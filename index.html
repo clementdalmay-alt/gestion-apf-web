@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FAF7F2">
+<meta name="robots" content="noindex">
+<title>Resident Activités</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;700&text=0123456789&display=swap">
+<script src="https://accounts.google.com/gsi/client" async></script>
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Resident Activités — charte de la bible (douce et lisible : fond clair, vert sauge, terracotta).
+   Mise en page : une colonne, en-tête 56 px, contenu sans défilement, barre d'onglets 64 px.
+   Les teintes marquées « ajusté » sont assombries pour atteindre un contraste de 4,5. */
+:root {
+  --fond: #FAF7F2;
+  --surface: #FFFFFF;
+  --texte: #2B2B2B;
+  --texte-2: #5E625F;
+  --sauge: #557560;          /* ajusté (bible : #5E7F67) */
+  --sur-sauge: #FFFFFF;
+  --terracotta: #A9573A;     /* ajusté (bible : #B5603C) */
+  --rouge: #B23A3A;
+  --bleu: #3D6E9E;
+  --orange: #9A5B00;
+  --bordure: #E4DED4;
+  --sauge-fond: #E8EFE9;
+  --rouge-fond: #F8E6E4;
+  /* Graphique : paire validée (CVD, vision normale, contraste) ; distincte de la charte, réservée aux barres. */
+  --g-avance: #D07A3E;
+  --g-rembourse: #1A7F5E;
+  --g-grille: #ECE7DF;
+  --bleu-fond: #E4EDF6;
+  --ombre: 0 1px 2px rgba(43, 43, 43, .06);
+  /* Chiffres en Source Sans 3 (zéro sans barre, chargée pour les chiffres seuls), lettres en Atkinson Hyperlegible. */
+  --police: "Source Sans 3", "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --t-courant: 17px;
+  --t-titre: 22px;
+  --t-total: 28px;
+  --rayon: 12px;
+  --ecart: 12px;
+  --h-bouton: 52px;
+  --h-titre-box: 48px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #1F2321; --surface: #2A2F2C; --texte: #EDEAE4; --texte-2: #B5B8B4;
+    --sauge: #8FB59A; --sur-sauge: #14201A; --terracotta: #E39A78; --rouge: #EE9A93; --bleu: #93B9DF; --orange: #E8B25E;
+    --bordure: #3A403C; --sauge-fond: #2F3B33; --rouge-fond: #3D2A28; --bleu-fond: #26313C; --g-avance: #CC7536; --g-rembourse: #20A080; --g-grille: #343A36;
+    --ombre: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #1F2321; --surface: #2A2F2C; --texte: #EDEAE4; --texte-2: #B5B8B4;
+  --sauge: #8FB59A; --sur-sauge: #14201A; --terracotta: #E39A78; --rouge: #EE9A93; --bleu: #93B9DF; --orange: #E8B25E;
+  --bordure: #3A403C; --sauge-fond: #2F3B33; --rouge-fond: #3D2A28; --bleu-fond: #26313C; --g-avance: #CC7536; --g-rembourse: #20A080; --g-grille: #343A36;
+  --ombre: none; color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--fond); color: var(--texte);
+  font-family: var(--police); font-size: var(--t-courant); line-height: 1.3;
+  -webkit-text-size-adjust: 100%; overflow: hidden;
+}
+* { box-sizing: border-box; }
+button, input, select, textarea { font: inherit; color: inherit; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+#app {
+  height: 100%; max-width: 560px; margin: 0 auto;
+  display: flex; flex-direction: column; position: relative;
+}
+
+/* En-tête */
+.entete {
+  flex: 0 0 56px; display: flex; align-items: center; gap: 8px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--bordure); background: var(--fond);
+}
+.entete h1 { font-size: var(--t-titre); margin: 0; font-weight: 700; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.puce { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px; font-size: var(--t-courant); line-height: 28px; white-space: nowrap; border: 1px solid currentColor; }
+.puce.test { color: var(--bleu); background: var(--bleu-fond); }
+.puce.lecture { color: var(--texte-2); }
+.version { color: var(--texte-2); white-space: nowrap; }
+
+/* Zone de contenu : jamais de défilement, découpée en pages */
+.contenu {
+  flex: 1 1 auto; min-height: 0; overflow: hidden;
+  display: flex; flex-direction: column; gap: var(--ecart);
+  padding-block: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.pousse { flex: 1 1 auto; }
+
+/* Box */
+.box { background: var(--surface); border: 1px solid var(--bordure); border-radius: var(--rayon); box-shadow: var(--ombre); padding: 0 12px; }
+.box-titre { height: var(--h-titre-box); display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.box-titre .fin { margin-left: auto; font-weight: 400; color: var(--texte-2); display: flex; align-items: center; gap: 4px; }
+.ligne { min-height: 44px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--bordure); }
+.box > .ligne:first-child { border-top: 0; }
+.ligne .lib { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ligne .sec { color: var(--texte-2); }
+.total { font-size: var(--t-total); font-weight: 700; }
+.avance { color: var(--terracotta); }
+.rembourse { color: var(--sauge); }
+.du { color: var(--rouge); }
+.info { color: var(--bleu); }
+.retard { color: var(--rouge); display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.etat-vide { text-align: center; color: var(--texte-2); padding: 16px 8px; }
+.etat-vide strong { display: block; color: var(--texte); font-size: var(--t-titre); margin-bottom: 6px; }
+
+/* Boutons : 4 familles, 52 px */
+.btn {
+  min-height: var(--h-bouton); border-radius: var(--rayon); padding: 0 16px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 700; cursor: pointer; border: 2px solid var(--sauge); background: transparent; color: var(--sauge);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 44px;
+}
+.btn.principal { background: var(--sauge); color: var(--sur-sauge); }
+.btn.danger { border-color: var(--rouge); color: var(--rouge); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.btn.icone { padding: 0; width: var(--h-bouton); flex: 0 0 var(--h-bouton); }
+.actions {
+  flex: 0 0 auto; display: flex; gap: var(--ecart); padding-block: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-top: 1px solid var(--bordure); background: var(--fond);
+}
+.actions .btn { flex: 1 1 0; min-width: 0; }
+.actions .btn.icone { flex: 0 0 var(--h-bouton); }
+
+/* Cartes de choix */
+.grille { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ecart); }
+.carte {
+  min-height: var(--h-bouton); border-radius: var(--rayon); border: 1px solid var(--bordure); background: var(--surface);
+  text-align: left; padding: 6px 12px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; min-width: 0;
+}
+/* Nom sur deux lignes au plus ; sous-titre sur une ligne. */
+.carte b { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; line-height: 1.2; }
+.carte span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.carte span { color: var(--texte-2); }
+@media (max-width: 359px) { .grille { grid-template-columns: 1fr; } }
+
+/* Sélecteur segmenté */
+.segments { display: flex; border: 2px solid var(--sauge); border-radius: var(--rayon); overflow: hidden; min-height: var(--h-bouton); }
+.segments button { flex: 1 1 0; min-width: 0; border: 0; background: transparent; color: var(--sauge); font-weight: 700; cursor: pointer; padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.segments button[aria-pressed="true"] { background: var(--sauge); color: var(--sur-sauge); }
+
+/* Lignes cliquables */
+.rangee { width: 100%; min-height: 52px; display: flex; align-items: center; gap: 8px; background: transparent; border: 0; border-top: 1px solid var(--bordure); padding: 0; text-align: left; cursor: pointer; }
+.box > .rangee:first-child, .box-titre + .rangee { border-top: 0; }
+.rangee .lib { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rangee .sec { color: var(--texte-2); }
+
+/* Champs */
+.champ { min-height: var(--h-bouton); display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--bordure); }
+.box > .champ:first-child { border-top: 0; }
+.champ label { flex: 0 0 auto; min-width: 96px; font-weight: 700; }
+.champ input, .champ select {
+  flex: 1 1 auto; min-width: 0; height: 44px; border: 1px solid var(--bordure); border-radius: 8px; padding: 0 10px;
+  background: var(--fond); text-align: right;
+}
+.champ input[type="text"]:not(.montant) { text-align: left; }
+.champ input:focus, .champ select:focus { outline: 2px solid var(--sauge); outline-offset: 1px; }
+.recherche { display: flex; gap: var(--ecart); align-items: center; }
+.recherche input { flex: 1; min-width: 0; height: var(--h-bouton); border: 1px solid var(--bordure); border-radius: var(--rayon); padding: 0 12px; background: var(--surface); }
+.recherche input:focus { outline: 2px solid var(--sauge); outline-offset: 1px; }
+/* Interrupteur : zone tactile 56 × 44, piste dessinée de 52 × 32. */
+.bascule { width: 56px; height: 44px; border: 0; background: transparent; position: relative; cursor: pointer; flex: 0 0 56px; margin-left: auto; padding: 0; }
+.bascule::before { content: ""; position: absolute; top: 6px; left: 2px; width: 52px; height: 32px; border-radius: 16px; border: 2px solid var(--sauge); box-sizing: border-box; }
+.bascule::after { content: ""; position: absolute; top: 11px; left: 7px; width: 22px; height: 22px; border-radius: 50%; background: var(--sauge); transition: left .15s; }
+.bascule[aria-checked="true"]::before { background: var(--sauge); }
+.bascule[aria-checked="true"]::after { left: 27px; background: var(--sur-sauge); }
+.bascule-zone { min-width: 52px; min-height: 44px; display: flex; align-items: center; justify-content: flex-end; flex: 1; }
+
+.message { border-radius: var(--rayon); padding: 10px 12px; display: flex; gap: 8px; align-items: flex-start; }
+.message.erreur { background: var(--rouge-fond); color: var(--rouge); }
+.message.avert { background: var(--rouge-fond); color: var(--orange); }
+.message.info { background: var(--bleu-fond); color: var(--bleu); }
+.aide { color: var(--texte-2); }
+
+/* Pagination */
+.pager { display: flex; align-items: center; gap: 4px; }
+.pager button { width: 44px; height: 44px; border: 0; background: transparent; color: var(--sauge); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; }
+.pager button[disabled] { opacity: .35; cursor: default; }
+
+/* Tableau des totaux */
+.tableau .ligne { display: grid; grid-template-columns: minmax(0, 1fr) 76px 76px 76px; gap: 6px; }
+.tableau.trois .ligne { grid-template-columns: minmax(0, 1fr) 92px 92px; }
+.tableau .ligne > * { text-align: right; }
+.tableau .ligne > :first-child { text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tableau .entete-t { color: var(--texte-2); font-weight: 700; }
+.tableau .pied { font-weight: 700; }
+
+/* Barre d'onglets */
+.onglets {
+  flex: 0 0 auto; display: flex; border-top: 1px solid var(--bordure); background: var(--surface);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+.onglets button { flex: 1 1 0; min-width: 0; height: 64px; border: 0; background: transparent; color: var(--texte-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; font-size: var(--t-courant); }
+.onglets button span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; padding: 0 2px; }
+.onglets button[aria-current="page"] { color: var(--sauge); font-weight: 700; }
+
+svg.ic { width: 24px; height: 24px; flex: 0 0 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Notification (en haut, fermable) et bandeau Annuler (en bas) */
+.notif {
+  position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); top: 64px; z-index: 5;
+  border-radius: var(--rayon); padding: 10px 12px; min-height: 44px; display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--bordure); box-shadow: 0 4px 16px rgba(0, 0, 0, .12); cursor: pointer; text-align: left; width: auto;
+}
+.notif.ok { color: var(--sauge); }
+.notif.erreur { color: var(--rouge); }
+.notif.info { color: var(--bleu); }
+.bandeau {
+  position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); bottom: 88px; z-index: 6;
+  border-radius: var(--rayon); padding: 4px 4px 4px 12px; display: flex; align-items: center; gap: 8px;
+  background: var(--texte); color: var(--fond);
+}
+.bandeau .lib { flex: 1; min-width: 0; }
+.bandeau .btn { border-color: var(--fond); color: var(--fond); }
+
+:focus-visible { outline: 3px solid var(--bleu); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Liste des activités et titres qui peuvent porter un nom long. */
+.lib-souple { flex: 1; min-width: 0; overflow-wrap: anywhere; padding-block: 6px; }
+.titre-souple { min-width: 0; overflow-wrap: anywhere; line-height: 1.2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+/* Bouton ⓘ des totaux, à côté du mot « Total », zone tactile 44 px. */
+.tableau .ligne > .total-aide { display: flex; align-items: center; gap: 2px; }
+.pastille-info { width: 44px; height: 44px; flex: 0 0 44px; border: 0; background: transparent; color: var(--bleu); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; margin-block: -2px; }
+
+/* Graphique des totaux */
+.legende { display: flex; gap: 16px; min-height: 32px; align-items: center; color: var(--texte-2); }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.pastille { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+i.g-avance { background: var(--g-avance); }
+i.g-rembourse { background: var(--g-rembourse); }
+.g-colonnes { position: relative; height: 212px; margin: 12px 0 4px 48px; display: flex; align-items: stretch; padding-bottom: 28px; }
+.g-grille { position: absolute; left: -48px; right: 0; border-top: 1px solid var(--g-grille); pointer-events: none; }
+/* Repères sur la zone des barres (hauteur totale moins les 28 px des libellés). */
+.g-grille.g-haut { bottom: 100%; }
+.g-grille.g-milieu { bottom: calc(14px + 50%); }
+.g-grille.g-zero { bottom: 28px; }
+.tableau .ligne.g-detail { display: flex; align-items: center; }
+.g-grille b { position: absolute; left: 0; top: 4px; font-weight: 400; color: var(--texte-2); font-size: var(--t-courant); line-height: 1; }
+.g-zero { border-top-color: var(--bordure); }
+.g-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; border-radius: 6px; }
+.g-col.choisi { background: var(--sauge-fond); }
+.g-barres { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 2px; }
+.g-barres i { width: min(10px, 32%); border-radius: 4px 4px 0 0; display: block; }
+.g-lib { position: absolute; bottom: -28px; height: 28px; line-height: 28px; color: var(--texte-2); white-space: nowrap; }
+.g-col.choisi .g-lib { color: var(--texte); font-weight: 700; }
+.g-lignes { display: flex; flex-direction: column; gap: 4px; padding-block: 8px; }
+.g-ligne { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 40px; cursor: pointer; border-radius: 6px; padding: 0 4px; }
+.g-ligne.choisi { background: var(--sauge-fond); }
+.g-nom { color: var(--texte-2); overflow-wrap: anywhere; line-height: 1.15; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+.g-ligne.choisi .g-nom { color: var(--texte); font-weight: 700; }
+.g-pistes { display: flex; flex-direction: column; gap: 2px; }
+.g-pistes i { display: block; height: 10px; border-radius: 0 4px 4px 0; min-width: 0; }
+.g-detail { gap: 10px; }
+.g-detail .g-nom-detail { flex: 1; min-width: 0; font-weight: 700; overflow-wrap: anywhere; line-height: 1.15; }
+.g-detail .num { flex: 0 0 auto; }
+.g-detail { min-height: 48px; }
+.g-detail .pastille-info { margin-block: 0; }
+
+/* Numéro de version : bouton discret (double tap = codes de test), zone tactile 44 px. */
+.entete button.version { background: transparent; border: 0; color: var(--texte-2); min-width: 44px; min-height: 44px; padding: 0 4px; cursor: pointer; touch-action: manipulation; font: inherit; }
+
+/* Boutons du bas de l'accueil : deux côte à côte, marge intérieure réduite pour que « + Remboursement » tienne. */
+.btn.serre { padding: 0 5px; gap: 2px; }
+
+/* Bouton Aide (?) de l'en-tête */
+.aide-btn { width: 44px; height: 44px; flex: 0 0 44px; border: 0; background: transparent; color: var(--sauge); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; }
+/* Tutoriel : voile, anneau sur la cible, bulle */
+.tuto { position: absolute; inset: 0; z-index: 20; }
+.tuto-anneau { position: absolute; border-radius: var(--rayon); box-shadow: 0 0 0 9999px rgba(20, 24, 22, .62); outline: 3px solid var(--fond); pointer-events: none; transition: all .2s; }
+.tuto-anneau.tuto-plein { left: 50%; top: 50%; width: 0; height: 0; outline: 0; }
+.tuto-bulle { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); background: var(--surface); color: var(--texte); border-radius: var(--rayon); padding: 12px; box-shadow: 0 8px 28px rgba(0, 0, 0, .3); display: flex; flex-direction: column; gap: 8px; }
+.tuto-etape { display: flex; justify-content: space-between; color: var(--texte-2); }
+.tuto-titre { margin: 0; font-size: var(--t-titre); font-weight: 700; line-height: 1.2; }
+.tuto-texte { margin: 0; line-height: 1.35; }
+.tuto-actions { display: flex; gap: var(--ecart); }
+.tuto-actions .btn:not(.icone) { flex: 1 1 0; min-width: 0; }
+.tuto-actions .btn.icone { flex: 0 0 var(--h-bouton); }
+@media (prefers-reduced-motion: reduce) { .tuto-anneau { transition: none; } }
+
+/* Choix de l'année sur l'accueil */
+.choix-annee { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; min-width: 0; }
+.choix-annee select { height: 44px; border: 1px solid var(--bordure); border-radius: 8px; padding: 0 6px; background: var(--fond); font-weight: 700; font-variant-numeric: tabular-nums; }
+.choix-annee select:focus { outline: 2px solid var(--sauge); outline-offset: 1px; }
+/* Écran Télécharger : un contenu par ligne, boutons PDF / Excel à droite */
+.ligne.tele { padding-block: 4px; }
+.tele-btns { display: flex; gap: 6px; flex: 0 0 auto; }
+.tele-btns .btn { min-width: 56px; min-height: 44px; }
+/* Sauvegarde : le champ fichier couvre le bouton (le sélecteur du téléphone s'ouvre au toucher) */
+.btn.fichier { position: relative; cursor: pointer; border-width: 0; box-shadow: inset 0 0 0 2px var(--sauge); }
+.btn.fichier input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 0; }
+.btn.fichier:focus-within { outline: 2px solid var(--sauge); outline-offset: 2px; }
+.btn.fichier:has(input[disabled]) { opacity: .45; cursor: default; }
+
+/* Appli Google : compléments à la charte (src/styles.css). */
+.connexion { display: flex; flex-direction: column; gap: var(--ecart); align-items: stretch; }
+.connexion .bouton-google { min-height: 52px; display: flex; justify-content: center; align-items: center; }
+.puce.role { color: var(--sauge); }
+.champ textarea { flex: 1 1 auto; min-width: 0; min-height: 64px; border: 1px solid var(--bordure); border-radius: 8px; padding: 8px 10px; background: var(--fond); resize: none; font: inherit; color: inherit; }
+.champ textarea:focus { outline: 2px solid var(--sauge); outline-offset: 1px; }
+.champ.haut { align-items: flex-start; padding-block: 6px; }
+.statut { display: inline-flex; align-items: center; gap: 4px; padding: 0 8px; border-radius: 999px; line-height: 26px; white-space: nowrap; border: 1px solid currentColor; }
+.statut.a_repartir { color: var(--orange); }
+.statut.repartie { color: var(--sauge); }
+.ligne-depense { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; padding-block: 8px; border-top: 1px solid var(--bordure); }
+.box > .ligne-depense:first-of-type, .box-titre + .ligne-depense { border-top: 0; }
+.ligne-depense .lib { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.ligne-depense .sous { grid-column: 1 / -1; color: var(--texte-2); overflow-wrap: anywhere; }
+.compteur { font-size: var(--t-total); font-weight: 700; }
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="application/json" id="contenus">{"appli.nom":"Resident Activités","entete.version":"v{v}","entete.version_aide":"Version {v}","entete.mode_test":"Test","entete.lecture":"Lecture","onglets.titre":"Navigation","onglets.accueil":"Accueil","onglets.residents":"Résidents","onglets.totaux":"Totaux","onglets.gestion":"Gestion","commun.retour":"Retour","commun.annuler":"Annuler","commun.inconnu":"Introuvable","commun.inactif":"inactif","commun.retard":"Retard","commun.chambre":"Chambre {n}","commun.chambre_court":"ch. {n}","commun.avance_total":"Avancé","commun.rembourse_total":"Remboursé","commun.reste_du":"Reste dû","commun.page":"{n}/{total}","commun.page_prec":"Page précédente","commun.page_suiv":"Page suivante","chargement.titre":"Chargement…","chargement.texte":"Les données arrivent.","indispo.titre":"Données indisponibles","indispo.texte":"Ouvre l'appli depuis claude.ai pour voir tes données. Les codes de test, dans Gestion, marchent quand même.","deconnecte.titre":"Connecte-toi pour voir les données","deconnecte.texte":"Touche « Connexion » en haut à droite et connecte-toi à Claude avec l'adresse e-mail qui a reçu l'invitation. Pas encore de compte ? Crée-le avec cette même adresse.","accueil.totaux_titre":"Année {annee}","accueil.annee":"Année","accueil.a_jour":"à jour à {h}","accueil.peut_etre_ancien":"peut-être pas à jour","accueil.retards.un":"1 résident en retard","accueil.retards.plusieurs":"{n} résidents en retard","accueil.retards_court.un":"1 en retard","accueil.retards_court.plusieurs":"{n} en retard","accueil.ajouter_avance":"Ajouter une avance","accueil.tous":"Tous","accueil.nouveau_resident":"Résident","accueil.nouvelle_activite":"Activité","accueil.noter_remboursement":"Noter un remboursement","accueil.plus_avance":"Avance","accueil.plus_remboursement":"Remboursement","accueil.dernieres":"Dernières saisies","accueil.aucune_operation":"Rien de saisi pour l'instant.","accueil.vide_lecture":"Rien de saisi pour l'instant.","accueil.vide_residents.titre":"Aucun résident","accueil.vide_residents.texte":"Commence par ajouter un résident.","accueil.vide_residents.action":"Ajouter un résident","accueil.vide_activites.titre":"Aucune activité","accueil.vide_activites.texte":"Ajoute une activité, par exemple Théâtre.","accueil.vide_activites.action":"Ajouter une activité","residents.chercher":"Nom ou chambre","residents.en_retard":"En retard","tri.titre":"Trier","tri.nom":"Par nom","tri.chambre":"Par chambre","tri.avance":"Par avancé","tri.ligne_chambre":"{n} · {nom}","residents.aucun_resultat":"Aucun résident trouvé.","residents.vide.titre":"Aucun résident","residents.vide.texte":"Ajoute le premier résident.","residents.vide.action":"Ajouter un résident","fiche.introuvable":"Ce résident n'existe plus.","fiche.note":"Voir la note","fiche.annee":"Avancé · remboursé en {annee}","fiche.operations":"Historique","fiche.aucune_operation":"Rien de saisi pour ce résident.","fiche.avance":"Avance","fiche.rembourser":"Rembourser","choix.titre_avance":"Pour quel résident ?","choix.titre_remb":"Qui rembourse ?","choix.titre_activite":"{nom} · quelle activité ?","choix.rien_a_rembourser":"Rien à rembourser","form.changer":"Changer","form.montant":"Montant","form.montant_exemple":"12,50","form.mois":"Mois","form.date_paiement":"Avancé le","form.date":"Remboursé le","form.imputer":"Sur quelle avance ?","form.imputer_libre":"Les plus anciennes d'abord","form.imputer_avance":"{activite} · {mois} · reste {reste}","form.imputer_aide_libre":"Le montant rembourse d'abord les avances les plus anciennes.","form.imputer_aide_avance":"Le montant va sur cette avance seulement.","form.valider":"Valider","form.valider_quand_meme":"Valider quand même","form.enregistrer":"Enregistrer","form.enregistrer_autre":"Enregistrer et ajouter un autre","form.doublon_confirmer":"Vérifie le mois, puis valide à nouveau si c'est voulu.","erreur.montant_positif":"Le montant doit être supérieur à 0.","erreur.montant_format":"Écris le montant en euros, par exemple 12,50.","erreur.date_invalide":"Choisis une date valide.","erreur.date_future":"La date ne peut pas être dans le futur.","erreur.resident_requis":"Choisis un résident.","erreur.activite_requise":"Choisis une activité.","erreur.mois_invalide":"Choisis le mois concerné.","erreur.rembourse_depasse_reste":"C'est plus que ce que ce résident doit. Baisse le montant.","erreur.rembourse_depasse_avance":"Le montant dépasse le reste de cette avance. Baisse-le ou choisis « Les plus anciennes d'abord ».","erreur.avance_autre_resident":"Cette avance n'est pas celle de ce résident. Choisis-en une autre.","erreur.nom_requis":"Écris un nom.","erreur.resident_doublon":"Ce résident existe déjà dans cette chambre.","erreur.activite_doublon":"Cette activité existe déjà.","erreur.chambre_numero":"Écris le numéro de chambre en chiffres, par exemple 101.","erreur.code_inconnu":"Code inconnu. Vérifie-le dans la liste.","erreur.ecriture_refusee":"Tu n'as pas le droit de modifier. L'appli passe en lecture seule.","erreur.base_pleine":"Plus de place pour enregistrer. Préviens Clément.","erreur.ecriture":"L'enregistrement n'est pas passé. Vérifie la connexion et réessaie.","avert.doublon":"Une avance existe déjà pour ce résident, cette activité et ce mois.","statut.soldee":"Remboursée","statut.partielle":"Remboursée en partie","statut.due":"À rembourser","statut.retard":"En retard","operation.remboursement":"Remboursement","operation.remboursement_libre":"Remboursement global","detail.avance_titre":"Avance","detail.remb_titre":"Remboursement","detail.introuvable":"Cette saisie n'existe plus.","detail.resident":"Résident","detail.activite":"Activité","detail.mois":"Mois","detail.date_paiement":"Avancé le","detail.date":"Remboursé le","detail.montant":"Montant","detail.rembourse":"Remboursé","detail.statut":"État","detail.genre":"Sur","detail.rattache":"Sur une avance précise","detail.libre":"Les plus anciennes","detail.jours.un":"1 jour","detail.jours.plusieurs":"{n} jours","detail.supprimer":"Supprimer","detail.supprimer_impossible":"Supprime d'abord les remboursements de cette avance.","annuler.avance":"Avance supprimée","annuler.remb":"Remboursement supprimé","annuler.resident":"Résident supprimé","annuler.activite":"Activité supprimée","annuler.resident_inactif":"{nom} a des avances : sa fiche devient inactive.","annuler.activite_inactive":"{nom} a des avances : l'activité devient inactive.","notif.avance_ok":"Avance de {montant} notée pour {nom}","notif.remb_ok":"Remboursement de {montant} noté pour {nom}","notif.saisie_activee":"Tu peux saisir sur cet appareil.","notif.lecture_activee":"Cet appareil repasse en lecture seule.","notif.codes_visibles":"Codes de test visibles dans Gestion","notif.codes_caches":"Codes de test cachés","notif.resident_ajoute":"Fiche de {nom} créée","notif.resident_modifie":"Fiche de {nom} modifiée","notif.activite_ajoutee":"{nom} ajoutée","notif.activite_modifiee":"{nom} modifiée","totaux.annee_prec":"Année précédente","totaux.annee_suiv":"Année suivante","totaux.vue":"Regrouper par","totaux.par_resident":"Résident","totaux.par_activite":"Activité","totaux.par_mois":"Mois","totaux.par_trimestre":"Trimestre","totaux.col_resident":"Résident","totaux.col_activite":"Activité","totaux.col_mois":"Mois","totaux.col_trimestre":"Trimestre","totaux.trimestre_ligne":"T{n} · {debut} à {fin}","totaux.col_avance":"Avancé","totaux.col_rembourse":"Remb.","totaux.col_reste":"Reste","totaux.total":"Total","totaux.aucune_donnee":"Rien de saisi cette année.","totaux.aide":"Explications","totaux.aide_resident":"En euros. « Reste » compte aussi les années passées.","totaux.aide_activite":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_mois":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_trimestre":"En euros, selon la date de chaque avance et de chaque remboursement. T1 : janvier à mars, T2 : avril à juin, etc.","graphique.titre":"Graphique des totaux","graphique.avance":"Avancé","graphique.rembourse":"Remboursé","graphique.voir_graphique":"Voir le graphique","graphique.voir_tableau":"Voir le tableau","pdf.bouton":"Télécharger","pdf.titre":"Télécharger","pdf.totaux":"Totaux affichés","pdf.totaux_aide":"Le tableau à l'écran, avec ses filtres","pdf.recap":"Récapitulatif {annee}","pdf.recap_aide":"Par résident, par activité et par mois","pdf.recu":"Reçu d'un résident","pdf.recu_aide":"Ses avances et remboursements de l'année","pdf.choix_resident":"Reçu pour quel résident ?","pdf.en_cours":"Préparation du fichier…","pdf.ok":"PDF téléchargé","pdf.patienter":"Attends quelques secondes, puis réessaie.","pdf.indispo":"Le téléchargement est bloqué ici. Ouvre l'appli directement dans claude.ai.","pdf.erreur":"Le fichier n'a pas pu être préparé. Vérifie la connexion et réessaie.","pdf.edite_le":"Édité le {date}","pdf.page":"Page {n} / {total}","pdf.doc_totaux":"Totaux {annee}","pdf.doc_recap":"Récapitulatif {annee}","pdf.doc_recu":"Reçu {annee}","pdf.col_date":"Date","pdf.col_operation":"Détail","pdf.reste_du":"Reste dû (toutes années)","pdf.fichier_totaux":"totaux-{annee}","pdf.fichier_recap":"recapitulatif-{annee}","pdf.fichier_recu":"recu-{nom}-{annee}","tele.pdf":"PDF","tele.excel":"Excel","tele.operations":"Toutes les saisies","tele.operations_aide":"Chaque avance et chaque remboursement de l'année","tele.doc_operations":"Saisies {annee}","tele.col_genre":"Type","tele.genre_avance":"Avance","tele.fichier_operations":"saisies-{annee}","tele.ok_excel":"Fichier Excel téléchargé","filtres.titre":"Filtres","filtres.annee":"Année","filtres.periode":"Période","filtres.resident":"Résident","filtres.activite":"Activité","filtres.toute_annee":"Toute l'année","filtres.tous":"Tous","filtres.toutes":"Toutes","filtres.aucun":"aucun filtre","filtres.resident_chambre":"{nom} · ch. {n}","filtres.effacer":"Retirer les filtres","filtres.voir":"Voir les totaux","filtres.aide":"Tu peux combiner les filtres. Le reste dû compte toujours toutes les années, quelle que soit la période.","gestion.titre":"Gestion","gestion.residents":"Résidents","gestion.activites":"Activités","gestion.codes":"Codes","gestion.infos":"Infos","gestion.compte_residents.aucun":"Aucun résident","gestion.compte_residents.un":"1 résident","gestion.compte_residents.plusieurs":"{n} résidents","gestion.compte_activites.aucun":"Aucune activité","gestion.compte_activites.un":"1 activité","gestion.compte_activites.plusieurs":"{n} activités","gestion.vide_residents":"Ajoute le premier résident.","gestion.vide_activites":"Ajoute la première activité.","gestion.ajouter_resident":"Ajouter un résident","gestion.ajouter_activite":"Ajouter une activité","gestion.version":"Version","gestion.acces":"Accès","gestion.acces_saisie":"Saisie","gestion.acces_lecture":"Lecture seule","gestion.acces_test":"Test, données fictives","gestion.saisie_proprio":"Saisir depuis cet appareil","gestion.fuseau":"Dates","gestion.fuseau_valeur":"Heure de Paris","gestion.tutoriel":"Tutoriel","gestion.tutoriel_revoir":"Revoir","sauvegarde.titre":"Sauvegarde","sauvegarde.ouvrir":"Ouvrir","sauvegarde.sauver":"Sauvegarder les données","sauvegarde.sauver_aide":"Un fichier avec toutes les données, à garder en lieu sûr","sauvegarde.bouton_sauver":"Fichier","sauvegarde.restaurer":"Restaurer une sauvegarde","sauvegarde.restaurer_aide":"Remplace les données par celles d'un fichier de sauvegarde","sauvegarde.bouton_restaurer":"Choisir","sauvegarde.copie":"Données d'avant la restauration","sauvegarde.bouton_copie":"Reprendre","sauvegarde.indispo":"La sauvegarde n'est pas disponible dans cette vue de claude.ai.","sauvegarde.fichier":"sauvegarde-resident-activites-{date}","sauvegarde.ok":"Sauvegarde enregistrée","sauvegarde.erreur_lecture":"Ce fichier n'est pas une sauvegarde de l'appli. Choisis un fichier « sauvegarde-resident-activites ».","sauvegarde.erreur_version":"Cette sauvegarde vient d'une version plus récente de l'appli. Recharge la page, puis réessaie.","sauvegarde.erreur_contenu":"Ce fichier de sauvegarde est abîmé : rien n'a été changé. Essaie une autre sauvegarde.","restaurer.titre":"Restaurer","restaurer.le":"Sauvegarde du {date} à {heure}","restaurer.date_inconnue":"Sauvegarde sans date","restaurer.col_fichier":"Fichier","restaurer.col_actuel":"Actuel","restaurer.residents":"Résidents","restaurer.activites":"Activités","restaurer.avances":"Avances","restaurer.remboursements":"Remboursements","restaurer.avert":"Les données actuelles seront remplacées par celles du fichier. Elles restent récupérables dans Sauvegarde.","restaurer.identique":"Ce fichier contient déjà les mêmes données : rien à changer.","restaurer.confirmer":"Remplacer les données","restaurer.en_cours":"Restauration en cours : {n} sur {total}","restaurer.ok":"Données restaurées","restaurer.erreur":"La restauration s'est arrêtée. Relance-la : rien n'est perdu.","restaurer.copie_erreur":"Les données actuelles n'ont pas pu être mises de côté : rien n'a été changé. Réessaie.","resident.titre_nouveau":"Nouveau résident","resident.titre_modifier":"Modifier le résident","resident.nom":"Nom","resident.chambre":"Chambre","resident.note":"Note","resident.note_exemple":"Paie en espèces","resident.actif":"Actif","resident.rappel_sante":"N'écris aucune information de santé ici.","resident.historique":"Cette fiche a des avances : « Supprimer » la rend inactive, et ses totaux restent.","activite.titre_nouveau":"Nouvelle activité","activite.titre_modifier":"Modifier l'activité","activite.nom":"Nom","activite.active":"Active","activite.historique":"Cette activité a des avances : « Supprimer » la rend inactive, et ses totaux restent.","codes.champ":"Code de test","codes.exemple":"T-AVANCE-BASE-001","codes.ouvrir":"Ouvrir","codes.voir":"Voir les codes de test","codes.aide":"Un code de test charge des données fictives. Les vraies données ne sont pas touchées.","codes.quitter":"Quitter le mode test","codes.T-AVANCE-BASE-001":"Saisir une avance","codes.T-TOTAUX-BASE-001":"Totaux 2026","codes.T-RETARD-BASE-001":"Retards","codes.T-REMBLIBRE-BASE-001":"Remboursement global","codes.T-DOUBLON-BASE-001":"Avance en double","codes.T-VIDE-VIDE-001":"États vides","codes.T-NOMLONG-BASE-001":"Résident au nom long","codes.T-VOLUME-VOLUME-042":"Beaucoup de données","codes.T-FILTRE-BASE-001":"Filtre Théâtre, T1","codes.T-TRIMESTRE-BASE-001":"Totaux par trimestre","codes.T-QUIREMB-BASE-001":"Qui rembourse ?","codes.T-GRAPHIQUE-BASE-001":"Graphique par mois","codes.T-SAUVEGARDE-BASE-001":"Sauvegarde et restauration","tuto.puce":"Exemple","tuto.ouvrir":"Revoir le tutoriel","tuto.compte":"{n}/{total}","tuto.passer":"Passer","tuto.precedent":"Étape précédente","tuto.suivant":"Suivant","tuto.terminer":"Terminer","tuto.groupe.quotidien":"Au quotidien","tuto.groupe.preparer":"Préparer l'appli","tuto.groupe.totaux":"Les totaux","tuto.groupe.erreur":"Une erreur ?","tuto.groupe.fin":"C'est tout","tuto.totaux.titre":"Les totaux de l'année","tuto.totaux.texte":"Ce que l'association a avancé, ce qu'on lui a remboursé, et ce qui reste à rembourser. Ici, ce sont des exemples : tes vraies données ne bougent pas.","tuto.retards.titre":"Les retards","tuto.retards.texte":"En rouge : les résidents qui doivent depuis plus de 30 jours. Touche cette ligne pour les voir.","tuto.avance.titre":"Noter une avance","tuto.avance.texte":"Touche + Avance, choisis le résident, puis l'activité. Le montant est proposé : vérifie-le et valide.","tuto.raccourci.titre":"Le raccourci","tuto.raccourci.texte":"Les derniers résidents sont ici : touche un nom pour noter une avance plus vite.","tuto.remboursement.titre":"Noter un remboursement","tuto.remboursement.texte":"Quand un résident rembourse, touche + Remboursement et choisis-le. Ceux qui doivent sont en premier.","tuto.residents.titre":"Les résidents","tuto.residents.texte":"Chaque résident et ce qu'il reste à rembourser. Touche un nom pour voir sa fiche et son historique.","tuto.ajouter.titre":"Ajouter un résident ou une activité","tuto.ajouter.texte":"Ajoute chaque résident avec son numéro de chambre, et chaque activité. « Enregistrer et ajouter un autre » enchaîne les ajouts.","tuto.gestion.titre":"Modifier ou supprimer","tuto.gestion.texte":"Dans Gestion, touche un résident ou une activité pour le modifier ou le supprimer. Si la fiche a des avances, elle devient inactive.","tuto.sauvegarde.titre":"Sauvegarder","tuto.sauvegarde.texte":"Dans Gestion, onglet Infos, Sauvegarde enregistre toutes les données dans un fichier. Le même écran les remet depuis ce fichier.","tuto.regrouper.titre":"Regrouper les totaux","tuto.regrouper.texte":"Choisis comment voir les totaux : par résident, par activité, par mois ou par trimestre.","tuto.filtres.titre":"Filtrer","tuto.filtres.texte":"L'entonnoir ouvre les filtres : année, période, résident, activité. Tu peux les combiner.","tuto.graphique.titre":"Le graphique","tuto.graphique.texte":"Ce bouton passe du tableau au graphique, et inversement.","tuto.annee.titre":"Choisir l'année","tuto.annee.texte":"Choisis l'année ici : elle vaut aussi pour les Totaux et les fiches des résidents.","tuto.tri.titre":"Trier","tuto.tri.texte":"Range les résidents par nom, par numéro de chambre, ou du plus gros montant avancé au plus petit.","tuto.telecharger.titre":"Télécharger","tuto.telecharger.texte":"La flèche télécharge les totaux, le récapitulatif de l'année ou le reçu d'un résident, en PDF ou en Excel, et toutes les saisies en Excel.","tuto.erreur.titre":"Corriger une erreur","tuto.erreur.texte":"Ouvre la saisie depuis la fiche du résident et touche Supprimer. Tu as 2 secondes pour annuler.","tuto.revoir.titre":"Revoir ce tutoriel","tuto.revoir.texte":"Touche ce point d'interrogation, sur l'accueil, pour revoir ces explications. Il est aussi dans Gestion, onglet Infos.","g.role.admin":"Admin","g.role.association":"Association","g.connexion.titre":"Bienvenue","g.connexion.texte":"Connecte-toi avec ton compte Google pour continuer.","g.non_membre.titre":"Accès non ouvert","g.non_membre.texte":"Le compte {email} n'a pas encore accès. Demande à l'administratrice de l'ajouter, puis reconnecte-toi.","g.changer_compte":"Changer de compte","g.deconnexion":"Se déconnecter","g.reessayer":"Réessayer","g.indispo.titre":"Service indisponible","g.indispo.texte":"L'appli ne répond pas. Vérifie la connexion, puis réessaie.","g.erreur.reseau":"L'envoi n'est pas passé. Vérifie la connexion et réessaie.","g.depense.titre":"Nouvelle dépense","g.depense.ajouter":"Nouvelle dépense","g.depense.activite":"Activité","g.depense.choisir":"Choisir…","g.depense.nouvelle_activite":"+ Nouvelle activité","g.depense.nom_activite":"Nom","g.depense.montant":"Montant","g.depense.montant_exemple":"100,00","g.depense.date":"Date","g.depense.commentaire":"Note","g.depense.commentaire_exemple":"Ex. séance du mardi","g.depense.envoyer":"Envoyer","g.depense.ok":"Dépense de {montant} envoyée","g.statut.a_repartir":"À répartir","g.statut.repartie":"Répartie","g.association.mes_saisies":"Mes dépenses","g.association.vide":"Aucune dépense envoyée pour l'instant.","g.admin.a_repartir":"Dépenses à répartir","g.admin.liste":"À répartir","g.admin.rien_a_repartir":"Tout est réparti.","g.admin.bientot":"La répartition entre résidents arrive dans la prochaine version.","g.mail.sujet":"Nouvelle dépense : {activite}, {montant}","g.mail.corps":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\n\nÀ répartir dans l'appli : {lien}","g.mail.corps_commentaire":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\nNote : {commentaire}\n\nÀ répartir dans l'appli : {lien}","erreur.requete":"Demande incomplète. Recharge la page et réessaie.","erreur.connexion":"Ta connexion a expiré. Reconnecte-toi.","erreur.non_membre":"Ce compte n'a pas encore accès.","erreur.non_autorise":"Ton rôle ne permet pas cette action.","erreur.occupe":"L'appli est occupée. Réessaie dans quelques secondes.","erreur.serveur":"Une erreur est survenue. Réessaie ; si elle revient, préviens Clément.","erreur.introuvable":"Cet élément n'existe plus.","erreur.depense_introuvable":"Cette dépense n'existe plus.","erreur.depense_repartie":"Cette dépense est déjà répartie : retire d'abord la répartition.","erreur.depense_repartie_montant":"Cette dépense est répartie : pour changer le montant, refais la répartition.","erreur.commentaire_long":"La note est trop longue (500 caractères au plus).","erreur.repartition_vide":"Choisis au moins un résident.","erreur.repartition_doublon":"Un résident apparaît deux fois.","erreur.part_positive":"Chaque part doit être supérieure à 0.","erreur.repartition_somme":"La somme des parts doit être égale au montant de la dépense.","erreur.part_remboursee":"Un résident a déjà remboursé une partie : sa part ne peut pas descendre en dessous.","g.version":"G{v}"}</script>
+<script type="application/json" id="meta">{"version":"0.1","date":"2026-11-07","service":"https://script.google.com/macros/s/AKfycbwbPKLMDVKnmtA8X4izKVwY64-4Q5tN_ZoHKkxSKs6aKwv_l7hwmQbEHvjCaJY-ZoyI/exec","clientId":"485738393486-qs3djc9k7nqch3tcaka4ps0hcmlbeltj.apps.googleusercontent.com","lien":"https://clementdalmay-alt.github.io/resident-activites-web/"}</script>
+<script>
+/* Resident Activités — logique (modèle, règles de calcul, contrôles de saisie).
+ * Aucun texte affiché ici : les messages sont des clés du fichier de contenus.
+ * Montants en centimes (entiers). Dates "AAAA-MM-JJ", fuseau Europe/Paris. Mois "AAAA-MM".
+ */
+(function (racine) {
+  'use strict';
+
+  var FUSEAU = 'Europe/Paris';
+  var JOURS_RETARD = 30;
+
+  /* ---------- Montants ---------- */
+
+  // "12,50", "12.5", "12 €" → 1250 ; null si illisible.
+  function lireMontant(texte) {
+    if (typeof texte === 'number') return Number.isFinite(texte) ? Math.round(texte * 100) : null;
+    if (typeof texte !== 'string') return null;
+    var t = texte.replace(/[\s  €]/g, '').replace(',', '.');
+    if (!/^\d+(\.\d{0,2})?$/.test(t)) return null;
+    var parts = t.split('.');
+    var cents = parseInt(parts[0], 10) * 100 + (parts[1] ? parseInt((parts[1] + '0').slice(0, 2), 10) : 0);
+    return cents;
+  }
+
+  var formateur = null;
+  function formaterMontant(cents) {
+    if (!formateur) formateur = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
+    return formateur.format((cents || 0) / 100);
+  }
+
+  // "12,50" pour un champ de saisie.
+  function montantPourChamp(cents) {
+    return ((cents || 0) / 100).toFixed(2).replace('.', ',');
+  }
+
+  /* ---------- Dates ---------- */
+
+  function dateValide(d) {
+    if (typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
+    var y = +d.slice(0, 4), m = +d.slice(5, 7), j = +d.slice(8, 10);
+    var x = new Date(Date.UTC(y, m - 1, j));
+    return x.getUTCFullYear() === y && x.getUTCMonth() === m - 1 && x.getUTCDate() === j && y >= 2000 && y <= 2100;
+  }
+
+  function moisValide(m) {
+    return typeof m === 'string' && /^\d{4}-(0[1-9]|1[0-2])$/.test(m);
+  }
+
+  function joursEntre(a, b) {
+    var ta = Date.UTC(+a.slice(0, 4), +a.slice(5, 7) - 1, +a.slice(8, 10));
+    var tb = Date.UTC(+b.slice(0, 4), +b.slice(5, 7) - 1, +b.slice(8, 10));
+    return Math.round((tb - ta) / 86400000);
+  }
+
+  // Date du jour à Paris, "AAAA-MM-JJ".
+  function aujourdhuiParis(maintenant) {
+    var f = new Intl.DateTimeFormat('en-CA', { timeZone: FUSEAU, year: 'numeric', month: '2-digit', day: '2-digit' });
+    return f.format(maintenant || new Date());
+  }
+
+  // Horodatage ISO avec décalage Paris, pour les champs "créé le".
+  function horodatageParis(maintenant) {
+    var d = maintenant || new Date();
+    var f = new Intl.DateTimeFormat('en-CA', { timeZone: FUSEAU, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'longOffset' });
+    var p = {};
+    f.formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
+    var off = (p.timeZoneName || 'GMT+00:00').replace('GMT', '') || '+00:00';
+    return p.year + '-' + p.month + '-' + p.day + 'T' + p.hour + ':' + p.minute + ':' + p.second + off;
+  }
+
+  function annee(d) { return +d.slice(0, 4); }
+  function moisDe(d) { return +d.slice(5, 7); }
+
+  /* ---------- État ---------- */
+
+  function etatVide() {
+    return { residents: [], activites: [], avances: [], remboursements: [] };
+  }
+
+  function index(liste) {
+    var m = Object.create(null);
+    liste.forEach(function (x) { m[x.id] = x; });
+    return m;
+  }
+
+  function parDateEtId(cle) {
+    return function (a, b) {
+      if (a[cle] < b[cle]) return -1;
+      if (a[cle] > b[cle]) return 1;
+      return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+    };
+  }
+
+  /* ---------- Imputation (règles 3 et 4) ----------
+   * Pour chaque résident : les remboursements rattachés s'appliquent à leur avance ;
+   * puis les libres, par date, sur les avances non soldées les plus anciennes (date du paiement).
+   */
+  function imputer(etat) {
+    var reste = Object.create(null);      // avanceId → centimes restant dus
+    var parts = [];                        // { rembId, avanceId, montant, date }
+    var avancesParResident = Object.create(null);
+    etat.avances.slice().sort(parDateEtId('datePaiement')).forEach(function (a) {
+      reste[a.id] = a.montant;
+      (avancesParResident[a.residentId] = avancesParResident[a.residentId] || []).push(a);
+    });
+
+    var remb = etat.remboursements.slice().sort(parDateEtId('date'));
+    var libres = [];
+    remb.forEach(function (r) {
+      if (r.avanceId && reste[r.avanceId] !== undefined) {
+        var m = Math.min(r.montant, reste[r.avanceId]);
+        if (m > 0) { parts.push({ rembId: r.id, avanceId: r.avanceId, montant: m, date: r.date }); reste[r.avanceId] -= m; }
+        if (r.montant - m > 0) libres.push({ r: r, montant: r.montant - m });
+      } else {
+        libres.push({ r: r, montant: r.montant });
+      }
+    });
+
+    var nonImpute = Object.create(null);  // residentId → centimes reçus sans avance à solder
+    libres.forEach(function (l) {
+      var aRestant = l.montant;
+      (avancesParResident[l.r.residentId] || []).forEach(function (a) {
+        if (aRestant <= 0 || reste[a.id] <= 0) return;
+        var m = Math.min(aRestant, reste[a.id]);
+        parts.push({ rembId: l.r.id, avanceId: a.id, montant: m, date: l.r.date });
+        reste[a.id] -= m; aRestant -= m;
+      });
+      if (aRestant > 0) nonImpute[l.r.residentId] = (nonImpute[l.r.residentId] || 0) + aRestant;
+    });
+
+    return { reste: reste, parts: parts, nonImpute: nonImpute };
+  }
+
+  /* ---------- Calculs (règles 1 à 5) ---------- */
+
+  function calculer(etat, options) {
+    var an = options.annee;
+    var jour = options.aujourdhui;
+    var imp = imputer(etat);
+    var avIdx = index(etat.avances);
+
+    var avances = Object.create(null);
+    var parResident = Object.create(null);
+    var parActivite = Object.create(null);
+    var parMois = [];
+    for (var i = 0; i < 12; i++) parMois.push({ avance: 0, rembourse: 0 });
+    var global = { avance: 0, rembourse: 0, resteDu: 0, nbRetards: 0 };
+
+    function res(id) {
+      return parResident[id] || (parResident[id] = { avance: 0, rembourse: 0, resteDu: 0, totalAvance: 0, totalRembourse: 0, retards: [] });
+    }
+    function act(id) {
+      return parActivite[id] || (parActivite[id] = { avance: 0, rembourse: 0 });
+    }
+    etat.residents.forEach(function (r) { res(r.id); });
+    etat.activites.forEach(function (a) { act(a.id); });
+
+    etat.avances.forEach(function (a) {
+      var restant = imp.reste[a.id];
+      var rembourse = a.montant - restant;
+      var jours = joursEntre(a.datePaiement, jour);
+      var statut = restant <= 0 ? 'soldee' : rembourse > 0 ? 'partielle' : 'due';
+      var retard = restant > 0 && jours > JOURS_RETARD;
+      avances[a.id] = { rembourse: rembourse, reste: restant, statut: statut, retard: retard, jours: jours };
+      var r = res(a.residentId);
+      r.totalAvance += a.montant;
+      if (retard) { r.retards.push(a.id); global.nbRetards++; }
+      if (annee(a.datePaiement) === an) {
+        r.avance += a.montant;
+        act(a.activiteId).avance += a.montant;
+        parMois[moisDe(a.datePaiement) - 1].avance += a.montant;
+        global.avance += a.montant;
+      }
+    });
+
+    etat.remboursements.forEach(function (b) {
+      var r = res(b.residentId);
+      r.totalRembourse += b.montant;
+      if (annee(b.date) === an) {
+        r.rembourse += b.montant;
+        parMois[moisDe(b.date) - 1].rembourse += b.montant;
+        global.rembourse += b.montant;
+      }
+    });
+
+    // Remboursé par activité : selon l'imputation, compté à la date du remboursement.
+    imp.parts.forEach(function (p) {
+      if (annee(p.date) !== an) return;
+      var a = avIdx[p.avanceId];
+      if (a) act(a.activiteId).rembourse += p.montant;
+    });
+
+    Object.keys(parResident).forEach(function (id) {
+      var r = parResident[id];
+      r.resteDu = r.totalAvance - r.totalRembourse;   // règle 2, toutes années
+      global.resteDu += r.resteDu;
+    });
+
+    return { annee: an, aujourdhui: jour, avances: avances, parResident: parResident, parActivite: parActivite, parMois: parMois, global: global, parts: imp.parts };
+  }
+
+  /* ---------- Totaux filtrés (résident, activité, période) et regroupés ----------
+   * filtre : { residentId?, activiteId?, periode?: '' | 'T1'..'T4' | 'M1'..'M12' }
+   * groupe : 'resident' | 'activite' | 'mois' | 'trimestre'
+   * Avancé : avances de l'année (date du paiement) qui passent les filtres.
+   * Remboursé : parts de remboursement imputées (date du remboursement), filtrées par l'activité
+   *   et le résident de l'avance remboursée.
+   * Reste : reste dû des avances qui passent les filtres résident et activité, toutes années
+   *   (la période ne s'y applique pas).
+   */
+  function trimestreDe(m) { return Math.floor((m - 1) / 3) + 1; }
+  function dansPeriode(d, periode) {
+    if (!periode) return true;
+    var m = moisDe(d);
+    if (periode.charAt(0) === 'T') return trimestreDe(m) === +periode.slice(1);
+    return m === +periode.slice(1);
+  }
+
+  function totaux(etat, options, groupe, filtre) {
+    filtre = filtre || {};
+    var c = calculer(etat, options), an = options.annee;
+    var avIdx = index(etat.avances);
+    var lignes = Object.create(null), total = { avance: 0, rembourse: 0, reste: 0 };
+    function cle(a, d) {
+      if (groupe === 'resident') return a.residentId;
+      if (groupe === 'activite') return a.activiteId;
+      if (groupe === 'trimestre') return 'T' + trimestreDe(moisDe(d));
+      return 'M' + moisDe(d);
+    }
+    function ligne(k) { return lignes[k] || (lignes[k] = { avance: 0, rembourse: 0, reste: 0 }); }
+    function passe(a) {
+      return (!filtre.residentId || a.residentId === filtre.residentId) && (!filtre.activiteId || a.activiteId === filtre.activiteId);
+    }
+    etat.avances.forEach(function (a) {
+      if (!passe(a)) return;
+      if (annee(a.datePaiement) === an && dansPeriode(a.datePaiement, filtre.periode)) {
+        ligne(cle(a, a.datePaiement)).avance += a.montant; total.avance += a.montant;
+      }
+      if (groupe === 'resident' || groupe === 'activite') {
+        var r = c.avances[a.id].reste;
+        if (r > 0) { ligne(cle(a, a.datePaiement)).reste += r; total.reste += r; }
+      }
+    });
+    c.parts.forEach(function (p) {
+      var a = avIdx[p.avanceId];
+      if (!a || !passe(a) || annee(p.date) !== an || !dansPeriode(p.date, filtre.periode)) return;
+      ligne(cle(a, p.date)).rembourse += p.montant; total.rembourse += p.montant;
+    });
+    if (groupe !== 'resident' && groupe !== 'activite') total.reste = 0;
+    return { lignes: lignes, total: total };
+  }
+
+  function annees(etat, jour) {
+    var s = {};
+    s[annee(jour)] = true;
+    s[annee(jour) + 1] = true;                 // l'année suivante est toujours proposée
+    etat.avances.forEach(function (a) { s[annee(a.datePaiement)] = true; });
+    etat.remboursements.forEach(function (b) { s[annee(b.date)] = true; });
+    return Object.keys(s).map(Number).sort(function (a, b) { return b - a; });
+  }
+
+  /* ---------- Contrôles de saisie ---------- */
+
+  function controleDate(d, jour, erreurs) {
+    if (!dateValide(d)) erreurs.push('erreur.date_invalide');
+    else if (d > jour) erreurs.push('erreur.date_future');
+  }
+
+  // saisie : { residentId, activiteId, mois, montant (centimes|null), datePaiement, id? }
+  function validerAvance(etat, saisie, jour) {
+    var erreurs = [], avertissements = [];
+    var residents = index(etat.residents), activites = index(etat.activites);
+    if (!saisie.residentId || !residents[saisie.residentId]) erreurs.push('erreur.resident_requis');
+    if (!saisie.activiteId || !activites[saisie.activiteId]) erreurs.push('erreur.activite_requise');
+    if (!moisValide(saisie.mois)) erreurs.push('erreur.mois_invalide');
+    if (saisie.montant === null || saisie.montant === undefined || isNaN(saisie.montant)) erreurs.push('erreur.montant_format');
+    else if (saisie.montant <= 0) erreurs.push('erreur.montant_positif');
+    controleDate(saisie.datePaiement, jour, erreurs);
+    var doublon = etat.avances.some(function (a) {
+      return a.id !== saisie.id && a.residentId === saisie.residentId && a.activiteId === saisie.activiteId && a.mois === saisie.mois;
+    });
+    if (doublon) avertissements.push('avert.doublon');
+    return { erreurs: erreurs, avertissements: avertissements };
+  }
+
+  // saisie : { residentId, montant, date, avanceId|null }
+  function validerRemboursement(etat, saisie, jour) {
+    var erreurs = [];
+    var residents = index(etat.residents);
+    if (!saisie.residentId || !residents[saisie.residentId]) erreurs.push('erreur.resident_requis');
+    if (saisie.montant === null || saisie.montant === undefined || isNaN(saisie.montant)) erreurs.push('erreur.montant_format');
+    else if (saisie.montant <= 0) erreurs.push('erreur.montant_positif');
+    controleDate(saisie.date, jour, erreurs);
+    if (erreurs.length) return { erreurs: erreurs, avertissements: [] };
+
+    var c = calculer(etat, { annee: annee(jour), aujourdhui: jour });
+    var resteDu = c.parResident[saisie.residentId] ? c.parResident[saisie.residentId].resteDu : 0;
+    if (saisie.avanceId) {
+      var a = index(etat.avances)[saisie.avanceId];
+      if (!a || a.residentId !== saisie.residentId) erreurs.push('erreur.avance_autre_resident');
+      else if (saisie.montant > c.avances[a.id].reste) erreurs.push('erreur.rembourse_depasse_avance');
+    }
+    if (!erreurs.length && saisie.montant > resteDu) erreurs.push('erreur.rembourse_depasse_reste');  // règle 6
+    return { erreurs: erreurs, avertissements: [], resteDu: resteDu };
+  }
+
+  // Une avance qui porte des remboursements rattachés ne se supprime pas avant eux.
+  function peutSupprimerAvance(etat, avanceId) {
+    return !etat.remboursements.some(function (b) { return b.avanceId === avanceId; });
+  }
+
+  function aHistoriqueResident(etat, id) {
+    return etat.avances.some(function (a) { return a.residentId === id; }) || etat.remboursements.some(function (b) { return b.residentId === id; });
+  }
+  function aHistoriqueActivite(etat, id) {
+    return etat.avances.some(function (a) { return a.activiteId === id; });
+  }
+
+  function validerResident(etat, saisie) {
+    var erreurs = [];
+    if (!saisie.nom || !saisie.nom.trim()) erreurs.push('erreur.nom_requis');
+    var nom = (saisie.nom || '').trim().toLowerCase(), ch = (saisie.chambre || '').trim().toLowerCase();
+    var doublon = etat.residents.some(function (r) {
+      return r.id !== saisie.id && r.nom.trim().toLowerCase() === nom && (r.chambre || '').trim().toLowerCase() === ch;
+    });
+    if (doublon) erreurs.push('erreur.resident_doublon');
+    if ((saisie.chambre || '').trim() && !/^\d+$/.test((saisie.chambre || '').trim())) erreurs.push('erreur.chambre_numero');
+    return { erreurs: erreurs, avertissements: [] };
+  }
+
+  function validerActivite(etat, saisie) {
+    var erreurs = [];
+    if (!saisie.nom || !saisie.nom.trim()) erreurs.push('erreur.nom_requis');
+    var nom = (saisie.nom || '').trim().toLowerCase();
+    if (etat.activites.some(function (a) { return a.id !== saisie.id && a.nom.trim().toLowerCase() === nom; })) erreurs.push('erreur.activite_doublon');
+    return { erreurs: erreurs, avertissements: [] };
+  }
+
+  /* ---------- Aides de saisie ---------- */
+
+  // Montant proposé : la dernière avance du même résident pour la même activité.
+  function montantPropose(etat, residentId, activiteId) {
+    var derniere = null;
+    etat.avances.forEach(function (a) {
+      if (a.residentId === residentId && a.activiteId === activiteId && (!derniere || a.datePaiement > derniere.datePaiement)) derniere = a;
+    });
+    return derniere ? derniere.montant : null;
+  }
+
+  // Résidents actifs, les plus récemment utilisés d'abord, puis par nom.
+  function residentsPourSaisie(etat) {
+    var dernier = Object.create(null);
+    etat.avances.forEach(function (a) { if (!dernier[a.residentId] || a.datePaiement > dernier[a.residentId]) dernier[a.residentId] = a.datePaiement; });
+    return etat.residents.filter(function (r) { return r.actif; }).sort(function (a, b) {
+      var da = dernier[a.id] || '', db = dernier[b.id] || '';
+      if (da !== db) return da > db ? -1 : 1;
+      return comparerNoms(a, b);
+    });
+  }
+
+  function activitesPourSaisie(etat, residentId) {
+    var dernier = Object.create(null);
+    etat.avances.forEach(function (a) { if (a.residentId === residentId && (!dernier[a.activiteId] || a.datePaiement > dernier[a.activiteId])) dernier[a.activiteId] = a.datePaiement; });
+    return etat.activites.filter(function (a) { return a.actif; }).sort(function (a, b) {
+      var da = dernier[a.id] || '', db = dernier[b.id] || '';
+      if (da !== db) return da > db ? -1 : 1;
+      return comparerNoms(a, b);
+    });
+  }
+
+  function comparerNoms(a, b) {
+    return a.nom.localeCompare(b.nom, 'fr', { sensitivity: 'base', numeric: true });
+  }
+
+  // Tri des résidents : 'nom' (alphabétique), 'chambre' (numérique, sans chambre à la fin)
+  // ou 'avance' (montant avancé décroissant, montants = { id: centimes }).
+  function trierResidents(liste, mode, montants) {
+    return liste.slice().sort(function (a, b) {
+      if (mode === 'avance') {
+        var ma = (montants && montants[a.id]) || 0, mb = (montants && montants[b.id]) || 0;
+        if (ma !== mb) return mb - ma;
+      }
+      if (mode === 'chambre') {
+        var ca = parseInt(a.chambre, 10), cb = parseInt(b.chambre, 10);
+        var va = isNaN(ca) ? Infinity : ca, vb = isNaN(cb) ? Infinity : cb;
+        if (va !== vb) return va < vb ? -1 : 1;
+      }
+      return comparerNoms(a, b);
+    });
+  }
+
+  function normaliser(t) {
+    return (t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function chercherResidents(liste, q) {
+    var n = normaliser(q);
+    if (!n) return liste;
+    return liste.filter(function (r) { return normaliser(r.nom).indexOf(n) >= 0 || normaliser(r.chambre).indexOf(n) >= 0; });
+  }
+
+  /* ---------- Sauvegarde et restauration ----------
+   * Fichier JSON : { format, version, appli, creeLe, collections: { residents, activites, avances, remboursements } }.
+   * Les documents gardent leur id et tous leurs champs simples (un champ ajouté par une version plus récente
+   * n'est pas perdu). Les préférences des personnes (data/users) n'en font pas partie.
+   */
+  var FORMAT_SAUVEGARDE = 'resident-activites/sauvegarde';
+  var VERSION_SAUVEGARDE = 1;
+  var COLLECTIONS = ['residents', 'activites', 'avances', 'remboursements'];
+  var ID_VALIDE = /^(?!\.\.?$)[A-Za-z0-9_\-.~:@+]{1,200}$/;
+
+  function simple(v) { return v === null || typeof v === 'string' || typeof v === 'boolean' || (typeof v === 'number' && Number.isFinite(v)); }
+  function propre(o) {
+    var r = {};
+    Object.keys(o).sort().forEach(function (k) { if (k !== 'modifieLe' && simple(o[k])) r[k] = o[k]; });
+    return r;
+  }
+  function parId(a, b) { return a.id < b.id ? -1 : a.id > b.id ? 1 : 0; }
+
+  // Objet prêt à écrire en JSON ; ordre stable (même données → même fichier, hors date).
+  function exporterSauvegarde(etat, meta) {
+    var col = {};
+    COLLECTIONS.forEach(function (c) { col[c] = (etat[c] || []).map(propre).sort(parId); });
+    return { format: FORMAT_SAUVEGARDE, version: VERSION_SAUVEGARDE, appli: (meta && meta.appli) || '', creeLe: (meta && meta.creeLe) || '', collections: col };
+  }
+
+  function texte(v) { return typeof v === 'string' && v.trim() !== ''; }
+  function centimes(v) { return typeof v === 'number' && Number.isInteger(v) && v > 0; }
+
+  // texte : contenu du fichier. Renvoie { ok: true, etat, creeLe, appli, compte } ou { ok: false, erreur: clé }.
+  // Tout ou rien : un seul document invalide et rien n'est retenu.
+  function lireSauvegarde(texteFichier) {
+    var o;
+    try { o = typeof texteFichier === 'string' ? JSON.parse(texteFichier) : texteFichier; } catch (x) { return { ok: false, erreur: 'sauvegarde.erreur_lecture' }; }
+    if (!o || typeof o !== 'object' || o.format !== FORMAT_SAUVEGARDE || !o.collections || typeof o.collections !== 'object') return { ok: false, erreur: 'sauvegarde.erreur_lecture' };
+    if (typeof o.version !== 'number' || o.version < 1) return { ok: false, erreur: 'sauvegarde.erreur_lecture' };
+    if (o.version > VERSION_SAUVEGARDE) return { ok: false, erreur: 'sauvegarde.erreur_version' };
+    var etat = {}, compte = {};
+    for (var i = 0; i < COLLECTIONS.length; i++) {
+      var c = COLLECTIONS[i], liste = o.collections[c];
+      if (liste === undefined) liste = [];
+      if (!Array.isArray(liste)) return { ok: false, erreur: 'sauvegarde.erreur_contenu' };
+      var vus = Object.create(null);
+      etat[c] = [];
+      for (var j = 0; j < liste.length; j++) {
+        var x = liste[j];
+        if (!x || typeof x !== 'object' || Array.isArray(x) || typeof x.id !== 'string' || !ID_VALIDE.test(x.id) || vus[x.id]) return { ok: false, erreur: 'sauvegarde.erreur_contenu' };
+        vus[x.id] = true;
+        etat[c].push(propre(x));
+      }
+      compte[c] = etat[c].length;
+    }
+    var res = index(etat.residents), act = index(etat.activites), av = index(etat.avances);
+    var bon = etat.residents.every(function (r) { return texte(r.nom) && typeof r.actif === 'boolean' && (r.chambre === undefined || typeof r.chambre === 'string') && (r.note === undefined || typeof r.note === 'string'); }) &&
+      etat.activites.every(function (a) { return texte(a.nom) && typeof a.actif === 'boolean'; }) &&
+      etat.avances.every(function (a) { return res[a.residentId] && act[a.activiteId] && moisValide(a.mois) && centimes(a.montant) && dateValide(a.datePaiement); }) &&
+      etat.remboursements.every(function (b) { return res[b.residentId] && centimes(b.montant) && dateValide(b.date) && (b.avanceId === undefined || b.avanceId === null || !!av[b.avanceId]); });
+    if (!bon) return { ok: false, erreur: 'sauvegarde.erreur_contenu' };
+    return { ok: true, etat: etat, creeLe: typeof o.creeLe === 'string' ? o.creeLe : '', appli: typeof o.appli === 'string' ? o.appli : '', compte: compte };
+  }
+
+  function egaux(a, b) {
+    var pa = propre(a), pb = propre(b), ka = Object.keys(pa), kb = Object.keys(pb);
+    if (ka.length !== kb.length) return false;
+    for (var i = 0; i < ka.length; i++) if (ka[i] !== kb[i] || pa[ka[i]] !== pb[kb[i]]) return false;
+    return true;
+  }
+
+  // Ce qu'il faut écrire et effacer pour que la base devienne exactement la sauvegarde.
+  // Écritures dans l'ordre résidents → activités → avances → remboursements ; effacements dans l'ordre inverse.
+  function planRestauration(actuel, cible) {
+    var ecrire = [], effacer = [];
+    COLLECTIONS.forEach(function (c) {
+      var avant = index(actuel[c] || []);
+      (cible[c] || []).forEach(function (x) { if (!avant[x.id] || !egaux(avant[x.id], x)) ecrire.push({ col: c, objet: x }); });
+    });
+    COLLECTIONS.slice().reverse().forEach(function (c) {
+      var garde = index(cible[c] || []);
+      (actuel[c] || []).forEach(function (x) { if (!garde[x.id]) effacer.push({ col: c, id: x.id }); });
+    });
+    return { ecrire: ecrire, effacer: effacer, total: ecrire.length + effacer.length };
+  }
+
+  // Découpe un texte en morceaux d'au plus n caractères (copie gardée dans la base : 256 Kio par document).
+  function decouper(s, n) {
+    var parts = [];
+    for (var i = 0; i < s.length; i += n) parts.push(s.slice(i, i + n));
+    return parts.length ? parts : [''];
+  }
+
+  /* ---------- Modèle « dépenses » (appli Google) ----------
+   * Une association saisit une dépense (activité, montant total, date, commentaire).
+   * Un admin la répartit entre des résidents : une part par résident, montants ajustables,
+   * somme des parts = montant de la dépense. Chaque part joue le rôle d'une avance :
+   * versCalcul() ramène ce modèle au modèle des calculs (avances, remboursements) sans le changer.
+   * etatG : { residents, activites, depenses, parts, remboursements } ; remboursement.partId|null.
+   */
+  function etatVideG() { return { residents: [], activites: [], depenses: [], parts: [], remboursements: [] }; }
+
+  // Parts égales, centimes restants un par un aux premiers de la liste (100 € / 3 = 33,34 + 33,33 + 33,33).
+  function repartirEgal(montant, residentIds) {
+    var n = residentIds.length;
+    if (!n) return [];
+    var base = Math.floor(montant / n), reste = montant - base * n;
+    return residentIds.map(function (id, i) { return { residentId: id, montant: base + (i < reste ? 1 : 0) }; });
+  }
+
+  function versCalcul(e) {
+    var deps = index(e.depenses || []);
+    var avances = [];
+    (e.parts || []).forEach(function (p) {
+      var d = deps[p.depenseId];
+      if (!d) return;
+      avances.push({ id: p.id, residentId: p.residentId, activiteId: d.activiteId, mois: d.mois || d.date.slice(0, 7), montant: p.montant, datePaiement: d.date, depenseId: d.id });
+    });
+    return {
+      residents: e.residents || [], activites: e.activites || [], avances: avances,
+      remboursements: (e.remboursements || []).map(function (b) {
+        var o = {}; Object.keys(b).forEach(function (k) { if (k !== 'partId') o[k] = b[k]; });
+        o.avanceId = b.partId || null; return o;
+      })
+    };
+  }
+
+  function partsDe(e, depenseId) { return (e.parts || []).filter(function (p) { return p.depenseId === depenseId; }); }
+  function statutDepense(e, depenseId) { return partsDe(e, depenseId).length ? 'repartie' : 'a_repartir'; }
+
+  // saisie : { activiteId, montant (centimes), date, commentaire, id? }
+  function validerDepense(e, saisie, jour) {
+    var erreurs = [];
+    var act = index(e.activites || [])[saisie.activiteId];
+    if (!act) erreurs.push('erreur.activite_requise');
+    if (saisie.montant === null || saisie.montant === undefined || typeof saisie.montant !== 'number' || isNaN(saisie.montant)) erreurs.push('erreur.montant_format');
+    else if (saisie.montant <= 0 || !Number.isInteger(saisie.montant)) erreurs.push('erreur.montant_positif');
+    controleDate(saisie.date, jour, erreurs);
+    if (typeof saisie.commentaire === 'string' && saisie.commentaire.length > 500) erreurs.push('erreur.commentaire_long');
+    if (saisie.id && !erreurs.length) {
+      var avant = index(e.depenses || [])[saisie.id];
+      if (!avant) erreurs.push('erreur.depense_introuvable');
+      else if (partsDe(e, saisie.id).length && saisie.montant !== avant.montant) erreurs.push('erreur.depense_repartie_montant');
+    }
+    return { erreurs: erreurs, avertissements: [] };
+  }
+
+  // parts : [{ residentId, montant }]. Remplace la répartition existante de la dépense.
+  function validerRepartition(e, depenseId, parts) {
+    var erreurs = [];
+    var d = index(e.depenses || [])[depenseId];
+    if (!d) return { erreurs: ['erreur.depense_introuvable'], avertissements: [] };
+    var res = index(e.residents || []), vus = {};
+    if (!parts || !parts.length) erreurs.push('erreur.repartition_vide');
+    var somme = 0;
+    (parts || []).forEach(function (p) {
+      if (!res[p.residentId]) { if (erreurs.indexOf('erreur.resident_requis') < 0) erreurs.push('erreur.resident_requis'); return; }
+      if (vus[p.residentId]) { if (erreurs.indexOf('erreur.repartition_doublon') < 0) erreurs.push('erreur.repartition_doublon'); }
+      vus[p.residentId] = true;
+      if (typeof p.montant !== 'number' || !Number.isInteger(p.montant) || p.montant <= 0) { if (erreurs.indexOf('erreur.part_positive') < 0) erreurs.push('erreur.part_positive'); return; }
+      somme += p.montant;
+    });
+    if (!erreurs.length && somme !== d.montant) erreurs.push('erreur.repartition_somme');
+    if (erreurs.length) return { erreurs: erreurs, avertissements: [], somme: somme };
+    // Les remboursements déjà notés doivent rester couverts.
+    var anciennes = partsDe(e, depenseId), parId = {}, apres = {};
+    anciennes.forEach(function (p) { parId[p.id] = p; });
+    parts.forEach(function (p) { apres[p.residentId] = p.montant; });
+    var rattache = {};
+    (e.remboursements || []).forEach(function (b) { if (b.partId && parId[b.partId]) { var r = parId[b.partId].residentId; rattache[r] = (rattache[r] || 0) + b.montant; } });
+    Object.keys(rattache).forEach(function (r) { if ((apres[r] || 0) < rattache[r] && erreurs.indexOf('erreur.part_remboursee') < 0) erreurs.push('erreur.part_remboursee'); });
+    if (!erreurs.length) {
+      var simule = { residents: e.residents, activites: e.activites, depenses: e.depenses, remboursements: e.remboursements,
+        parts: (e.parts || []).filter(function (p) { return p.depenseId !== depenseId; }).concat(parts.map(function (p, i) { return { id: 'tmp' + i, depenseId: depenseId, residentId: p.residentId, montant: p.montant }; })) };
+      var tot = {};
+      simule.parts.forEach(function (p) { tot[p.residentId] = (tot[p.residentId] || 0) + p.montant; });
+      (e.remboursements || []).forEach(function (b) { tot[b.residentId] = (tot[b.residentId] || 0) - b.montant; });
+      if (Object.keys(tot).some(function (r) { return tot[r] < 0; })) erreurs.push('erreur.part_remboursee');
+    }
+    return { erreurs: erreurs, avertissements: [], somme: somme };
+  }
+
+  // saisie : { residentId, montant, date, partId|null } — mêmes règles que pour une avance (règle 6).
+  function validerRemboursementG(e, saisie, jour) {
+    return validerRemboursement(versCalcul(e), { residentId: saisie.residentId, montant: saisie.montant, date: saisie.date, avanceId: saisie.partId || null }, jour);
+  }
+
+  // Passage depuis l'appli claude.ai (fichier de sauvegarde lu par lireSauvegarde) : une avance = une dépense
+  // à un seul participant ; la part garde l'id de l'avance, donc les remboursements rattachés suivent.
+  function depuisAncien(etat, auteur) {
+    var e = etatVideG();
+    e.residents = etat.residents.map(function (r) { return Object.assign({}, r); });
+    e.activites = etat.activites.map(function (a) { return Object.assign({}, a); });
+    etat.avances.forEach(function (a) {
+      var d = { id: 'dep-' + a.id, activiteId: a.activiteId, montant: a.montant, date: a.datePaiement, mois: a.mois, commentaire: '', creePar: auteur || '', creeLe: a.creeLe || '' };
+      e.depenses.push(d);
+      e.parts.push({ id: a.id, depenseId: d.id, residentId: a.residentId, montant: a.montant, creePar: auteur || '', creeLe: a.creeLe || '' });
+    });
+    e.remboursements = etat.remboursements.map(function (b) {
+      var o = {}; Object.keys(b).forEach(function (k) { if (k !== 'avanceId') o[k] = b[k]; });
+      o.partId = b.avanceId || null; return o;
+    });
+    return e;
+  }
+
+  // Retour vers l'appli claude.ai : seules les dépenses réparties deviennent des avances.
+  function versAncien(e) {
+    var c = versCalcul(e);
+    return { residents: c.residents, activites: c.activites, avances: c.avances.map(function (a) { var o = Object.assign({}, a); delete o.depenseId; return o; }), remboursements: c.remboursements };
+  }
+
+  var compteur = 0;
+  function nouvelId(prefixe) {
+    compteur = (compteur + 1) % 1296;
+    return prefixe + Date.now().toString(36) + Math.random().toString(36).slice(2, 7) + compteur.toString(36);
+  }
+
+  var api = {
+    FUSEAU: FUSEAU, JOURS_RETARD: JOURS_RETARD,
+    lireMontant: lireMontant, formaterMontant: formaterMontant, montantPourChamp: montantPourChamp,
+    dateValide: dateValide, moisValide: moisValide, joursEntre: joursEntre,
+    aujourdhuiParis: aujourdhuiParis, horodatageParis: horodatageParis,
+    etatVide: etatVide, index: index, imputer: imputer, calculer: calculer, annees: annees,
+    totaux: totaux, trimestreDe: trimestreDe,
+    validerAvance: validerAvance, validerRemboursement: validerRemboursement,
+    validerResident: validerResident, validerActivite: validerActivite,
+    peutSupprimerAvance: peutSupprimerAvance, aHistoriqueResident: aHistoriqueResident, aHistoriqueActivite: aHistoriqueActivite,
+    montantPropose: montantPropose, residentsPourSaisie: residentsPourSaisie, activitesPourSaisie: activitesPourSaisie,
+    comparerNoms: comparerNoms, trierResidents: trierResidents, normaliser: normaliser, chercherResidents: chercherResidents, nouvelId: nouvelId,
+    FORMAT_SAUVEGARDE: FORMAT_SAUVEGARDE, VERSION_SAUVEGARDE: VERSION_SAUVEGARDE,
+    exporterSauvegarde: exporterSauvegarde, lireSauvegarde: lireSauvegarde, planRestauration: planRestauration, decouper: decouper,
+    etatVideG: etatVideG, repartirEgal: repartirEgal, versCalcul: versCalcul, partsDe: partsDe, statutDepense: statutDepense,
+    validerDepense: validerDepense, validerRepartition: validerRepartition, validerRemboursementG: validerRemboursementG,
+    depuisAncien: depuisAncien, versAncien: versAncien
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else racine.RA_Logique = api;
+})(typeof window !== 'undefined' ? window : this);
+
+</script>
+<script>
+/* Resident Activités — appli Google (lot G0 : connexion, saisie Association, dépenses à répartir).
+ * Tout texte affiché vient du fichier de contenus (fonction t). Aucune donnée réelle dans ce fichier.
+ * Le service (Apps Script) vérifie la connexion et le rôle à chaque appel : l'écran ne fait que suivre.
+ */
+(function () {
+  'use strict';
+  var L = window.RA_Logique;
+  var C = JSON.parse(document.getElementById('contenus').textContent);
+  var META = JSON.parse(document.getElementById('meta').textContent);
+  var app = document.getElementById('app');
+
+  function t(cle, vars) {
+    var s = C[cle];
+    if (s === undefined) { if (window.console) console.warn('Clé de contenu manquante : ' + cle); s = '[' + cle + ']'; }
+    if (vars) s = s.replace(/\{(\w+)\}/g, function (m, n) { return vars[n] !== undefined ? vars[n] : m; });
+    return s;
+  }
+  function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var fmt = L.formaterMontant;
+  var fDate = new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' });
+  function date(d) { return d ? fDate.format(new Date(Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10)))) : ''; }
+
+  var S = {
+    etape: 'demarrage',   // demarrage | connexion | chargement | appli | non_membre | indispo
+    jeton: null, moi: null, donnees: null, jour: L.aujourdhuiParis(),
+    form: {}, erreurs: [], notif: null, envoi: false, page: 0
+  };
+
+  /* ---------- Service ---------- */
+  function api(action, donnees) {
+    return fetch(META.service, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ jeton: S.jeton, action: action, donnees: donnees || {} }) })
+      .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); });
+  }
+  function echecReseau() { S.envoi = false; notifier('g.erreur.reseau', 'erreur'); render(); }
+
+  function charger() {
+    S.etape = S.donnees ? S.etape : 'chargement'; render();
+    return api('donnees').then(function (r) {
+      if (!r.ok) return refus(r);
+      S.moi = S.moi || {}; S.moi.role = r.role; S.jour = r.jour || S.jour;
+      S.donnees = r.etat; S.etape = 'appli'; render();
+    }, function () { S.etape = S.donnees ? 'appli' : 'indispo'; render(); });
+  }
+  function refus(r) {
+    if (r.erreur === 'erreur.non_membre') { S.etape = 'non_membre'; S.emailRefuse = r.email || ''; render(); return; }
+    if (r.erreur === 'erreur.connexion') { S.jeton = null; S.etape = 'connexion'; S.envoi = false; render(); demanderConnexion(); return; }
+    S.erreurs = r.erreurs || [r.erreur || 'erreur.serveur']; S.envoi = false; render();
+  }
+
+  /* ---------- Connexion Google ---------- */
+  var gisPret = false;
+  function initGis() {
+    if (gisPret) return true;
+    if (!(window.google && google.accounts && google.accounts.id)) return false;
+    google.accounts.id.initialize({ client_id: META.clientId, callback: surConnexion, auto_select: true, cancel_on_tap_outside: false, use_fedcm_for_prompt: true });
+    gisPret = true;
+    return true;
+  }
+  // Bouton redessiné à chaque rendu de l'écran Connexion ; la proposition automatique (compte déjà choisi) une fois.
+  function afficherBouton() {
+    if (!initGis()) return;
+    var zone = document.getElementById('bouton-google');
+    if (zone) google.accounts.id.renderButton(zone, { type: 'standard', theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', locale: 'fr', width: Math.min(360, zone.clientWidth || 320) });
+  }
+  function demanderConnexion() {
+    if (!initGis()) return;
+    afficherBouton();
+    google.accounts.id.prompt();
+  }
+  function surConnexion(rep) {
+    S.jeton = rep && rep.credential;
+    if (!S.jeton) return;
+    S.etape = 'chargement'; S.erreurs = []; render();
+    api('moi').then(function (r) {
+      if (!r.ok) return refus(r);
+      S.moi = { email: r.email, role: r.role, nom: r.nom };
+      return charger();
+    }, function () { S.etape = 'indispo'; render(); });
+  }
+  function seDeconnecter() {
+    if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
+    S.jeton = null; S.moi = null; S.donnees = null; S.form = {}; S.erreurs = []; S.etape = 'connexion';
+    render(); demanderConnexion();
+  }
+
+  /* ---------- Rendu ---------- */
+  function notifier(cle, genre, vars) {
+    S.notif = { texte: t(cle, vars), genre: genre || 'ok' };
+    clearTimeout(S.notifTimer);
+    S.notifTimer = setTimeout(function () { S.notif = null; render(); }, 3000);
+  }
+  function messages() { return S.erreurs.map(function (k) { return '<div class="message erreur" role="alert"><span>' + esc(t(k)) + '</span></div>'; }).join(''); }
+  function entete() {
+    var puce = S.moi && S.moi.role ? '<span class="puce role">' + esc(t('g.role.' + S.moi.role)) + '</span>' : '';
+    return '<header class="entete"><h1>' + esc(t('appli.nom')) + '</h1>' + puce + '<span class="version num">' + esc(t('g.version', { v: META.version })) + '</span></header>';
+  }
+  function bas(boutons) { return '<div class="actions">' + boutons.join('') + '</div>'; }
+  function btn(cle, action, genre, extra) { return '<button type="button" class="btn ' + (genre || '') + '" data-a="' + action + '"' + (extra || '') + '>' + esc(t(cle)) + '</button>'; }
+
+  var ECRANS = {
+    demarrage: function () { return { corps: '<div class="box"><div class="etat-vide">' + esc(t('chargement.titre')) + '</div></div>' }; },
+    chargement: function () { return { corps: '<div class="box"><div class="etat-vide" role="status"><strong>' + esc(t('chargement.titre')) + '</strong>' + esc(t('chargement.texte')) + '</div></div>' }; },
+    indispo: function () { return { corps: '<div class="box"><div class="etat-vide" role="status"><strong>' + esc(t('g.indispo.titre')) + '</strong>' + esc(t('g.indispo.texte')) + '</div></div>', bas: bas([btn('g.reessayer', 'reessayer', 'principal')]) }; },
+    connexion: function () {
+      return { corps: '<section class="box connexion" style="padding:16px 12px"><strong style="font-size:var(--t-titre)">' + esc(t('g.connexion.titre')) + '</strong><span>' + esc(t('g.connexion.texte')) + '</span>' +
+        '<div id="bouton-google" class="bouton-google"></div></section>' + messages() };
+    },
+    non_membre: function () {
+      return { corps: '<div class="box"><div class="etat-vide"><strong>' + esc(t('g.non_membre.titre')) + '</strong>' + esc(t('g.non_membre.texte', { email: S.emailRefuse })) + '</div></div>',
+        bas: bas([btn('g.changer_compte', 'deconnexion', 'principal')]) };
+    },
+    appli: function () { return S.moi && S.moi.role === 'admin' ? ecranAdmin() : ecranAssociation(); }
+  };
+
+  function nomActivite(id) { var a = (S.donnees.activites || []).filter(function (x) { return x.id === id; })[0]; return a ? a.nom : t('commun.inconnu'); }
+
+  function formulaireDepense() {
+    var f = S.form, acts = (S.donnees.activites || []).filter(function (a) { return a.actif; }).slice().sort(L.comparerNoms);
+    if (f.init !== true) { f.activiteId = acts.length ? '' : '__nouvelle'; f.montant = ''; f.date = S.jour; f.commentaire = ''; f.nomActivite = ''; f.init = true; }
+    var opts = '<option value="">' + esc(t('g.depense.choisir')) + '</option>' + acts.map(function (a) { return '<option value="' + esc(a.id) + '"' + (f.activiteId === a.id ? ' selected' : '') + '>' + esc(a.nom) + '</option>'; }).join('') +
+      '<option value="__nouvelle"' + (f.activiteId === '__nouvelle' ? ' selected' : '') + '>' + esc(t('g.depense.nouvelle_activite')) + '</option>';
+    return '<form class="box" data-form="depense" novalidate>' +
+      '<div class="champ"><label for="f-activite">' + esc(t('g.depense.activite')) + '</label><select id="f-activite" data-champ="activiteId">' + opts + '</select></div>' +
+      (f.activiteId === '__nouvelle' ? '<div class="champ"><label for="f-nom-activite">' + esc(t('g.depense.nom_activite')) + '</label><input id="f-nom-activite" type="text" maxlength="60" autocomplete="off" data-champ="nomActivite" value="' + esc(f.nomActivite) + '"></div>' : '') +
+      '<div class="champ"><label for="f-montant">' + esc(t('g.depense.montant')) + '</label><input id="f-montant" class="montant num" type="text" inputmode="decimal" autocomplete="off" data-champ="montant" value="' + esc(f.montant) + '" placeholder="' + esc(t('g.depense.montant_exemple')) + '"></div>' +
+      '<div class="champ"><label for="f-date">' + esc(t('g.depense.date')) + '</label><input id="f-date" type="date" data-champ="date" max="' + S.jour + '" value="' + esc(f.date) + '"></div>' +
+      '<div class="champ haut"><label for="f-commentaire">' + esc(t('g.depense.commentaire')) + '</label><textarea id="f-commentaire" maxlength="500" rows="2" data-champ="commentaire" placeholder="' + esc(t('g.depense.commentaire_exemple')) + '">' + esc(f.commentaire) + '</textarea></div>' +
+      '</form>';
+  }
+
+  function ligneDepense(d, avecAuteur) {
+    var statut = d.statut || L.statutDepense(S.donnees, d.id);
+    var sous = date(d.date) + (avecAuteur && d.creePar ? ' · ' + d.creePar : '') + (d.commentaire ? ' · ' + d.commentaire : '');
+    return '<div class="ligne-depense" data-depense="' + esc(d.id) + '"><span class="lib">' + esc(nomActivite(d.activiteId)) + '</span><span class="num avance">' + fmt(d.montant) + '</span>' +
+      '<span class="sous">' + esc(sous) + ' <span class="statut ' + statut + '">' + esc(t('g.statut.' + statut)) + '</span></span></div>';
+  }
+  function liste(titre, deps, vide, avecAuteur, parPage) {
+    var total = Math.max(1, Math.ceil(deps.length / parPage)), page = Math.min(S.page, total - 1);
+    var pager = total > 1 ? '<span class="pager"><button type="button" data-a="page" data-d="-1" aria-label="' + esc(t('commun.page_prec')) + '"' + (page <= 0 ? ' disabled' : '') + '>‹</button><span class="num">' + esc(t('commun.page', { n: page + 1, total: total })) + '</span><button type="button" data-a="page" data-d="1" aria-label="' + esc(t('commun.page_suiv')) + '"' + (page >= total - 1 ? ' disabled' : '') + '>›</button></span>' : '';
+    return '<section class="box"><div class="box-titre">' + esc(titre) + '<span class="fin">' + pager + '</span></div>' +
+      (deps.length ? deps.slice(page * parPage, page * parPage + parPage).map(function (d) { return ligneDepense(d, avecAuteur); }).join('') : '<div class="etat-vide">' + esc(t(vide)) + '</div>') + '</section>';
+  }
+  function triees(deps) { return deps.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.creeLe < b.creeLe ? 1 : -1); }); }
+
+  function ecranAssociation() {
+    if (S.vue === 'saisie') return { corps: '<div class="box-titre" style="padding:0">' + esc(t('g.depense.titre')) + '</div>' + formulaireDepense() + messages(),
+      bas: bas([btn('commun.retour', 'retour', ''), btn('g.depense.envoyer', 'envoyer', 'principal', S.envoi ? ' disabled' : '')]) };
+    return { corps: liste(t('g.association.mes_saisies'), triees(S.donnees.depenses || []), 'g.association.vide', false, 5),
+      bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]) };
+  }
+
+  function ecranAdmin() {
+    if (S.vue === 'saisie') return ecranAssociation();
+    var deps = S.donnees.depenses || [];
+    var aRepartir = triees(deps.filter(function (d) { return L.statutDepense(S.donnees, d.id) === 'a_repartir'; }));
+    var h = '<section class="box"><div class="ligne" style="min-height:52px"><span class="lib">' + esc(t('g.admin.a_repartir')) + '</span><span class="compteur num ' + (aRepartir.length ? 'du' : 'rembourse') + '" data-compteur>' + aRepartir.length + '</span></div></section>';
+    h += liste(t('g.admin.liste'), aRepartir, 'g.admin.rien_a_repartir', true, 4);
+    h += '<p class="aide" style="margin:0">' + esc(t('g.admin.bientot')) + '</p>';
+    return { corps: h, bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]) };
+  }
+
+  function render() {
+    var actif = document.activeElement, idActif = actif && actif.id;
+    var v = (ECRANS[S.etape] || ECRANS.demarrage)();
+    var h = entete() + '<main class="contenu" id="contenu" data-ecran="' + S.etape + (S.vue && S.etape === 'appli' ? '-' + S.vue : '') + '">' + v.corps + '</main>' + (v.bas || '');
+    if (S.notif) h += '<button type="button" class="notif ' + S.notif.genre + '" data-a="fermer-notif" role="status"><span>' + esc(S.notif.texte) + '</span></button>';
+    app.innerHTML = h;
+    if (S.etape === 'connexion') afficherBouton();
+    if (idActif) { var el = document.getElementById(idActif); if (el) el.focus({ preventScroll: true }); }
+  }
+
+  /* ---------- Actions ---------- */
+  function envoyer() {
+    if (S.envoi) return;
+    var f = S.form, montant = L.lireMontant(f.montant), erreurs = [];
+    if (!f.activiteId) erreurs.push('erreur.activite_requise');
+    if (f.activiteId === '__nouvelle' && !(f.nomActivite || '').trim()) erreurs.push('erreur.nom_requis');
+    if (erreurs.length) { S.erreurs = erreurs; render(); return; }
+    var v = L.validerDepense({ activites: f.activiteId === '__nouvelle' ? [{ id: '__nouvelle', nom: 'x', actif: true }] : S.donnees.activites, depenses: [], parts: [] },
+      { activiteId: f.activiteId, montant: montant, date: f.date, commentaire: f.commentaire }, S.jour);
+    if (v.erreurs.length) { S.erreurs = v.erreurs; render(); return; }
+    S.envoi = true; S.erreurs = []; render();
+    var avantActivite = f.activiteId === '__nouvelle'
+      ? api('ajouterActivite', { nom: f.nomActivite.trim() }).then(function (r) { if (!r.ok) { refus(r); return null; } return r.activite.id; })
+      : Promise.resolve(f.activiteId);
+    avantActivite.then(function (activiteId) {
+      if (!activiteId) return;
+      return api('ajouterDepense', { activiteId: activiteId, montant: montant, date: f.date, commentaire: f.commentaire }).then(function (r) {
+        if (!r.ok) return refus(r);
+        S.envoi = false; S.form = {}; S.vue = null; S.page = 0;
+        notifier('g.depense.ok', 'ok', { montant: fmt(montant) });
+        return charger();
+      });
+    }).catch(echecReseau);
+  }
+
+  var ACTIONS = {
+    saisir: function () { S.vue = 'saisie'; S.form = {}; S.erreurs = []; render(); },
+    retour: function () { S.vue = null; S.erreurs = []; render(); },
+    envoyer: envoyer,
+    page: function (d) { S.page = Math.max(0, S.page + (+d.d)); render(); },
+    deconnexion: seDeconnecter,
+    reessayer: function () { if (S.jeton) charger(); else { S.etape = 'connexion'; render(); } },
+    'fermer-notif': function () { S.notif = null; render(); }
+  };
+  app.addEventListener('click', function (ev) {
+    var el = ev.target.closest('[data-a]');
+    if (!el || el.disabled) return;
+    var f = ACTIONS[el.getAttribute('data-a')];
+    if (f) { ev.preventDefault(); f(el.dataset); }
+  });
+  app.addEventListener('input', function (ev) {
+    var k = ev.target.getAttribute && ev.target.getAttribute('data-champ');
+    if (!k) return;
+    S.form[k] = ev.target.value;
+    if (S.erreurs.length) { S.erreurs = []; render(); }
+  });
+  app.addEventListener('change', function (ev) {
+    var k = ev.target.getAttribute && ev.target.getAttribute('data-champ');
+    if (k) { S.form[k] = ev.target.value; if (k === 'activiteId') render(); }
+  });
+  app.addEventListener('submit', function (ev) { ev.preventDefault(); envoyer(); });
+
+  // Démarrage : attendre la bibliothèque de connexion Google (chargée en async), 10 s au plus.
+  render();
+  var essais = 0;
+  (function attendre() {
+    if (window.google && google.accounts && google.accounts.id) { S.etape = 'connexion'; render(); demanderConnexion(); return; }
+    if (++essais > 100) { S.etape = 'indispo'; render(); return; }
+    setTimeout(attendre, 100);
+  })();
+})();
+
+</script>
+</body>
+</html>
