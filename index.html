@@ -1061,16 +1061,40 @@ button.ligne-depense { width: 100%; background: transparent; border: 0; border-t
   function onglet(e) { S.pile = []; S.ecran = e; S.p = {}; S.form = {}; S.erreurs = []; render(); }
 
   /* ---------- Service ---------- */
-  function api(action, donnees) {
-    return fetch(META.service, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ jeton: S.jeton, action: action, donnees: donnees || {} }) })
+  // Session de 30 jours gardée sur ce téléphone (navigateur) ; sinon la connexion Google (valable 1 h).
+  var CLE_SESSION = 'resident-activites.session';
+  function lireSession() { try { var o = JSON.parse(localStorage.getItem(CLE_SESSION) || 'null'); return o && o.cle && o.exp > Date.now() ? o.cle : null; } catch (x) { return null; } }
+  function garderSession(o) { S.session = o.cle; try { localStorage.setItem(CLE_SESSION, JSON.stringify(o)); } catch (x) { /* stockage indisponible : session pour cette visite */ } }
+  function oublierSession() { S.session = null; try { localStorage.removeItem(CLE_SESSION); } catch (x) { /* rien à effacer */ } }
+
+  function appel(action, donnees) {
+    var corps = S.session ? { session: S.session, action: action, donnees: donnees || {} } : { jeton: S.jeton, action: action, donnees: donnees || {} };
+    return fetch(META.service, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(corps) })
       .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); });
+  }
+  // Connexion échue : reconnexion Google discrète, puis la même demande est refaite une fois.
+  function api(action, donnees) {
+    return appel(action, donnees).then(function (r) {
+      if (r.session) garderSession(r.session);
+      if (r.erreur !== 'erreur.connexion') return r;
+      return reconnecter().then(function () { return appel(action, donnees); }).then(function (r2) { if (r2.session) garderSession(r2.session); return r2; });
+    });
+  }
+  function reconnecter() {
+    oublierSession(); S.jeton = null;
+    return new Promise(function (ok) {
+      S.attente = ok;
+      if (initGis()) google.accounts.id.prompt();
+      // Si Google ne reconnecte pas tout seul : écran de connexion ; le travail en cours reste en mémoire.
+      setTimeout(function () { if (S.attente === ok) { S.etape = 'connexion'; render(); } }, 4000);
+    });
   }
   function echecReseau() { S.envoi = false; notifier('g.erreur.reseau', 'erreur'); render(); }
 
   // Identité et données arrivent ensemble (ouverture, ou réponse d'une écriture).
   function appliquerVue(r) {
     S.moi = { email: r.email, role: r.role, nom: r.nom }; S.jour = r.jour || S.jour;
-    S.donnees = r.etat; S.etape = 'appli';
+    S.donnees = r.etat; S.donnees.membres = r.membres || []; S.etape = 'appli';
   }
   function charger() {
     S.etape = S.donnees ? S.etape : 'chargement'; render();
@@ -1120,9 +1144,12 @@ button.ligne-depense { width: 100%; background: transparent; border: 0; border-t
     S.jeton = rep && rep.credential;
     if (!S.jeton) return;
     S.erreurs = [];
+    if (S.attente) { var ok = S.attente; S.attente = null; S.etape = S.donnees ? 'appli' : 'chargement'; render(); ok(); return; }
     charger();
   }
   function seDeconnecter() {
+    if (S.session) appel('fermerSession').catch(function () { /* la session échoira d'elle-même */ });
+    oublierSession(); S.attente = null;
     if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
     S.jeton = null; S.moi = null; S.donnees = null; S.form = {}; S.erreurs = []; S.etape = 'connexion'; S.ecran = 'accueil'; S.p = {}; S.pile = [];
     render(); demanderConnexion();
@@ -1247,8 +1274,8 @@ button.ligne-depense { width: 100%; background: transparent; border: 0; border-t
         ? '<button type="button" class="rangee" data-a="voir-retards"><span class="lib">' + esc(t('commun.reste_du')) + '</span><span class="retard">' + ic('alerte') + esc(tn('accueil.retards_court', nbRetard)) + '</span><span class="total num du" data-t="reste">' + fmt(g.resteDu) + '</span></button>'
         : '<div class="ligne" style="min-height:52px"><span class="lib">' + esc(t('commun.reste_du')) + '</span><span class="total num ' + (g.resteDu > 0 ? 'du' : 'rembourse') + '" data-t="reste">' + fmt(g.resteDu) + '</span></div>') +
       '</section>';
-    h += '<section class="box"><div class="box-titre">' + esc(t('g.admin.liste')) + '<span class="fin"><span class="compteur-petit num ' + (ar.length ? 'du' : 'rembourse') + '" data-compteur>' + ar.length + '</span>' + pager('page', pagine(ar, 'page', 3).page, pagine(ar, 'page', 3).total) + '</span></div>' +
-      (ar.length ? pagine(ar, 'page', 3).items.map(function (d) { return ligneDepense(d, true, true); }).join('') : vide('g.admin.rien_a_repartir')) + '</section>';
+    h += '<section class="box"><div class="box-titre">' + esc(t('g.admin.liste')) + '<span class="fin"><span class="compteur-petit num ' + (ar.length ? 'du' : 'rembourse') + '" data-compteur>' + ar.length + '</span>' + pager('page', pagine(ar, 'page', 2).page, pagine(ar, 'page', 2).total) + '</span></div>' +
+      (ar.length ? pagine(ar, 'page', 2).items.map(function (d) { return ligneDepense(d, true, true); }).join('') : vide('g.admin.rien_a_repartir')) + '</section>';
     return { corps: h, bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]), nav: true };
   };
 
@@ -1710,12 +1737,18 @@ button.ligne-depense { width: 100%; background: transparent; border: 0; border-t
   });
   app.addEventListener('submit', function (ev) { ev.preventDefault(); if (S.ecran === 'saisie') envoyer(); });
 
-  // Démarrage : attendre la bibliothèque de connexion Google (chargée en async), 10 s au plus.
+  // Démarrage : avec une session gardée, les données se chargent tout de suite ; sinon attendre la bibliothèque
+  // de connexion Google (chargée en async), 10 s au plus.
+  S.session = lireSession();
   render();
+  if (S.session) charger();
   var essais = 0;
   (function attendre() {
-    if (window.google && google.accounts && google.accounts.id) { S.etape = 'connexion'; render(); demanderConnexion(); return; }
-    if (++essais > 100) { S.etape = 'indispo'; render(); return; }
+    if (window.google && google.accounts && google.accounts.id) {
+      if (S.etape === 'demarrage') { S.etape = 'connexion'; render(); demanderConnexion(); } else initGis();
+      return;
+    }
+    if (++essais > 100) { if (S.etape === 'demarrage') { S.etape = 'indispo'; render(); } return; }
     setTimeout(attendre, 100);
   })();
 })();
