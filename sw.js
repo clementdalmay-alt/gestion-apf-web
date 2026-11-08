@@ -1,6 +1,6 @@
-// Resident Activités : service worker. Version 0.23.
+// Resident Activités : service worker. Version 0.24.
 // Page : réseau d'abord (revalidée à chaque ouverture), copie gardée pour l'ouverture sans réseau. Icônes : copie gardée.
-var CACHE = 'resident-activites-0.23';
+var CACHE = 'resident-activites-0.24';
 var FICHIERS = ["manifest.webmanifest","icone-192.png","icone-512.png","icone-maskable-512.png","apple-touch-icon.png","favicon-32.png"];
 function page() { return self.registration.scope; }
 self.addEventListener('install', function (e) {
