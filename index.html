@@ -322,13 +322,27 @@ i.g-rembourse { background: var(--g-rembourse); }
 .ligne-depense .sous { grid-column: 1 / -1; color: var(--texte-2); overflow-wrap: anywhere; }
 .compteur { font-size: var(--t-total); font-weight: 700; }
 .statut.envoi { color: var(--texte-2); border-style: dashed; }
+/* G2 : lignes cliquables, répartition. */
+button.ligne-depense { width: 100%; background: transparent; border: 0; border-top: 1px solid var(--bordure); text-align: left; cursor: pointer; color: inherit; font: inherit; }
+.box > button.ligne-depense:first-of-type, .box-titre + button.ligne-depense { border-top: 0; }
+.compteur-petit { font-weight: 700; font-size: var(--t-titre); }
+.ligne-part { min-height: 52px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--bordure); }
+.box > .ligne-part:first-child { border-top: 0; }
+.ligne-part .choix { flex: 1 1 auto; min-width: 0; min-height: 52px; display: flex; align-items: center; gap: 10px; background: transparent; border: 0; padding: 0; text-align: left; cursor: pointer; color: inherit; font: inherit; }
+.ligne-part .choix .lib { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ligne-part .choix .sec { color: var(--texte-2); }
+.ligne-part .choix[aria-pressed="true"] svg.ic { color: var(--sauge); }
+.ligne-part input.part { flex: 0 0 104px; width: 104px; height: 44px; border: 1px solid var(--bordure); border-radius: 8px; padding: 0 10px; background: var(--fond); text-align: right; }
+.ligne-part input.part:focus { outline: 2px solid var(--sauge); outline-offset: 1px; }
+.btn[aria-pressed="true"] { background: var(--sauge); color: var(--sur-sauge); }
+.ligne .fin { margin-left: auto; display: flex; align-items: center; }
 
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script type="application/json" id="contenus">{"appli.nom":"Resident Activités","entete.version":"v{v}","entete.version_aide":"Version {v}","entete.mode_test":"Test","entete.lecture":"Lecture","onglets.titre":"Navigation","onglets.accueil":"Accueil","onglets.residents":"Résidents","onglets.totaux":"Totaux","onglets.gestion":"Gestion","commun.retour":"Retour","commun.annuler":"Annuler","commun.inconnu":"Introuvable","commun.inactif":"inactif","commun.retard":"Retard","commun.chambre":"Chambre {n}","commun.chambre_court":"ch. {n}","commun.avance_total":"Avancé","commun.rembourse_total":"Remboursé","commun.reste_du":"Reste dû","commun.page":"{n}/{total}","commun.page_prec":"Page précédente","commun.page_suiv":"Page suivante","chargement.titre":"Chargement…","chargement.texte":"Les données arrivent.","indispo.titre":"Données indisponibles","indispo.texte":"Ouvre l'appli depuis claude.ai pour voir tes données. Les codes de test, dans Gestion, marchent quand même.","deconnecte.titre":"Connecte-toi pour voir les données","deconnecte.texte":"Touche « Connexion » en haut à droite et connecte-toi à Claude avec l'adresse e-mail qui a reçu l'invitation. Pas encore de compte ? Crée-le avec cette même adresse.","accueil.totaux_titre":"Année {annee}","accueil.annee":"Année","accueil.a_jour":"à jour à {h}","accueil.peut_etre_ancien":"peut-être pas à jour","accueil.retards.un":"1 résident en retard","accueil.retards.plusieurs":"{n} résidents en retard","accueil.retards_court.un":"1 en retard","accueil.retards_court.plusieurs":"{n} en retard","accueil.ajouter_avance":"Ajouter une avance","accueil.tous":"Tous","accueil.nouveau_resident":"Résident","accueil.nouvelle_activite":"Activité","accueil.noter_remboursement":"Noter un remboursement","accueil.plus_avance":"Avance","accueil.plus_remboursement":"Remboursement","accueil.dernieres":"Dernières saisies","accueil.aucune_operation":"Rien de saisi pour l'instant.","accueil.vide_lecture":"Rien de saisi pour l'instant.","accueil.vide_residents.titre":"Aucun résident","accueil.vide_residents.texte":"Commence par ajouter un résident.","accueil.vide_residents.action":"Ajouter un résident","accueil.vide_activites.titre":"Aucune activité","accueil.vide_activites.texte":"Ajoute une activité, par exemple Théâtre.","accueil.vide_activites.action":"Ajouter une activité","residents.chercher":"Nom ou chambre","residents.en_retard":"En retard","tri.titre":"Trier","tri.nom":"Par nom","tri.chambre":"Par chambre","tri.avance":"Par avancé","tri.ligne_chambre":"{n} · {nom}","residents.aucun_resultat":"Aucun résident trouvé.","residents.vide.titre":"Aucun résident","residents.vide.texte":"Ajoute le premier résident.","residents.vide.action":"Ajouter un résident","fiche.introuvable":"Ce résident n'existe plus.","fiche.note":"Voir la note","fiche.annee":"Avancé · remboursé en {annee}","fiche.operations":"Historique","fiche.aucune_operation":"Rien de saisi pour ce résident.","fiche.avance":"Avance","fiche.rembourser":"Rembourser","choix.titre_avance":"Pour quel résident ?","choix.titre_remb":"Qui rembourse ?","choix.titre_activite":"{nom} · quelle activité ?","choix.rien_a_rembourser":"Rien à rembourser","form.changer":"Changer","form.montant":"Montant","form.montant_exemple":"12,50","form.mois":"Mois","form.date_paiement":"Avancé le","form.date":"Remboursé le","form.imputer":"Sur quelle avance ?","form.imputer_libre":"Les plus anciennes d'abord","form.imputer_avance":"{activite} · {mois} · reste {reste}","form.imputer_aide_libre":"Le montant rembourse d'abord les avances les plus anciennes.","form.imputer_aide_avance":"Le montant va sur cette avance seulement.","form.valider":"Valider","form.valider_quand_meme":"Valider quand même","form.enregistrer":"Enregistrer","form.enregistrer_autre":"Enregistrer et ajouter un autre","form.doublon_confirmer":"Vérifie le mois, puis valide à nouveau si c'est voulu.","erreur.montant_positif":"Le montant doit être supérieur à 0.","erreur.montant_format":"Écris le montant en euros, par exemple 12,50.","erreur.date_invalide":"Choisis une date valide.","erreur.date_future":"La date ne peut pas être dans le futur.","erreur.resident_requis":"Choisis un résident.","erreur.activite_requise":"Choisis une activité.","erreur.mois_invalide":"Choisis le mois concerné.","erreur.rembourse_depasse_reste":"C'est plus que ce que ce résident doit. Baisse le montant.","erreur.rembourse_depasse_avance":"Le montant dépasse le reste de cette avance. Baisse-le ou choisis « Les plus anciennes d'abord ».","erreur.avance_autre_resident":"Cette avance n'est pas celle de ce résident. Choisis-en une autre.","erreur.nom_requis":"Écris un nom.","erreur.resident_doublon":"Ce résident existe déjà dans cette chambre.","erreur.activite_doublon":"Cette activité existe déjà.","erreur.chambre_numero":"Écris le numéro de chambre en chiffres, par exemple 101.","erreur.code_inconnu":"Code inconnu. Vérifie-le dans la liste.","erreur.ecriture_refusee":"Tu n'as pas le droit de modifier. L'appli passe en lecture seule.","erreur.base_pleine":"Plus de place pour enregistrer. Préviens Clément.","erreur.ecriture":"L'enregistrement n'est pas passé. Vérifie la connexion et réessaie.","avert.doublon":"Une avance existe déjà pour ce résident, cette activité et ce mois.","statut.soldee":"Remboursée","statut.partielle":"Remboursée en partie","statut.due":"À rembourser","statut.retard":"En retard","operation.remboursement":"Remboursement","operation.remboursement_libre":"Remboursement global","detail.avance_titre":"Avance","detail.remb_titre":"Remboursement","detail.introuvable":"Cette saisie n'existe plus.","detail.resident":"Résident","detail.activite":"Activité","detail.mois":"Mois","detail.date_paiement":"Avancé le","detail.date":"Remboursé le","detail.montant":"Montant","detail.rembourse":"Remboursé","detail.statut":"État","detail.genre":"Sur","detail.rattache":"Sur une avance précise","detail.libre":"Les plus anciennes","detail.jours.un":"1 jour","detail.jours.plusieurs":"{n} jours","detail.supprimer":"Supprimer","detail.supprimer_impossible":"Supprime d'abord les remboursements de cette avance.","annuler.avance":"Avance supprimée","annuler.remb":"Remboursement supprimé","annuler.resident":"Résident supprimé","annuler.activite":"Activité supprimée","annuler.resident_inactif":"{nom} a des avances : sa fiche devient inactive.","annuler.activite_inactive":"{nom} a des avances : l'activité devient inactive.","notif.avance_ok":"Avance de {montant} notée pour {nom}","notif.remb_ok":"Remboursement de {montant} noté pour {nom}","notif.saisie_activee":"Tu peux saisir sur cet appareil.","notif.lecture_activee":"Cet appareil repasse en lecture seule.","notif.codes_visibles":"Codes de test visibles dans Gestion","notif.codes_caches":"Codes de test cachés","notif.resident_ajoute":"Fiche de {nom} créée","notif.resident_modifie":"Fiche de {nom} modifiée","notif.activite_ajoutee":"{nom} ajoutée","notif.activite_modifiee":"{nom} modifiée","totaux.annee_prec":"Année précédente","totaux.annee_suiv":"Année suivante","totaux.vue":"Regrouper par","totaux.par_resident":"Résident","totaux.par_activite":"Activité","totaux.par_mois":"Mois","totaux.par_trimestre":"Trimestre","totaux.col_resident":"Résident","totaux.col_activite":"Activité","totaux.col_mois":"Mois","totaux.col_trimestre":"Trimestre","totaux.trimestre_ligne":"T{n} · {debut} à {fin}","totaux.col_avance":"Avancé","totaux.col_rembourse":"Remb.","totaux.col_reste":"Reste","totaux.total":"Total","totaux.aucune_donnee":"Rien de saisi cette année.","totaux.aide":"Explications","totaux.aide_resident":"En euros. « Reste » compte aussi les années passées.","totaux.aide_activite":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_mois":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_trimestre":"En euros, selon la date de chaque avance et de chaque remboursement. T1 : janvier à mars, T2 : avril à juin, etc.","graphique.titre":"Graphique des totaux","graphique.avance":"Avancé","graphique.rembourse":"Remboursé","graphique.voir_graphique":"Voir le graphique","graphique.voir_tableau":"Voir le tableau","pdf.bouton":"Télécharger","pdf.titre":"Télécharger","pdf.totaux":"Totaux affichés","pdf.totaux_aide":"Le tableau à l'écran, avec ses filtres","pdf.recap":"Récapitulatif {annee}","pdf.recap_aide":"Par résident, par activité et par mois","pdf.recu":"Reçu d'un résident","pdf.recu_aide":"Ses avances et remboursements de l'année","pdf.choix_resident":"Reçu pour quel résident ?","pdf.en_cours":"Préparation du fichier…","pdf.ok":"PDF téléchargé","pdf.patienter":"Attends quelques secondes, puis réessaie.","pdf.indispo":"Le téléchargement est bloqué ici. Ouvre l'appli directement dans claude.ai.","pdf.erreur":"Le fichier n'a pas pu être préparé. Vérifie la connexion et réessaie.","pdf.edite_le":"Édité le {date}","pdf.page":"Page {n} / {total}","pdf.doc_totaux":"Totaux {annee}","pdf.doc_recap":"Récapitulatif {annee}","pdf.doc_recu":"Reçu {annee}","pdf.col_date":"Date","pdf.col_operation":"Détail","pdf.reste_du":"Reste dû (toutes années)","pdf.fichier_totaux":"totaux-{annee}","pdf.fichier_recap":"recapitulatif-{annee}","pdf.fichier_recu":"recu-{nom}-{annee}","tele.pdf":"PDF","tele.excel":"Excel","tele.operations":"Toutes les saisies","tele.operations_aide":"Chaque avance et chaque remboursement de l'année","tele.doc_operations":"Saisies {annee}","tele.col_genre":"Type","tele.genre_avance":"Avance","tele.fichier_operations":"saisies-{annee}","tele.ok_excel":"Fichier Excel téléchargé","filtres.titre":"Filtres","filtres.annee":"Année","filtres.periode":"Période","filtres.resident":"Résident","filtres.activite":"Activité","filtres.toute_annee":"Toute l'année","filtres.tous":"Tous","filtres.toutes":"Toutes","filtres.aucun":"aucun filtre","filtres.resident_chambre":"{nom} · ch. {n}","filtres.effacer":"Retirer les filtres","filtres.voir":"Voir les totaux","filtres.aide":"Tu peux combiner les filtres. Le reste dû compte toujours toutes les années, quelle que soit la période.","gestion.titre":"Gestion","gestion.residents":"Résidents","gestion.activites":"Activités","gestion.codes":"Codes","gestion.infos":"Infos","gestion.compte_residents.aucun":"Aucun résident","gestion.compte_residents.un":"1 résident","gestion.compte_residents.plusieurs":"{n} résidents","gestion.compte_activites.aucun":"Aucune activité","gestion.compte_activites.un":"1 activité","gestion.compte_activites.plusieurs":"{n} activités","gestion.vide_residents":"Ajoute le premier résident.","gestion.vide_activites":"Ajoute la première activité.","gestion.ajouter_resident":"Ajouter un résident","gestion.ajouter_activite":"Ajouter une activité","gestion.version":"Version","gestion.acces":"Accès","gestion.acces_saisie":"Saisie","gestion.acces_lecture":"Lecture seule","gestion.acces_test":"Test, données fictives","gestion.saisie_proprio":"Saisir depuis cet appareil","gestion.fuseau":"Dates","gestion.fuseau_valeur":"Heure de Paris","gestion.tutoriel":"Tutoriel","gestion.tutoriel_revoir":"Revoir","sauvegarde.titre":"Sauvegarde","sauvegarde.ouvrir":"Ouvrir","sauvegarde.sauver":"Sauvegarder les données","sauvegarde.sauver_aide":"Un fichier avec toutes les données, à garder en lieu sûr","sauvegarde.bouton_sauver":"Fichier","sauvegarde.restaurer":"Restaurer une sauvegarde","sauvegarde.restaurer_aide":"Remplace les données par celles d'un fichier de sauvegarde","sauvegarde.bouton_restaurer":"Choisir","sauvegarde.copie":"Données d'avant la restauration","sauvegarde.bouton_copie":"Reprendre","sauvegarde.indispo":"La sauvegarde n'est pas disponible dans cette vue de claude.ai.","sauvegarde.fichier":"sauvegarde-resident-activites-{date}","sauvegarde.ok":"Sauvegarde enregistrée","sauvegarde.erreur_lecture":"Ce fichier n'est pas une sauvegarde de l'appli. Choisis un fichier « sauvegarde-resident-activites ».","sauvegarde.erreur_version":"Cette sauvegarde vient d'une version plus récente de l'appli. Recharge la page, puis réessaie.","sauvegarde.erreur_contenu":"Ce fichier de sauvegarde est abîmé : rien n'a été changé. Essaie une autre sauvegarde.","restaurer.titre":"Restaurer","restaurer.le":"Sauvegarde du {date} à {heure}","restaurer.date_inconnue":"Sauvegarde sans date","restaurer.col_fichier":"Fichier","restaurer.col_actuel":"Actuel","restaurer.residents":"Résidents","restaurer.activites":"Activités","restaurer.avances":"Avances","restaurer.remboursements":"Remboursements","restaurer.avert":"Les données actuelles seront remplacées par celles du fichier. Elles restent récupérables dans Sauvegarde.","restaurer.identique":"Ce fichier contient déjà les mêmes données : rien à changer.","restaurer.confirmer":"Remplacer les données","restaurer.en_cours":"Restauration en cours : {n} sur {total}","restaurer.ok":"Données restaurées","restaurer.erreur":"La restauration s'est arrêtée. Relance-la : rien n'est perdu.","restaurer.copie_erreur":"Les données actuelles n'ont pas pu être mises de côté : rien n'a été changé. Réessaie.","resident.titre_nouveau":"Nouveau résident","resident.titre_modifier":"Modifier le résident","resident.nom":"Nom","resident.chambre":"Chambre","resident.note":"Note","resident.note_exemple":"Paie en espèces","resident.actif":"Actif","resident.rappel_sante":"N'écris aucune information de santé ici.","resident.historique":"Cette fiche a des avances : « Supprimer » la rend inactive, et ses totaux restent.","activite.titre_nouveau":"Nouvelle activité","activite.titre_modifier":"Modifier l'activité","activite.nom":"Nom","activite.active":"Active","activite.historique":"Cette activité a des avances : « Supprimer » la rend inactive, et ses totaux restent.","codes.champ":"Code de test","codes.exemple":"T-AVANCE-BASE-001","codes.ouvrir":"Ouvrir","codes.voir":"Voir les codes de test","codes.aide":"Un code de test charge des données fictives. Les vraies données ne sont pas touchées.","codes.quitter":"Quitter le mode test","codes.T-AVANCE-BASE-001":"Saisir une avance","codes.T-TOTAUX-BASE-001":"Totaux 2026","codes.T-RETARD-BASE-001":"Retards","codes.T-REMBLIBRE-BASE-001":"Remboursement global","codes.T-DOUBLON-BASE-001":"Avance en double","codes.T-VIDE-VIDE-001":"États vides","codes.T-NOMLONG-BASE-001":"Résident au nom long","codes.T-VOLUME-VOLUME-042":"Beaucoup de données","codes.T-FILTRE-BASE-001":"Filtre Théâtre, T1","codes.T-TRIMESTRE-BASE-001":"Totaux par trimestre","codes.T-QUIREMB-BASE-001":"Qui rembourse ?","codes.T-GRAPHIQUE-BASE-001":"Graphique par mois","codes.T-SAUVEGARDE-BASE-001":"Sauvegarde et restauration","tuto.puce":"Exemple","tuto.ouvrir":"Revoir le tutoriel","tuto.compte":"{n}/{total}","tuto.passer":"Passer","tuto.precedent":"Étape précédente","tuto.suivant":"Suivant","tuto.terminer":"Terminer","tuto.groupe.quotidien":"Au quotidien","tuto.groupe.preparer":"Préparer l'appli","tuto.groupe.totaux":"Les totaux","tuto.groupe.erreur":"Une erreur ?","tuto.groupe.fin":"C'est tout","tuto.totaux.titre":"Les totaux de l'année","tuto.totaux.texte":"Ce que l'association a avancé, ce qu'on lui a remboursé, et ce qui reste à rembourser. Ici, ce sont des exemples : tes vraies données ne bougent pas.","tuto.retards.titre":"Les retards","tuto.retards.texte":"En rouge : les résidents qui doivent depuis plus de 30 jours. Touche cette ligne pour les voir.","tuto.avance.titre":"Noter une avance","tuto.avance.texte":"Touche + Avance, choisis le résident, puis l'activité. Le montant est proposé : vérifie-le et valide.","tuto.raccourci.titre":"Le raccourci","tuto.raccourci.texte":"Les derniers résidents sont ici : touche un nom pour noter une avance plus vite.","tuto.remboursement.titre":"Noter un remboursement","tuto.remboursement.texte":"Quand un résident rembourse, touche + Remboursement et choisis-le. Ceux qui doivent sont en premier.","tuto.residents.titre":"Les résidents","tuto.residents.texte":"Chaque résident et ce qu'il reste à rembourser. Touche un nom pour voir sa fiche et son historique.","tuto.ajouter.titre":"Ajouter un résident ou une activité","tuto.ajouter.texte":"Ajoute chaque résident avec son numéro de chambre, et chaque activité. « Enregistrer et ajouter un autre » enchaîne les ajouts.","tuto.gestion.titre":"Modifier ou supprimer","tuto.gestion.texte":"Dans Gestion, touche un résident ou une activité pour le modifier ou le supprimer. Si la fiche a des avances, elle devient inactive.","tuto.sauvegarde.titre":"Sauvegarder","tuto.sauvegarde.texte":"Dans Gestion, onglet Infos, Sauvegarde enregistre toutes les données dans un fichier. Le même écran les remet depuis ce fichier.","tuto.regrouper.titre":"Regrouper les totaux","tuto.regrouper.texte":"Choisis comment voir les totaux : par résident, par activité, par mois ou par trimestre.","tuto.filtres.titre":"Filtrer","tuto.filtres.texte":"L'entonnoir ouvre les filtres : année, période, résident, activité. Tu peux les combiner.","tuto.graphique.titre":"Le graphique","tuto.graphique.texte":"Ce bouton passe du tableau au graphique, et inversement.","tuto.annee.titre":"Choisir l'année","tuto.annee.texte":"Choisis l'année ici : elle vaut aussi pour les Totaux et les fiches des résidents.","tuto.tri.titre":"Trier","tuto.tri.texte":"Range les résidents par nom, par numéro de chambre, ou du plus gros montant avancé au plus petit.","tuto.telecharger.titre":"Télécharger","tuto.telecharger.texte":"La flèche télécharge les totaux, le récapitulatif de l'année ou le reçu d'un résident, en PDF ou en Excel, et toutes les saisies en Excel.","tuto.erreur.titre":"Corriger une erreur","tuto.erreur.texte":"Ouvre la saisie depuis la fiche du résident et touche Supprimer. Tu as 2 secondes pour annuler.","tuto.revoir.titre":"Revoir ce tutoriel","tuto.revoir.texte":"Touche ce point d'interrogation, sur l'accueil, pour revoir ces explications. Il est aussi dans Gestion, onglet Infos.","g.role.admin":"Admin","g.role.association":"Association","g.connexion.titre":"Bienvenue","g.connexion.texte":"Connecte-toi avec ton compte Google pour continuer.","g.non_membre.titre":"Accès non ouvert","g.non_membre.texte":"Le compte {email} n'a pas encore accès. Demande à l'administratrice de l'ajouter, puis reconnecte-toi.","g.changer_compte":"Changer de compte","g.deconnexion":"Se déconnecter","g.reessayer":"Réessayer","g.indispo.titre":"Service indisponible","g.indispo.texte":"L'appli ne répond pas. Vérifie la connexion, puis réessaie.","g.erreur.reseau":"L'envoi n'est pas passé. Vérifie la connexion et réessaie.","g.depense.titre":"Nouvelle dépense","g.depense.ajouter":"Nouvelle dépense","g.depense.activite":"Activité","g.depense.choisir":"Choisir…","g.depense.nouvelle_activite":"+ Nouvelle activité","g.depense.nom_activite":"Nom","g.depense.montant":"Montant","g.depense.montant_exemple":"100,00","g.depense.date":"Date","g.depense.commentaire":"Note","g.depense.commentaire_exemple":"Ex. séance du mardi","g.depense.envoyer":"Envoyer","g.depense.ok":"Dépense de {montant} envoyée","g.statut.a_repartir":"À répartir","g.statut.repartie":"Répartie","g.statut.envoi":"Envoi…","g.association.mes_saisies":"Mes dépenses","g.association.vide":"Aucune dépense envoyée pour l'instant.","g.admin.a_repartir":"Dépenses à répartir","g.admin.liste":"À répartir","g.admin.rien_a_repartir":"Tout est réparti.","g.admin.bientot":"La répartition entre résidents arrive dans la prochaine version.","g.mail.sujet":"Nouvelle dépense : {activite}, {montant}","g.mail.corps":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\n\nÀ répartir dans l'appli : {lien}","g.mail.corps_commentaire":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\nNote : {commentaire}\n\nÀ répartir dans l'appli : {lien}","erreur.requete":"Demande incomplète. Recharge la page et réessaie.","erreur.connexion":"Ta connexion a expiré. Reconnecte-toi.","erreur.non_membre":"Ce compte n'a pas encore accès.","erreur.non_autorise":"Ton rôle ne permet pas cette action.","erreur.occupe":"L'appli est occupée. Réessaie dans quelques secondes.","erreur.serveur":"Une erreur est survenue. Réessaie ; si elle revient, préviens Clément.","erreur.introuvable":"Cet élément n'existe plus.","erreur.depense_introuvable":"Cette dépense n'existe plus.","erreur.depense_repartie":"Cette dépense est déjà répartie : retire d'abord la répartition.","erreur.depense_repartie_montant":"Cette dépense est répartie : pour changer le montant, refais la répartition.","erreur.commentaire_long":"La note est trop longue (500 caractères au plus).","erreur.repartition_vide":"Choisis au moins un résident.","erreur.repartition_doublon":"Un résident apparaît deux fois.","erreur.part_positive":"Chaque part doit être supérieure à 0.","erreur.repartition_somme":"La somme des parts doit être égale au montant de la dépense.","erreur.part_remboursee":"Un résident a déjà remboursé une partie : sa part ne peut pas descendre en dessous.","g.version":"G{v}"}</script>
-<script type="application/json" id="meta">{"version":"0.2","date":"2026-11-07","service":"https://script.google.com/macros/s/AKfycbwbPKLMDVKnmtA8X4izKVwY64-4Q5tN_ZoHKkxSKs6aKwv_l7hwmQbEHvjCaJY-ZoyI/exec","clientId":"485738393486-qs3djc9k7nqch3tcaka4ps0hcmlbeltj.apps.googleusercontent.com","lien":"https://clementdalmay-alt.github.io/resident-activites-web/"}</script>
+<script type="application/json" id="contenus">{"appli.nom":"Resident Activités","entete.version":"v{v}","entete.version_aide":"Version {v}","entete.mode_test":"Test","entete.lecture":"Lecture","onglets.titre":"Navigation","onglets.accueil":"Accueil","onglets.residents":"Résidents","onglets.totaux":"Totaux","onglets.gestion":"Gestion","commun.retour":"Retour","commun.annuler":"Annuler","commun.inconnu":"Introuvable","commun.inactif":"inactif","commun.retard":"Retard","commun.chambre":"Chambre {n}","commun.chambre_court":"ch. {n}","commun.avance_total":"Avancé","commun.rembourse_total":"Remboursé","commun.reste_du":"Reste dû","commun.page":"{n}/{total}","commun.page_prec":"Page précédente","commun.page_suiv":"Page suivante","chargement.titre":"Chargement…","chargement.texte":"Les données arrivent.","indispo.titre":"Données indisponibles","indispo.texte":"Ouvre l'appli depuis claude.ai pour voir tes données. Les codes de test, dans Gestion, marchent quand même.","deconnecte.titre":"Connecte-toi pour voir les données","deconnecte.texte":"Touche « Connexion » en haut à droite et connecte-toi à Claude avec l'adresse e-mail qui a reçu l'invitation. Pas encore de compte ? Crée-le avec cette même adresse.","accueil.totaux_titre":"Année {annee}","accueil.annee":"Année","accueil.a_jour":"à jour à {h}","accueil.peut_etre_ancien":"peut-être pas à jour","accueil.retards.un":"1 résident en retard","accueil.retards.plusieurs":"{n} résidents en retard","accueil.retards_court.un":"1 en retard","accueil.retards_court.plusieurs":"{n} en retard","accueil.ajouter_avance":"Ajouter une avance","accueil.tous":"Tous","accueil.nouveau_resident":"Résident","accueil.nouvelle_activite":"Activité","accueil.noter_remboursement":"Noter un remboursement","accueil.plus_avance":"Avance","accueil.plus_remboursement":"Remboursement","accueil.dernieres":"Dernières saisies","accueil.aucune_operation":"Rien de saisi pour l'instant.","accueil.vide_lecture":"Rien de saisi pour l'instant.","accueil.vide_residents.titre":"Aucun résident","accueil.vide_residents.texte":"Commence par ajouter un résident.","accueil.vide_residents.action":"Ajouter un résident","accueil.vide_activites.titre":"Aucune activité","accueil.vide_activites.texte":"Ajoute une activité, par exemple Théâtre.","accueil.vide_activites.action":"Ajouter une activité","residents.chercher":"Nom ou chambre","residents.en_retard":"En retard","tri.titre":"Trier","tri.nom":"Par nom","tri.chambre":"Par chambre","tri.avance":"Par avancé","tri.ligne_chambre":"{n} · {nom}","residents.aucun_resultat":"Aucun résident trouvé.","residents.vide.titre":"Aucun résident","residents.vide.texte":"Ajoute le premier résident.","residents.vide.action":"Ajouter un résident","fiche.introuvable":"Ce résident n'existe plus.","fiche.note":"Voir la note","fiche.annee":"Avancé · remboursé en {annee}","fiche.operations":"Historique","fiche.aucune_operation":"Rien de saisi pour ce résident.","fiche.avance":"Avance","fiche.rembourser":"Rembourser","choix.titre_avance":"Pour quel résident ?","choix.titre_remb":"Qui rembourse ?","choix.titre_activite":"{nom} · quelle activité ?","choix.rien_a_rembourser":"Rien à rembourser","form.changer":"Changer","form.montant":"Montant","form.montant_exemple":"12,50","form.mois":"Mois","form.date_paiement":"Avancé le","form.date":"Remboursé le","form.imputer":"Sur quelle avance ?","form.imputer_libre":"Les plus anciennes d'abord","form.imputer_avance":"{activite} · {mois} · reste {reste}","form.imputer_aide_libre":"Le montant rembourse d'abord les avances les plus anciennes.","form.imputer_aide_avance":"Le montant va sur cette avance seulement.","form.valider":"Valider","form.valider_quand_meme":"Valider quand même","form.enregistrer":"Enregistrer","form.enregistrer_autre":"Enregistrer et ajouter un autre","form.doublon_confirmer":"Vérifie le mois, puis valide à nouveau si c'est voulu.","erreur.montant_positif":"Le montant doit être supérieur à 0.","erreur.montant_format":"Écris le montant en euros, par exemple 12,50.","erreur.date_invalide":"Choisis une date valide.","erreur.date_future":"La date ne peut pas être dans le futur.","erreur.resident_requis":"Choisis un résident.","erreur.activite_requise":"Choisis une activité.","erreur.mois_invalide":"Choisis le mois concerné.","erreur.rembourse_depasse_reste":"C'est plus que ce que ce résident doit. Baisse le montant.","erreur.rembourse_depasse_avance":"Le montant dépasse le reste de cette avance. Baisse-le ou choisis « Les plus anciennes d'abord ».","erreur.avance_autre_resident":"Cette avance n'est pas celle de ce résident. Choisis-en une autre.","erreur.nom_requis":"Écris un nom.","erreur.resident_doublon":"Ce résident existe déjà dans cette chambre.","erreur.activite_doublon":"Cette activité existe déjà.","erreur.chambre_numero":"Écris le numéro de chambre en chiffres, par exemple 101.","erreur.code_inconnu":"Code inconnu. Vérifie-le dans la liste.","erreur.ecriture_refusee":"Tu n'as pas le droit de modifier. L'appli passe en lecture seule.","erreur.base_pleine":"Plus de place pour enregistrer. Préviens Clément.","erreur.ecriture":"L'enregistrement n'est pas passé. Vérifie la connexion et réessaie.","avert.doublon":"Une avance existe déjà pour ce résident, cette activité et ce mois.","statut.soldee":"Remboursée","statut.partielle":"Remboursée en partie","statut.due":"À rembourser","statut.retard":"En retard","operation.remboursement":"Remboursement","operation.remboursement_libre":"Remboursement global","detail.avance_titre":"Avance","detail.remb_titre":"Remboursement","detail.introuvable":"Cette saisie n'existe plus.","detail.resident":"Résident","detail.activite":"Activité","detail.mois":"Mois","detail.date_paiement":"Avancé le","detail.date":"Remboursé le","detail.montant":"Montant","detail.rembourse":"Remboursé","detail.statut":"État","detail.genre":"Sur","detail.rattache":"Sur une avance précise","detail.libre":"Les plus anciennes","detail.jours.un":"1 jour","detail.jours.plusieurs":"{n} jours","detail.supprimer":"Supprimer","detail.supprimer_impossible":"Supprime d'abord les remboursements de cette avance.","annuler.avance":"Avance supprimée","annuler.remb":"Remboursement supprimé","annuler.resident":"Résident supprimé","annuler.activite":"Activité supprimée","annuler.resident_inactif":"{nom} a des avances : sa fiche devient inactive.","annuler.activite_inactive":"{nom} a des avances : l'activité devient inactive.","notif.avance_ok":"Avance de {montant} notée pour {nom}","notif.remb_ok":"Remboursement de {montant} noté pour {nom}","notif.saisie_activee":"Tu peux saisir sur cet appareil.","notif.lecture_activee":"Cet appareil repasse en lecture seule.","notif.codes_visibles":"Codes de test visibles dans Gestion","notif.codes_caches":"Codes de test cachés","notif.resident_ajoute":"Fiche de {nom} créée","notif.resident_modifie":"Fiche de {nom} modifiée","notif.activite_ajoutee":"{nom} ajoutée","notif.activite_modifiee":"{nom} modifiée","totaux.annee_prec":"Année précédente","totaux.annee_suiv":"Année suivante","totaux.vue":"Regrouper par","totaux.par_resident":"Résident","totaux.par_activite":"Activité","totaux.par_mois":"Mois","totaux.par_trimestre":"Trimestre","totaux.col_resident":"Résident","totaux.col_activite":"Activité","totaux.col_mois":"Mois","totaux.col_trimestre":"Trimestre","totaux.trimestre_ligne":"T{n} · {debut} à {fin}","totaux.col_avance":"Avancé","totaux.col_rembourse":"Remb.","totaux.col_reste":"Reste","totaux.total":"Total","totaux.aucune_donnee":"Rien de saisi cette année.","totaux.aide":"Explications","totaux.aide_resident":"En euros. « Reste » compte aussi les années passées.","totaux.aide_activite":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_mois":"En euros, selon la date de chaque avance et de chaque remboursement.","totaux.aide_trimestre":"En euros, selon la date de chaque avance et de chaque remboursement. T1 : janvier à mars, T2 : avril à juin, etc.","graphique.titre":"Graphique des totaux","graphique.avance":"Avancé","graphique.rembourse":"Remboursé","graphique.voir_graphique":"Voir le graphique","graphique.voir_tableau":"Voir le tableau","pdf.bouton":"Télécharger","pdf.titre":"Télécharger","pdf.totaux":"Totaux affichés","pdf.totaux_aide":"Le tableau à l'écran, avec ses filtres","pdf.recap":"Récapitulatif {annee}","pdf.recap_aide":"Par résident, par activité et par mois","pdf.recu":"Reçu d'un résident","pdf.recu_aide":"Ses avances et remboursements de l'année","pdf.choix_resident":"Reçu pour quel résident ?","pdf.en_cours":"Préparation du fichier…","pdf.ok":"PDF téléchargé","pdf.patienter":"Attends quelques secondes, puis réessaie.","pdf.indispo":"Le téléchargement est bloqué ici. Ouvre l'appli directement dans claude.ai.","pdf.erreur":"Le fichier n'a pas pu être préparé. Vérifie la connexion et réessaie.","pdf.edite_le":"Édité le {date}","pdf.page":"Page {n} / {total}","pdf.doc_totaux":"Totaux {annee}","pdf.doc_recap":"Récapitulatif {annee}","pdf.doc_recu":"Reçu {annee}","pdf.col_date":"Date","pdf.col_operation":"Détail","pdf.reste_du":"Reste dû (toutes années)","pdf.fichier_totaux":"totaux-{annee}","pdf.fichier_recap":"recapitulatif-{annee}","pdf.fichier_recu":"recu-{nom}-{annee}","tele.pdf":"PDF","tele.excel":"Excel","tele.operations":"Toutes les saisies","tele.operations_aide":"Chaque avance et chaque remboursement de l'année","tele.doc_operations":"Saisies {annee}","tele.col_genre":"Type","tele.genre_avance":"Avance","tele.fichier_operations":"saisies-{annee}","tele.ok_excel":"Fichier Excel téléchargé","filtres.titre":"Filtres","filtres.annee":"Année","filtres.periode":"Période","filtres.resident":"Résident","filtres.activite":"Activité","filtres.toute_annee":"Toute l'année","filtres.tous":"Tous","filtres.toutes":"Toutes","filtres.aucun":"aucun filtre","filtres.resident_chambre":"{nom} · ch. {n}","filtres.effacer":"Retirer les filtres","filtres.voir":"Voir les totaux","filtres.aide":"Tu peux combiner les filtres. Le reste dû compte toujours toutes les années, quelle que soit la période.","gestion.titre":"Gestion","gestion.residents":"Résidents","gestion.activites":"Activités","gestion.codes":"Codes","gestion.infos":"Infos","gestion.compte_residents.aucun":"Aucun résident","gestion.compte_residents.un":"1 résident","gestion.compte_residents.plusieurs":"{n} résidents","gestion.compte_activites.aucun":"Aucune activité","gestion.compte_activites.un":"1 activité","gestion.compte_activites.plusieurs":"{n} activités","gestion.vide_residents":"Ajoute le premier résident.","gestion.vide_activites":"Ajoute la première activité.","gestion.ajouter_resident":"Ajouter un résident","gestion.ajouter_activite":"Ajouter une activité","gestion.version":"Version","gestion.acces":"Accès","gestion.acces_saisie":"Saisie","gestion.acces_lecture":"Lecture seule","gestion.acces_test":"Test, données fictives","gestion.saisie_proprio":"Saisir depuis cet appareil","gestion.fuseau":"Dates","gestion.fuseau_valeur":"Heure de Paris","gestion.tutoriel":"Tutoriel","gestion.tutoriel_revoir":"Revoir","sauvegarde.titre":"Sauvegarde","sauvegarde.ouvrir":"Ouvrir","sauvegarde.sauver":"Sauvegarder les données","sauvegarde.sauver_aide":"Un fichier avec toutes les données, à garder en lieu sûr","sauvegarde.bouton_sauver":"Fichier","sauvegarde.restaurer":"Restaurer une sauvegarde","sauvegarde.restaurer_aide":"Remplace les données par celles d'un fichier de sauvegarde","sauvegarde.bouton_restaurer":"Choisir","sauvegarde.copie":"Données d'avant la restauration","sauvegarde.bouton_copie":"Reprendre","sauvegarde.indispo":"La sauvegarde n'est pas disponible dans cette vue de claude.ai.","sauvegarde.fichier":"sauvegarde-resident-activites-{date}","sauvegarde.ok":"Sauvegarde enregistrée","sauvegarde.erreur_lecture":"Ce fichier n'est pas une sauvegarde de l'appli. Choisis un fichier « sauvegarde-resident-activites ».","sauvegarde.erreur_version":"Cette sauvegarde vient d'une version plus récente de l'appli. Recharge la page, puis réessaie.","sauvegarde.erreur_contenu":"Ce fichier de sauvegarde est abîmé : rien n'a été changé. Essaie une autre sauvegarde.","restaurer.titre":"Restaurer","restaurer.le":"Sauvegarde du {date} à {heure}","restaurer.date_inconnue":"Sauvegarde sans date","restaurer.col_fichier":"Fichier","restaurer.col_actuel":"Actuel","restaurer.residents":"Résidents","restaurer.activites":"Activités","restaurer.avances":"Avances","restaurer.remboursements":"Remboursements","restaurer.avert":"Les données actuelles seront remplacées par celles du fichier. Elles restent récupérables dans Sauvegarde.","restaurer.identique":"Ce fichier contient déjà les mêmes données : rien à changer.","restaurer.confirmer":"Remplacer les données","restaurer.en_cours":"Restauration en cours : {n} sur {total}","restaurer.ok":"Données restaurées","restaurer.erreur":"La restauration s'est arrêtée. Relance-la : rien n'est perdu.","restaurer.copie_erreur":"Les données actuelles n'ont pas pu être mises de côté : rien n'a été changé. Réessaie.","resident.titre_nouveau":"Nouveau résident","resident.titre_modifier":"Modifier le résident","resident.nom":"Nom","resident.chambre":"Chambre","resident.note":"Note","resident.note_exemple":"Paie en espèces","resident.actif":"Actif","resident.rappel_sante":"N'écris aucune information de santé ici.","resident.historique":"Cette fiche a des avances : « Supprimer » la rend inactive, et ses totaux restent.","activite.titre_nouveau":"Nouvelle activité","activite.titre_modifier":"Modifier l'activité","activite.nom":"Nom","activite.active":"Active","activite.historique":"Cette activité a des avances : « Supprimer » la rend inactive, et ses totaux restent.","codes.champ":"Code de test","codes.exemple":"T-AVANCE-BASE-001","codes.ouvrir":"Ouvrir","codes.voir":"Voir les codes de test","codes.aide":"Un code de test charge des données fictives. Les vraies données ne sont pas touchées.","codes.quitter":"Quitter le mode test","codes.T-AVANCE-BASE-001":"Saisir une avance","codes.T-TOTAUX-BASE-001":"Totaux 2026","codes.T-RETARD-BASE-001":"Retards","codes.T-REMBLIBRE-BASE-001":"Remboursement global","codes.T-DOUBLON-BASE-001":"Avance en double","codes.T-VIDE-VIDE-001":"États vides","codes.T-NOMLONG-BASE-001":"Résident au nom long","codes.T-VOLUME-VOLUME-042":"Beaucoup de données","codes.T-FILTRE-BASE-001":"Filtre Théâtre, T1","codes.T-TRIMESTRE-BASE-001":"Totaux par trimestre","codes.T-QUIREMB-BASE-001":"Qui rembourse ?","codes.T-GRAPHIQUE-BASE-001":"Graphique par mois","codes.T-SAUVEGARDE-BASE-001":"Sauvegarde et restauration","tuto.puce":"Exemple","tuto.ouvrir":"Revoir le tutoriel","tuto.compte":"{n}/{total}","tuto.passer":"Passer","tuto.precedent":"Étape précédente","tuto.suivant":"Suivant","tuto.terminer":"Terminer","tuto.groupe.quotidien":"Au quotidien","tuto.groupe.preparer":"Préparer l'appli","tuto.groupe.totaux":"Les totaux","tuto.groupe.erreur":"Une erreur ?","tuto.groupe.fin":"C'est tout","tuto.totaux.titre":"Les totaux de l'année","tuto.totaux.texte":"Ce que l'association a avancé, ce qu'on lui a remboursé, et ce qui reste à rembourser. Ici, ce sont des exemples : tes vraies données ne bougent pas.","tuto.retards.titre":"Les retards","tuto.retards.texte":"En rouge : les résidents qui doivent depuis plus de 30 jours. Touche cette ligne pour les voir.","tuto.avance.titre":"Noter une avance","tuto.avance.texte":"Touche + Avance, choisis le résident, puis l'activité. Le montant est proposé : vérifie-le et valide.","tuto.raccourci.titre":"Le raccourci","tuto.raccourci.texte":"Les derniers résidents sont ici : touche un nom pour noter une avance plus vite.","tuto.remboursement.titre":"Noter un remboursement","tuto.remboursement.texte":"Quand un résident rembourse, touche + Remboursement et choisis-le. Ceux qui doivent sont en premier.","tuto.residents.titre":"Les résidents","tuto.residents.texte":"Chaque résident et ce qu'il reste à rembourser. Touche un nom pour voir sa fiche et son historique.","tuto.ajouter.titre":"Ajouter un résident ou une activité","tuto.ajouter.texte":"Ajoute chaque résident avec son numéro de chambre, et chaque activité. « Enregistrer et ajouter un autre » enchaîne les ajouts.","tuto.gestion.titre":"Modifier ou supprimer","tuto.gestion.texte":"Dans Gestion, touche un résident ou une activité pour le modifier ou le supprimer. Si la fiche a des avances, elle devient inactive.","tuto.sauvegarde.titre":"Sauvegarder","tuto.sauvegarde.texte":"Dans Gestion, onglet Infos, Sauvegarde enregistre toutes les données dans un fichier. Le même écran les remet depuis ce fichier.","tuto.regrouper.titre":"Regrouper les totaux","tuto.regrouper.texte":"Choisis comment voir les totaux : par résident, par activité, par mois ou par trimestre.","tuto.filtres.titre":"Filtrer","tuto.filtres.texte":"L'entonnoir ouvre les filtres : année, période, résident, activité. Tu peux les combiner.","tuto.graphique.titre":"Le graphique","tuto.graphique.texte":"Ce bouton passe du tableau au graphique, et inversement.","tuto.annee.titre":"Choisir l'année","tuto.annee.texte":"Choisis l'année ici : elle vaut aussi pour les Totaux et les fiches des résidents.","tuto.tri.titre":"Trier","tuto.tri.texte":"Range les résidents par nom, par numéro de chambre, ou du plus gros montant avancé au plus petit.","tuto.telecharger.titre":"Télécharger","tuto.telecharger.texte":"La flèche télécharge les totaux, le récapitulatif de l'année ou le reçu d'un résident, en PDF ou en Excel, et toutes les saisies en Excel.","tuto.erreur.titre":"Corriger une erreur","tuto.erreur.texte":"Ouvre la saisie depuis la fiche du résident et touche Supprimer. Tu as 2 secondes pour annuler.","tuto.revoir.titre":"Revoir ce tutoriel","tuto.revoir.texte":"Touche ce point d'interrogation, sur l'accueil, pour revoir ces explications. Il est aussi dans Gestion, onglet Infos.","g.role.admin":"Admin","g.role.association":"Association","g.connexion.titre":"Bienvenue","g.connexion.texte":"Connecte-toi avec ton compte Google pour continuer.","g.non_membre.titre":"Accès non ouvert","g.non_membre.texte":"Le compte {email} n'a pas encore accès. Demande à l'administratrice de l'ajouter, puis reconnecte-toi.","g.changer_compte":"Changer de compte","g.deconnexion":"Se déconnecter","g.reessayer":"Réessayer","g.indispo.titre":"Service indisponible","g.indispo.texte":"L'appli ne répond pas. Vérifie la connexion, puis réessaie.","g.erreur.reseau":"L'envoi n'est pas passé. Vérifie la connexion et réessaie.","g.depense.titre":"Nouvelle dépense","g.depense.ajouter":"Nouvelle dépense","g.depense.activite":"Activité","g.depense.choisir":"Choisir…","g.depense.nouvelle_activite":"+ Nouvelle activité","g.depense.nom_activite":"Nom","g.depense.montant":"Montant","g.depense.montant_exemple":"100,00","g.depense.date":"Date","g.depense.commentaire":"Note","g.depense.commentaire_exemple":"Ex. séance du mardi","g.depense.envoyer":"Envoyer","g.depense.ok":"Dépense de {montant} envoyée","g.statut.a_repartir":"À répartir","g.statut.repartie":"Répartie","g.statut.envoi":"Envoi…","g.onglets.depenses":"Dépenses","g.depenses.titre":"Dépenses","g.depenses.filtre_a_repartir":"À répartir","g.depenses.filtre_toutes":"Toutes","g.depenses.vide":"Aucune dépense.","g.repartir.egal":"Parts égales","g.repartir.participants":"Participants ({n})","g.repartir.part_de":"Part de {nom}","g.repartir.resume.un":"1 participant · {parts} sur {montant}","g.repartir.resume.plusieurs":"{n} participants · {parts} sur {montant}","g.repartir.ecart":"écart {ecart}","g.repartir.valider":"Répartir","g.repartir.valider_modif":"Enregistrer","g.repartir.ok":"Dépense répartie entre {n} résident(s)","g.repartir.aucun_resident":"Ajoute d'abord les résidents, dans l'onglet Résidents.","g.fiche.part":"{activite} · {date}","g.fiche.remboursement":"Remboursement · {date}","g.fiche.modifier":"Modifier","g.resident.historique":"Ce résident a déjà des parts ou des remboursements : « Supprimer » le rend inactif, son historique reste.","g.resident.ok":"Résident enregistré","g.resident.inactive":"Résident passé inactif","g.resident.retire":"Résident supprimé","g.confirmer":"Confirmer","g.remb.imputer":"Sur quelle part ?","g.remb.imputer_part":"{activite} · {date} · reste {reste}","g.remb.aide_part":"Le montant va sur cette part seulement.","g.remb.ok":"Remboursement de {montant} enregistré","g.remb.supprime":"Remboursement supprimé","g.detail.par":"Saisi par","g.association.mes_saisies":"Mes dépenses","g.association.vide":"Aucune dépense envoyée pour l'instant.","g.admin.a_repartir":"Dépenses à répartir","g.admin.liste":"À répartir","g.admin.rien_a_repartir":"Tout est réparti.","g.admin.bientot":"La répartition entre résidents arrive dans la prochaine version.","g.mail.sujet":"Nouvelle dépense : {activite}, {montant}","g.mail.corps":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\n\nÀ répartir dans l'appli : {lien}","g.mail.corps_commentaire":"{auteur} a saisi une dépense de {montant} pour {activite}, le {date}.\nNote : {commentaire}\n\nÀ répartir dans l'appli : {lien}","erreur.requete":"Demande incomplète. Recharge la page et réessaie.","erreur.connexion":"Ta connexion a expiré. Reconnecte-toi.","erreur.non_membre":"Ce compte n'a pas encore accès.","erreur.non_autorise":"Ton rôle ne permet pas cette action.","erreur.occupe":"L'appli est occupée. Réessaie dans quelques secondes.","erreur.serveur":"Une erreur est survenue. Réessaie ; si elle revient, préviens Clément.","erreur.introuvable":"Cet élément n'existe plus.","erreur.depense_introuvable":"Cette dépense n'existe plus.","erreur.depense_repartie":"Cette dépense est déjà répartie : retire d'abord la répartition.","erreur.depense_repartie_montant":"Cette dépense est répartie : pour changer le montant, refais la répartition.","erreur.commentaire_long":"La note est trop longue (500 caractères au plus).","erreur.repartition_vide":"Choisis au moins un résident.","erreur.repartition_doublon":"Un résident apparaît deux fois.","erreur.part_positive":"Chaque part doit être supérieure à 0.","erreur.repartition_somme":"La somme des parts doit être égale au montant de la dépense.","erreur.part_remboursee":"Un résident a déjà remboursé une partie : sa part ne peut pas descendre en dessous.","g.version":"G{v}"}</script>
+<script type="application/json" id="meta">{"version":"0.3","date":"2026-11-07","service":"https://script.google.com/macros/s/AKfycbwbPKLMDVKnmtA8X4izKVwY64-4Q5tN_ZoHKkxSKs6aKwv_l7hwmQbEHvjCaJY-ZoyI/exec","clientId":"485738393486-qs3djc9k7nqch3tcaka4ps0hcmlbeltj.apps.googleusercontent.com","lien":"https://clementdalmay-alt.github.io/resident-activites-web/"}</script>
 <script>
 /* Resident Activités — logique (modèle, règles de calcul, contrôles de saisie).
  * Aucun texte affiché ici : les messages sont des clés du fichier de contenus.
@@ -968,7 +982,9 @@ i.g-rembourse { background: var(--g-rembourse); }
 
 </script>
 <script>
-/* Resident Activités — appli Google (lot G0 : connexion, saisie Association, dépenses à répartir).
+/* Resident Activités — appli Google.
+ * G0 : connexion, saisie Association, dépenses à répartir. G2 : écrans Admin (répartition, résidents, fiche,
+ * remboursements, totaux de l'année).
  * Tout texte affiché vient du fichier de contenus (fonction t). Aucune donnée réelle dans ce fichier.
  * Le service (Apps Script) vérifie la connexion et le rôle à chaque appel : l'écran ne fait que suivre.
  */
@@ -985,16 +1001,47 @@ i.g-rembourse { background: var(--g-rembourse); }
     if (vars) s = s.replace(/\{(\w+)\}/g, function (m, n) { return vars[n] !== undefined ? vars[n] : m; });
     return s;
   }
+  function tn(cle, n, vars) { return t(cle + (n === 1 ? '.un' : '.plusieurs'), Object.assign({ n: n }, vars || {})); }
   function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   var fmt = L.formaterMontant;
   var fDate = new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' });
-  function date(d) { return d ? fDate.format(new Date(Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10)))) : ''; }
+  var fMois = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  function versDate(d) { return new Date(Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +(d.slice(8, 10) || 1))); }
+  function date(d) { return d ? fDate.format(versDate(d)) : ''; }
+  function mois(m) { return m ? fMois.format(versDate(m + '-01')) : ''; }
+
+  /* ---------- Icônes (mêmes tracés que l'appli claude.ai) ---------- */
+  var IC = {
+    accueil: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    residents: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.8c1.6.8 2.6 2.5 3 5.2"/>',
+    depenses: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>',
+    retour: '<path d="M15 5l-7 7 7 7"/>',
+    gauche: '<path d="M15 6l-6 6 6 6"/>',
+    droite: '<path d="M9 6l6 6-6 6"/>',
+    alerte: '<path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17.5v.5"/>',
+    ok: '<path d="M4 12.5l5 5L20 6.5"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+    remb: '<path d="M12 5v14M6 13l6 6 6-6"/>',
+    partiel: '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/>',
+    attente: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+    case: '<rect x="4" y="4" width="16" height="16" rx="3"/>',
+    coche: '<rect x="4" y="4" width="16" height="16" rx="3" fill="currentColor"/><path d="M8 12.5l3 3 5-6.5" stroke="var(--surface)"/>'
+  };
+  function ic(n) { return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + IC[n] + '</svg>'; }
 
   var S = {
     etape: 'demarrage',   // demarrage | connexion | chargement | appli | non_membre | indispo
     jeton: null, moi: null, donnees: null, jour: L.aujourdhuiParis(),
-    form: {}, erreurs: [], notif: null, envoi: false, page: 0
+    ecran: 'accueil', p: {}, pile: [],
+    form: {}, erreurs: [], notif: null, envoi: false
   };
+  function admin() { return !!(S.moi && S.moi.role === 'admin'); }
+
+  /* ---------- Navigation ---------- */
+  function aller(ecran, p) { S.pile.push({ ecran: S.ecran, p: S.p }); S.ecran = ecran; S.p = p || {}; S.form = {}; S.erreurs = []; render(); }
+  function retour() { var x = S.pile.pop(); if (x) { S.ecran = x.ecran; S.p = x.p; } else { S.ecran = 'accueil'; S.p = {}; } S.form = {}; S.erreurs = []; render(); }
+  function onglet(e) { S.pile = []; S.ecran = e; S.p = {}; S.form = {}; S.erreurs = []; render(); }
 
   /* ---------- Service ---------- */
   function api(action, donnees) {
@@ -1019,6 +1066,17 @@ i.g-rembourse { background: var(--g-rembourse); }
     if (r.erreur === 'erreur.non_membre') { S.etape = 'non_membre'; S.emailRefuse = r.email || ''; render(); return; }
     if (r.erreur === 'erreur.connexion') { S.jeton = null; S.etape = 'connexion'; S.envoi = false; render(); demanderConnexion(); return; }
     S.erreurs = r.erreurs || [r.erreur || 'erreur.serveur']; S.envoi = false; render();
+  }
+  // Écriture Admin : un appel, la réponse porte la vue à jour ; ensuite() reçoit la réponse.
+  function ecrire(action, donnees, ensuite) {
+    if (S.envoi) return;
+    S.envoi = true; S.erreurs = []; render();
+    api(action, donnees).then(function (r) {
+      if (!r.ok) return refus(r);
+      S.envoi = false;
+      if (r.vue && r.vue.ok) appliquerVue(r.vue);
+      ensuite(r); render();
+    }).catch(echecReseau);
   }
 
   /* ---------- Connexion Google ---------- */
@@ -1049,11 +1107,23 @@ i.g-rembourse { background: var(--g-rembourse); }
   }
   function seDeconnecter() {
     if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
-    S.jeton = null; S.moi = null; S.donnees = null; S.form = {}; S.erreurs = []; S.etape = 'connexion';
+    S.jeton = null; S.moi = null; S.donnees = null; S.form = {}; S.erreurs = []; S.etape = 'connexion'; S.ecran = 'accueil'; S.p = {}; S.pile = [];
     render(); demanderConnexion();
   }
 
-  /* ---------- Rendu ---------- */
+  /* ---------- Calculs (Admin) ---------- */
+  var cache = { d: null, c: null };
+  function calc() {
+    if (cache.d !== S.donnees) cache = { d: S.donnees, c: L.calculer(L.versCalcul(S.donnees), { annee: +S.jour.slice(0, 4), aujourdhui: S.jour }) };
+    return cache.c;
+  }
+  function idx(liste) { return L.index(liste || []); }
+  function nomActivite(id, d) { if (d && d.nomActivite) return d.nomActivite; var a = idx(S.donnees.activites)[id]; return a ? a.nom : t('commun.inconnu'); }
+  function nomResident(id) { var r = idx(S.donnees.residents)[id]; return r ? r.nom : t('commun.inconnu'); }
+  function auteur(email) { var m = (S.donnees.membres || []).filter(function (x) { return x.email === email; })[0]; return m && m.nom ? m.nom : email; }
+  function histoResident(id) { var e = S.donnees; return (e.parts || []).some(function (p) { return p.residentId === id; }) || (e.remboursements || []).some(function (b) { return b.residentId === id; }); }
+
+  /* ---------- Morceaux d'écran ---------- */
   function notifier(cle, genre, vars) {
     S.notif = { texte: t(cle, vars), genre: genre || 'ok' };
     clearTimeout(S.notifTimer);
@@ -1066,6 +1136,25 @@ i.g-rembourse { background: var(--g-rembourse); }
   }
   function bas(boutons) { return '<div class="actions">' + boutons.join('') + '</div>'; }
   function btn(cle, action, genre, extra) { return '<button type="button" class="btn ' + (genre || '') + '" data-a="' + action + '"' + (extra || '') + '>' + esc(t(cle)) + '</button>'; }
+  function btnRetour() { return '<button type="button" class="btn icone" data-a="retour" aria-label="' + esc(t('commun.retour')) + '">' + ic('retour') + '</button>'; }
+  function btnEnvoi(cle, action, genre, extra) { return btn(cle, action, genre, (extra || '') + (S.envoi ? ' disabled' : '')); }
+  function vide(cle) { return '<div class="etat-vide">' + esc(t(cle)) + '</div>'; }
+  function pager(cle, page, total) {
+    if (total <= 1) return '';
+    return '<span class="pager"><button type="button" data-a="page" data-cle="' + cle + '" data-d="-1" aria-label="' + esc(t('commun.page_prec')) + '"' + (page <= 0 ? ' disabled' : '') + '>' + ic('gauche') + '</button>' +
+      '<span class="num">' + esc(t('commun.page', { n: page + 1, total: total })) + '</span>' +
+      '<button type="button" data-a="page" data-cle="' + cle + '" data-d="1" aria-label="' + esc(t('commun.page_suiv')) + '"' + (page >= total - 1 ? ' disabled' : '') + '>' + ic('droite') + '</button></span>';
+  }
+  function pagine(liste, cle, parPage) {
+    var total = Math.max(1, Math.ceil(liste.length / parPage)), page = Math.min(S.p[cle] || 0, total - 1);
+    return { items: liste.slice(page * parPage, page * parPage + parPage), page: page, total: total };
+  }
+  function onglets() {
+    var actif = { accueil: 'accueil', depenses: 'depenses', repartir: 'depenses', residents: 'residents', fiche: 'residents', 'form-resident': 'residents', 'form-remb': 'residents', remb: 'residents' }[S.ecran];
+    return '<nav class="onglets" aria-label="' + esc(t('onglets.titre')) + '">' + [['accueil', 'onglets.accueil'], ['depenses', 'g.onglets.depenses'], ['residents', 'onglets.residents']].map(function (x) {
+      return '<button type="button" data-a="onglet" data-e="' + x[0] + '"' + (actif === x[0] ? ' aria-current="page"' : '') + '>' + ic(x[0]) + '<span>' + esc(t(x[1])) + '</span></button>';
+    }).join('') + '</nav>';
+  }
 
   var ECRANS = {
     demarrage: function () { return { corps: '<div class="box"><div class="etat-vide">' + esc(t('chargement.titre')) + '</div></div>' }; },
@@ -1079,12 +1168,14 @@ i.g-rembourse { background: var(--g-rembourse); }
       return { corps: '<div class="box"><div class="etat-vide"><strong>' + esc(t('g.non_membre.titre')) + '</strong>' + esc(t('g.non_membre.texte', { email: S.emailRefuse })) + '</div></div>',
         bas: bas([btn('g.changer_compte', 'deconnexion', 'principal')]) };
     },
-    appli: function () { return S.moi && S.moi.role === 'admin' ? ecranAdmin() : ecranAssociation(); }
+    appli: function () {
+      if (S.ecran === 'saisie') return ecranSaisie();
+      if (!admin()) return ecranAssociation();
+      return (ADMIN[S.ecran] || ADMIN.accueil)();
+    }
   };
 
-  function nomActivite(id, d) { if (d && d.nomActivite) return d.nomActivite;
-    var a = (S.donnees.activites || []).filter(function (x) { return x.id === id; })[0]; return a ? a.nom : t('commun.inconnu'); }
-
+  /* ---------- Saisie d'une dépense (Association et Admin) ---------- */
   function formulaireDepense() {
     var f = S.form, acts = (S.donnees.activites || []).filter(function (a) { return a.actif; }).slice().sort(L.comparerNoms);
     if (f.init !== true) { f.activiteId = acts.length ? '' : '__nouvelle'; f.montant = ''; f.date = S.jour; f.commentaire = ''; f.nomActivite = ''; f.init = true; }
@@ -1098,49 +1189,267 @@ i.g-rembourse { background: var(--g-rembourse); }
       '<div class="champ haut"><label for="f-commentaire">' + esc(t('g.depense.commentaire')) + '</label><textarea id="f-commentaire" maxlength="500" rows="2" data-champ="commentaire" placeholder="' + esc(t('g.depense.commentaire_exemple')) + '">' + esc(f.commentaire) + '</textarea></div>' +
       '</form>';
   }
-
-  function ligneDepense(d, avecAuteur) {
-    var statut = d.statut || L.statutDepense(S.donnees, d.id);
-    var sous = date(d.date) + (avecAuteur && d.creePar ? ' · ' + d.creePar : '') + (d.commentaire ? ' · ' + d.commentaire : '');
-    return '<div class="ligne-depense" data-depense="' + esc(d.id) + '"><span class="lib">' + esc(nomActivite(d.activiteId, d)) + '</span><span class="num avance">' + fmt(d.montant) + '</span>' +
-      '<span class="sous">' + esc(sous) + ' <span class="statut ' + statut + '">' + esc(t('g.statut.' + statut)) + '</span></span></div>';
+  function ecranSaisie() {
+    return { corps: '<div class="box-titre" style="padding:0">' + esc(t('g.depense.titre')) + '</div>' + formulaireDepense() + messages(),
+      bas: bas([btn('commun.retour', 'retour', ''), btnEnvoi('g.depense.envoyer', 'envoyer', 'principal')]) };
   }
-  function liste(titre, deps, vide, avecAuteur, parPage) {
-    var total = Math.max(1, Math.ceil(deps.length / parPage)), page = Math.min(S.page, total - 1);
-    var pager = total > 1 ? '<span class="pager"><button type="button" data-a="page" data-d="-1" aria-label="' + esc(t('commun.page_prec')) + '"' + (page <= 0 ? ' disabled' : '') + '>‹</button><span class="num">' + esc(t('commun.page', { n: page + 1, total: total })) + '</span><button type="button" data-a="page" data-d="1" aria-label="' + esc(t('commun.page_suiv')) + '"' + (page >= total - 1 ? ' disabled' : '') + '>›</button></span>' : '';
-    return '<section class="box"><div class="box-titre">' + esc(titre) + '<span class="fin">' + pager + '</span></div>' +
-      (deps.length ? deps.slice(page * parPage, page * parPage + parPage).map(function (d) { return ligneDepense(d, avecAuteur); }).join('') : '<div class="etat-vide">' + esc(t(vide)) + '</div>') + '</section>';
+
+  function ligneDepense(d, avecAuteur, cliquable) {
+    var statut = d.statut || L.statutDepense(S.donnees, d.id);
+    var sous = date(d.date) + (avecAuteur && d.creePar ? ' · ' + auteur(d.creePar) : '') + (d.commentaire ? ' · ' + d.commentaire : '');
+    var interieur = '<span class="lib">' + esc(nomActivite(d.activiteId, d)) + '</span><span class="num avance">' + fmt(d.montant) + '</span>' +
+      '<span class="sous">' + esc(sous) + ' <span class="statut ' + statut + '">' + esc(t('g.statut.' + statut)) + '</span></span>';
+    return cliquable && statut !== 'envoi'
+      ? '<button type="button" class="ligne-depense" data-a="repartir" data-id="' + esc(d.id) + '" data-depense="' + esc(d.id) + '">' + interieur + '</button>'
+      : '<div class="ligne-depense" data-depense="' + esc(d.id) + '">' + interieur + '</div>';
+  }
+  function liste(titre, deps, cleVide, avecAuteur, parPage, cliquable) {
+    var pg = pagine(deps, 'page', parPage);
+    return '<section class="box"><div class="box-titre">' + esc(titre) + '<span class="fin">' + pager('page', pg.page, pg.total) + '</span></div>' +
+      (deps.length ? pg.items.map(function (d) { return ligneDepense(d, avecAuteur, cliquable); }).join('') : vide(cleVide)) + '</section>';
   }
   function triees(deps) { return deps.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.creeLe < b.creeLe ? 1 : -1); }); }
 
   function ecranAssociation() {
-    if (S.vue === 'saisie') return { corps: '<div class="box-titre" style="padding:0">' + esc(t('g.depense.titre')) + '</div>' + formulaireDepense() + messages(),
-      bas: bas([btn('commun.retour', 'retour', ''), btn('g.depense.envoyer', 'envoyer', 'principal', S.envoi ? ' disabled' : '')]) };
-    return { corps: liste(t('g.association.mes_saisies'), triees(S.donnees.depenses || []), 'g.association.vide', false, 5),
+    return { corps: liste(t('g.association.mes_saisies'), triees(S.donnees.depenses || []), 'g.association.vide', false, 5, false),
       bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]) };
   }
 
-  function ecranAdmin() {
-    if (S.vue === 'saisie') return ecranAssociation();
-    var deps = S.donnees.depenses || [];
-    var aRepartir = triees(deps.filter(function (d) { return L.statutDepense(S.donnees, d.id) === 'a_repartir'; }));
-    var h = '<section class="box"><div class="ligne" style="min-height:52px"><span class="lib">' + esc(t('g.admin.a_repartir')) + '</span><span class="compteur num ' + (aRepartir.length ? 'du' : 'rembourse') + '" data-compteur>' + aRepartir.length + '</span></div></section>';
-    h += liste(t('g.admin.liste'), aRepartir, 'g.admin.rien_a_repartir', true, 4);
-    h += '<p class="aide" style="margin:0">' + esc(t('g.admin.bientot')) + '</p>';
-    return { corps: h, bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]) };
+  /* ---------- Écrans Admin ---------- */
+  function aRepartir() { return triees((S.donnees.depenses || []).filter(function (d) { return (d.statut || L.statutDepense(S.donnees, d.id)) !== 'repartie'; })); }
+
+  var ADMIN = {};
+
+  ADMIN.accueil = function () {
+    var c = calc(), g = c.global, ar = aRepartir();
+    var nbRetard = Object.keys(c.parResident).filter(function (id) { return c.parResident[id].retards.length; }).length;
+    var h = '<section class="box" aria-label="' + esc(t('accueil.totaux_titre', { annee: c.annee })) + '"><div class="box-titre">' + esc(t('accueil.totaux_titre', { annee: c.annee })) + '</div>' +
+      '<div class="ligne"><span class="sec">' + esc(t('commun.avance_total')) + '</span><b class="num avance" data-t="avance">' + fmt(g.avance) + '</b>' +
+      '<span class="sec" style="margin-left:auto">' + esc(t('commun.rembourse_total')) + '</span><b class="num rembourse" data-t="rembourse">' + fmt(g.rembourse) + '</b></div>' +
+      (nbRetard
+        ? '<button type="button" class="rangee" data-a="voir-retards"><span class="lib">' + esc(t('commun.reste_du')) + '</span><span class="retard">' + ic('alerte') + esc(tn('accueil.retards_court', nbRetard)) + '</span><span class="total num du" data-t="reste">' + fmt(g.resteDu) + '</span></button>'
+        : '<div class="ligne" style="min-height:52px"><span class="lib">' + esc(t('commun.reste_du')) + '</span><span class="total num ' + (g.resteDu > 0 ? 'du' : 'rembourse') + '" data-t="reste">' + fmt(g.resteDu) + '</span></div>') +
+      '</section>';
+    h += '<section class="box"><div class="box-titre">' + esc(t('g.admin.liste')) + '<span class="fin"><span class="compteur-petit num ' + (ar.length ? 'du' : 'rembourse') + '" data-compteur>' + ar.length + '</span>' + pager('page', pagine(ar, 'page', 3).page, pagine(ar, 'page', 3).total) + '</span></div>' +
+      (ar.length ? pagine(ar, 'page', 3).items.map(function (d) { return ligneDepense(d, true, true); }).join('') : vide('g.admin.rien_a_repartir')) + '</section>';
+    return { corps: h, bas: bas([btn('g.depense.ajouter', 'saisir', 'principal'), btn('g.deconnexion', 'deconnexion', '')]), nav: true };
+  };
+
+  ADMIN.depenses = function () {
+    var tout = !!S.p.toutes, deps = tout ? triees(S.donnees.depenses || []) : aRepartir();
+    var h = '<div class="segments"><button type="button" data-a="filtre-depenses" data-v="0" aria-pressed="' + !tout + '">' + esc(t('g.depenses.filtre_a_repartir')) + '</button>' +
+      '<button type="button" data-a="filtre-depenses" data-v="1" aria-pressed="' + tout + '">' + esc(t('g.depenses.filtre_toutes')) + '</button></div>';
+    h += liste(t('g.depenses.titre'), deps, tout ? 'g.depenses.vide' : 'g.admin.rien_a_repartir', true, 4, true);
+    return { corps: h, nav: true };
+  };
+
+  // Répartition : participants cochés, parts égales (centime restant au premier) ou ajustées une à une.
+  ADMIN.repartir = function () {
+    var e = S.donnees, d = idx(e.depenses)[S.p.id];
+    if (!d) return { corps: '<div class="box">' + vide('detail.introuvable') + '</div>', bas: bas([btnRetour()]) };
+    var f = S.form, existantes = L.partsDe(e, d.id);
+    if (f.init !== true) {
+      f.parts = {}; existantes.forEach(function (p) { f.parts[p.residentId] = L.montantPourChamp(p.montant); });
+      var ids = ordreParticipants(Object.keys(f.parts));
+      var egal = L.repartirEgal(d.montant, ids);
+      f.manuel = existantes.length > 0 && egal.some(function (x) { return L.montantPourChamp(x.montant) !== f.parts[x.residentId]; });
+      f.q = ''; f.init = true;
+    }
+    var res = (e.residents || []).filter(function (r) { return r.actif || f.parts[r.id] !== undefined; }).slice().sort(L.comparerNoms);
+    if (!res.length) return { corps: enteteDepense(d) + '<div class="box">' + vide('g.repartir.aucun_resident') + '</div>', bas: bas([btnRetour()]) };
+    var trouves = L.chercherResidents(res, f.q);
+    var pg = pagine(trouves, 'page', 5);
+    var h = enteteDepense(d);
+    h += '<div class="recherche"><input id="q-repartir" type="search" data-champ="q" value="' + esc(f.q) + '" placeholder="' + esc(t('residents.chercher')) + '" aria-label="' + esc(t('residents.chercher')) + '" autocomplete="off">' +
+      '<button type="button" class="btn" style="flex:0 0 auto" data-a="parts-egales"' + (f.manuel ? '' : ' aria-pressed="true"') + '>' + esc(t('g.repartir.egal')) + '</button></div>';
+    h += '<section class="box" aria-label="' + esc(t('g.repartir.participants', { n: Object.keys(f.parts).length })) + '">' + (pg.items.length ? pg.items.map(function (r) {
+      var choisi = f.parts[r.id] !== undefined;
+      return '<div class="ligne-part"><button type="button" class="choix" data-a="basculer-part" data-id="' + esc(r.id) + '" aria-pressed="' + choisi + '">' + ic(choisi ? 'coche' : 'case') +
+        '<span class="lib">' + esc(r.nom) + (r.chambre ? ' <span class="sec">' + esc(t('commun.chambre_court', { n: r.chambre })) + '</span>' : '') + '</span></button>' +
+        (choisi ? '<input class="montant num part" type="text" inputmode="decimal" autocomplete="off" id="part-' + esc(r.id) + '" data-part="' + esc(r.id) + '" value="' + esc(f.parts[r.id]) + '" aria-label="' + esc(t('g.repartir.part_de', { nom: r.nom })) + '">' : '') + '</div>';
+    }).join('') : vide('residents.aucun_resultat')) + '</section>';
+    h += '<section class="box"><div class="ligne" style="min-height:52px"><span class="lib" id="somme-parts">' + sommeParts(d) + '</span><span class="fin">' + pager('page', pg.page, pg.total) + '</span></div></section>';
+    h += messages();
+    return { corps: h, bas: bas([btnRetour(), btnEnvoi(existantes.length ? 'g.repartir.valider_modif' : 'g.repartir.valider', 'valider-repartition', 'principal')]) };
+  };
+  function enteteDepense(d) {
+    var sous = date(d.date) + ' · ' + auteur(d.creePar) + (d.commentaire ? ' · ' + d.commentaire : '');
+    return '<section class="box"><div class="ligne-depense" style="border-top:0"><span class="lib">' + esc(nomActivite(d.activiteId)) + '</span><span class="num avance">' + fmt(d.montant) + '</span><span class="sous">' + esc(sous) + '</span></div></section>';
+  }
+  // Ordre des participants : celui de la liste (noms), pour savoir qui reçoit les centimes restants.
+  function ordreParticipants(ids) {
+    var r = idx(S.donnees.residents);
+    return ids.slice().sort(function (a, b) { return L.comparerNoms(r[a] || { nom: a }, r[b] || { nom: b }); });
+  }
+  function partsSaisies() {
+    return ordreParticipants(Object.keys(S.form.parts)).map(function (id) { return { residentId: id, montant: L.lireMontant(S.form.parts[id]) }; });
+  }
+  function sommeParts(d) {
+    var parts = partsSaisies(), somme = 0, ok = true;
+    parts.forEach(function (p) { if (typeof p.montant === 'number' && !isNaN(p.montant)) somme += p.montant; else ok = false; });
+    var ecart = d.montant - somme;
+    var txt = esc(tn('g.repartir.resume', parts.length, { parts: fmt(somme), montant: fmt(d.montant) }));
+    if (parts.length && (ecart !== 0 || !ok)) txt += ' · <span class="du">' + esc(t('g.repartir.ecart', { ecart: fmt(ecart) })) + '</span>';
+    return txt;
+  }
+  function egaliser() {
+    var d = idx(S.donnees.depenses)[S.p.id], f = S.form;
+    L.repartirEgal(d.montant, ordreParticipants(Object.keys(f.parts))).forEach(function (x) { f.parts[x.residentId] = L.montantPourChamp(x.montant); });
+    f.manuel = false;
+  }
+  function validerRepartition() {
+    var d = idx(S.donnees.depenses)[S.p.id], parts = partsSaisies();
+    var v = L.validerRepartition(S.donnees, d.id, parts);
+    if (v.erreurs.length) { S.erreurs = v.erreurs; render(); return; }
+    ecrire('repartir', { depenseId: d.id, parts: parts }, function () {
+      notifier('g.repartir.ok', 'ok', { n: parts.length });
+      retour();
+    });
   }
 
+  ADMIN.residents = function () {
+    var e = S.donnees, c = calc();
+    if (!(e.residents || []).length) return { corps: '<div class="box"><div class="etat-vide"><strong>' + esc(t('residents.vide.titre')) + '</strong>' + esc(t('residents.vide.texte')) + '</div></div>', nav: true, bas: bas([btn('residents.vide.action', 'nouveau-resident', 'principal')]) };
+    var liste = e.residents.slice().sort(function (a, b) { return (b.actif - a.actif) || L.comparerNoms(a, b); });
+    liste = L.chercherResidents(liste, S.p.q);
+    if (S.p.retard) liste = liste.filter(function (r) { return c.parResident[r.id] && c.parResident[r.id].retards.length; });
+    var pg = pagine(liste, 'page', 6);
+    var h = '<div class="recherche"><input id="q-residents" type="search" data-champ="q" data-p="1" value="' + esc(S.p.q || '') + '" placeholder="' + esc(t('residents.chercher')) + '" aria-label="' + esc(t('residents.chercher')) + '" autocomplete="off">' +
+      '<div class="segments" style="flex:0 0 auto"><button type="button" data-a="filtre-retard" aria-pressed="' + (S.p.retard ? 'true' : 'false') + '">' + esc(t('residents.en_retard')) + '</button></div></div>';
+    h += '<section class="box">' + (pg.items.length ? pg.items.map(function (r) {
+      var x = c.parResident[r.id] || { resteDu: 0, retards: [] };
+      return '<button type="button" class="rangee" data-a="fiche" data-id="' + esc(r.id) + '"><span class="lib">' + esc(r.nom) + ' <span class="sec">' + esc(r.chambre ? t('commun.chambre_court', { n: r.chambre }) : '') + (r.actif ? '' : ' · ' + t('commun.inactif')) + '</span></span>' +
+        (x.retards.length ? '<span class="retard">' + ic('alerte') + esc(t('commun.retard')) + '</span>' : '') + '<span class="num ' + (x.resteDu > 0 ? 'du' : 'sec') + '">' + fmt(x.resteDu) + '</span></button>';
+    }).join('') : vide('residents.aucun_resultat')) + '</section>';
+    if (pg.total > 1) h += '<div style="display:flex;justify-content:center">' + pager('page', pg.page, pg.total) + '</div>';
+    return { corps: h, nav: true, bas: bas([btn('residents.vide.action', 'nouveau-resident', 'principal')]) };
+  };
+
+  ADMIN.fiche = function () {
+    var e = S.donnees, c = calc(), r = idx(e.residents)[S.p.id];
+    if (!r) return { corps: '<div class="box">' + vide('fiche.introuvable') + '</div>', bas: bas([btnRetour()]) };
+    var x = c.parResident[r.id] || { avance: 0, rembourse: 0, resteDu: 0, retards: [] };
+    var h = '<div class="box-titre" style="padding:0"><span style="font-size:var(--t-titre);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(r.nom) + '</span>' +
+      '<span class="sec" style="color:var(--texte-2);font-weight:400;white-space:nowrap">' + esc(r.chambre ? t('commun.chambre_court', { n: r.chambre }) : '') + (r.actif ? '' : ' · ' + esc(t('commun.inactif'))) + '</span></div>';
+    if (r.note) h += '<div class="message info">' + ic('info') + '<span>' + esc(r.note) + '</span></div>';
+    h += '<section class="box"><div class="ligne" style="min-height:52px"><span class="lib">' + esc(t('commun.reste_du')) + '</span>' + (x.retards.length ? '<span class="retard">' + ic('alerte') + esc(t('commun.retard')) + '</span>' : '') +
+      '<span class="total num ' + (x.resteDu > 0 ? 'du' : 'rembourse') + '" data-t="reste-resident">' + fmt(x.resteDu) + '</span></div>' +
+      '<div class="ligne"><span class="lib sec">' + esc(t('fiche.annee', { annee: c.annee })) + '</span><span class="num avance">' + fmt(x.avance) + '</span><span class="sec">·</span><span class="num rembourse">' + fmt(x.rembourse) + '</span></div></section>';
+    var deps = idx(e.depenses);
+    var ops = (e.parts || []).filter(function (p) { return p.residentId === r.id && deps[p.depenseId]; }).map(function (p) { return { genre: 'part', o: p, date: deps[p.depenseId].date }; })
+      .concat((e.remboursements || []).filter(function (b) { return b.residentId === r.id; }).map(function (b) { return { genre: 'remb', o: b, date: b.date }; }));
+    ops.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.o.id < b.o.id ? 1 : -1); });
+    var pg = pagine(ops, 'page', 4);
+    h += '<section class="box"><div class="box-titre">' + esc(t('fiche.operations')) + '<span class="fin">' + pager('page', pg.page, pg.total) + '</span></div>' +
+      (pg.items.length ? pg.items.map(function (op) {
+        if (op.genre === 'remb') return '<button type="button" class="rangee" data-a="voir-remb" data-id="' + esc(op.o.id) + '"><span class="rembourse" aria-hidden="true">' + ic('remb') + '</span><span class="lib">' + esc(t('g.fiche.remboursement', { date: date(op.date) })) + '</span><span class="num rembourse">' + fmt(op.o.montant) + '</span></button>';
+        var dep = deps[op.o.depenseId], st = c.avances[op.o.id] || {};
+        var icone = st.retard ? '<span class="du" aria-label="' + esc(t('statut.retard')) + '">' + ic('alerte') + '</span>'
+          : st.statut === 'soldee' ? '<span class="rembourse" aria-label="' + esc(t('statut.soldee')) + '">' + ic('ok') + '</span>'
+          : st.statut === 'partielle' ? '<span class="avance" aria-label="' + esc(t('statut.partielle')) + '">' + ic('partiel') + '</span>'
+          : '<span class="sec" aria-label="' + esc(t('statut.due')) + '">' + ic('attente') + '</span>';
+        return '<button type="button" class="rangee" data-a="repartir" data-id="' + esc(dep.id) + '">' + icone + '<span class="lib">' + esc(t('g.fiche.part', { activite: nomActivite(dep.activiteId), date: date(dep.date) })) + '</span><span class="num avance">' + fmt(op.o.montant) + '</span></button>';
+      }).join('') : vide('fiche.aucune_operation')) + '</section>';
+    var b = [btnRetour(), btn('g.fiche.modifier', 'modifier-resident', '', ' data-id="' + esc(r.id) + '"')];
+    if (x.resteDu > 0) b.push(btn('fiche.rembourser', 'rembourser', 'principal', ' data-id="' + esc(r.id) + '"'));
+    return { corps: h, bas: bas(b) };
+  };
+
+  ADMIN['form-resident'] = function () {
+    var r = S.p.id ? idx(S.donnees.residents)[S.p.id] : null, f = S.form;
+    if (f.init !== true) { f.nom = r ? r.nom : ''; f.chambre = r ? r.chambre || '' : ''; f.note = r ? r.note || '' : ''; f.actif = r ? r.actif : true; f.confirmer = false; f.init = true; }
+    var h = '<div class="box-titre" style="padding:0">' + esc(t(r ? 'resident.titre_modifier' : 'resident.titre_nouveau')) + '</div>';
+    h += '<form class="box" data-form="resident" novalidate>' +
+      '<div class="champ"><label for="f-nom">' + esc(t('resident.nom')) + '</label><input id="f-nom" type="text" data-champ="nom" maxlength="80" autocomplete="off" value="' + esc(f.nom) + '"></div>' +
+      '<div class="champ"><label for="f-chambre">' + esc(t('resident.chambre')) + '</label><input id="f-chambre" type="text" data-champ="chambre" maxlength="6" autocomplete="off" inputmode="numeric" value="' + esc(f.chambre) + '"></div>' +
+      '<div class="champ"><label for="f-note">' + esc(t('resident.note')) + '</label><input id="f-note" type="text" data-champ="note" maxlength="120" autocomplete="off" value="' + esc(f.note) + '" placeholder="' + esc(t('resident.note_exemple')) + '"></div>' +
+      (r ? '<div class="champ"><span style="font-weight:700">' + esc(t('resident.actif')) + '</span><span class="bascule-zone"><button type="button" class="bascule" role="switch" data-a="basculer-actif" aria-checked="' + (f.actif ? 'true' : 'false') + '" aria-label="' + esc(t('resident.actif')) + '"></button></span></div>' : '') +
+      '</form>';
+    h += '<div class="message info">' + ic('info') + '<span>' + esc(t('resident.rappel_sante')) + '</span></div>';
+    if (r && r.actif && histoResident(r.id)) h += '<p class="aide" style="margin:0">' + esc(t('g.resident.historique')) + '</p>';
+    h += messages();
+    var b = [btnRetour()];
+    if (r && (r.actif || !histoResident(r.id))) b.push(btnEnvoi(f.confirmer ? 'g.confirmer' : 'detail.supprimer', 'supprimer-resident', 'danger'));
+    b.push(btnEnvoi('form.enregistrer', 'enregistrer-resident', 'principal'));
+    return { corps: h, bas: bas(b) };
+  };
+  function enregistrerResident() {
+    var f = S.form, r = S.p.id ? idx(S.donnees.residents)[S.p.id] : null;
+    var saisie = { id: r ? r.id : undefined, nom: (f.nom || '').trim(), chambre: (f.chambre || '').trim(), note: (f.note || '').trim(), actif: r ? !!f.actif : true };
+    var v = L.validerResident(S.donnees, saisie);
+    if (v.erreurs.length) { S.erreurs = v.erreurs; render(); return; }
+    ecrire('enregistrerResident', saisie, function (rep) {
+      notifier('g.resident.ok', 'ok');
+      if (r) retour(); else { S.ecran = 'fiche'; S.p = { id: rep.id }; S.form = {}; }   // le nouveau résident remplace le formulaire
+    });
+  }
+  function supprimerResident() {
+    if (!S.form.confirmer) { S.form.confirmer = true; render(); return; }
+    var id = S.p.id;
+    ecrire('retirerResident', { id: id }, function (rep) {
+      notifier(rep.inactif ? 'g.resident.inactive' : 'g.resident.retire', 'ok');
+      onglet('residents');
+    });
+  }
+
+  ADMIN['form-remb'] = function () {
+    var e = S.donnees, c = calc(), r = idx(e.residents)[S.p.id];
+    if (!r) return { corps: '<div class="box">' + vide('fiche.introuvable') + '</div>', bas: bas([btnRetour()]) };
+    var x = c.parResident[r.id] || { resteDu: 0 }, deps = idx(e.depenses), f = S.form;
+    var ouvertes = (e.parts || []).filter(function (p) { return p.residentId === r.id && deps[p.depenseId] && c.avances[p.id] && c.avances[p.id].reste > 0; })
+      .sort(function (a, b) { return deps[a.depenseId].date < deps[b.depenseId].date ? -1 : 1; });
+    if (f.init !== true) { f.montant = x.resteDu > 0 ? L.montantPourChamp(x.resteDu) : ''; f.date = S.jour; f.partId = ''; f.init = true; }
+    var h = '<section class="box"><div class="ligne" style="min-height:52px"><span class="lib"><b>' + esc(r.nom) + '</b></span><span class="sec">' + esc(t('commun.reste_du')) + '</span><span class="num du total" style="font-size:var(--t-titre)">' + fmt(x.resteDu) + '</span></div></section>';
+    h += '<form class="box" data-form="remb" novalidate>' +
+      '<div class="champ"><label for="f-montant">' + esc(t('form.montant')) + '</label><input id="f-montant" class="montant num" type="text" inputmode="decimal" autocomplete="off" data-champ="montant" value="' + esc(f.montant) + '" placeholder="' + esc(t('form.montant_exemple')) + '"></div>' +
+      '<div class="champ"><label for="f-date">' + esc(t('form.date')) + '</label><input id="f-date" type="date" data-champ="date" max="' + S.jour + '" value="' + esc(f.date) + '"></div>' +
+      '<div class="champ"><label for="f-part">' + esc(t('g.remb.imputer')) + '</label><select id="f-part" data-champ="partId"><option value="">' + esc(t('form.imputer_libre')) + '</option>' +
+      ouvertes.map(function (p) { var d = deps[p.depenseId]; return '<option value="' + esc(p.id) + '"' + (f.partId === p.id ? ' selected' : '') + '>' + esc(t('g.remb.imputer_part', { activite: nomActivite(d.activiteId), date: date(d.date), reste: fmt(c.avances[p.id].reste) })) + '</option>'; }).join('') +
+      '</select></div></form>';
+    h += messages();
+    if (!S.erreurs.length) h += '<p class="aide" style="margin:0">' + esc(t(f.partId ? 'g.remb.aide_part' : 'form.imputer_aide_libre')) + '</p>';
+    return { corps: h, bas: bas([btnRetour(), btnEnvoi('form.valider', 'valider-remb', 'principal')]) };
+  };
+  function validerRemb() {
+    var f = S.form, saisie = { residentId: S.p.id, montant: L.lireMontant(f.montant), date: f.date, partId: f.partId || null };
+    var v = L.validerRemboursementG(S.donnees, saisie, S.jour);
+    if (v.erreurs.length) { S.erreurs = v.erreurs; render(); return; }
+    ecrire('ajouterRemboursement', saisie, function () {
+      notifier('g.remb.ok', 'ok', { montant: fmt(saisie.montant) });
+      retour();
+    });
+  }
+
+  ADMIN.remb = function () {
+    var e = S.donnees, b = idx(e.remboursements)[S.p.id];
+    if (!b) return { corps: '<div class="box">' + vide('detail.introuvable') + '</div>', bas: bas([btnRetour()]) };
+    var part = b.partId ? idx(e.parts)[b.partId] : null, dep = part ? idx(e.depenses)[part.depenseId] : null;
+    function ligne(cle, v, classe) { return '<div class="ligne"><span class="lib sec">' + esc(t(cle)) + '</span><span class="' + (classe || '') + '">' + esc(v) + '</span></div>'; }
+    var h = '<div class="box-titre" style="padding:0">' + esc(t('detail.remb_titre')) + '</div><section class="box">' +
+      ligne('detail.resident', nomResident(b.residentId)) + ligne('detail.date', date(b.date)) + ligne('detail.montant', fmt(b.montant), 'num rembourse') +
+      ligne('detail.genre', dep ? t('g.fiche.part', { activite: nomActivite(dep.activiteId), date: date(dep.date) }) : t('detail.libre')) +
+      ligne('g.detail.par', auteur(b.creePar)) + '</section>';
+    h += messages();
+    return { corps: h, bas: bas([btnRetour(), btnEnvoi(S.form.confirmer ? 'g.confirmer' : 'detail.supprimer', 'supprimer-remb', 'danger')]) };
+  };
+  function supprimerRemb() {
+    if (!S.form.confirmer) { S.form.confirmer = true; render(); return; }
+    ecrire('supprimerRemboursement', { id: S.p.id }, function () { notifier('g.remb.supprime', 'ok'); retour(); });
+  }
+
+  /* ---------- Rendu ---------- */
   function render() {
-    var actif = document.activeElement, idActif = actif && actif.id;
+    var actif = document.activeElement, idActif = actif && actif.id, s0 = null, s1 = null;
+    try { if (actif && typeof actif.selectionStart === 'number') { s0 = actif.selectionStart; s1 = actif.selectionEnd; } } catch (x) { /* champ sans sélection */ }
     var v = (ECRANS[S.etape] || ECRANS.demarrage)();
-    var h = entete() + '<main class="contenu" id="contenu" data-ecran="' + S.etape + (S.vue && S.etape === 'appli' ? '-' + S.vue : '') + '">' + v.corps + '</main>' + (v.bas || '');
+    var h = entete() + '<main class="contenu" id="contenu" data-ecran="' + S.etape + (S.etape === 'appli' ? '-' + S.ecran : '') + '">' + v.corps + '</main>' + (v.bas || '') + (v.nav ? onglets() : '');
     if (S.notif) h += '<button type="button" class="notif ' + S.notif.genre + '" data-a="fermer-notif" role="status"><span>' + esc(S.notif.texte) + '</span></button>';
     app.innerHTML = h;
     if (S.etape === 'connexion') afficherBouton();
-    if (idActif) { var el = document.getElementById(idActif); if (el) el.focus({ preventScroll: true }); }
+    if (idActif) { var el = document.getElementById(idActif); if (el) { el.focus({ preventScroll: true }); try { if (s0 !== null) el.setSelectionRange(s0, s1); } catch (x) { /* type sans sélection */ } } }
   }
 
-  /* ---------- Actions ---------- */
+  /* ---------- Envoi d'une dépense ---------- */
   function envoyer() {
     if (S.envoi) return;
     var f = S.form, montant = L.lireMontant(f.montant), erreurs = [];
@@ -1155,14 +1464,15 @@ i.g-rembourse { background: var(--g-rembourse); }
     var nouvelle = f.activiteId === '__nouvelle';
     var envoi = { id: '__envoi', activiteId: nouvelle ? '' : f.activiteId, nomActivite: nouvelle ? f.nomActivite.trim() : '', montant: montant, date: f.date,
       commentaire: (f.commentaire || '').trim(), creePar: S.moi && S.moi.email, creeLe: '9999', statut: 'envoi' };
-    var formGarde = f;
-    S.envoi = true; S.erreurs = []; S.vue = null; S.page = 0; S.form = {};
+    var formGarde = f, pileGardee = S.pile.slice();
+    S.envoi = true; S.erreurs = []; S.form = {};
+    retour();
     S.donnees.depenses = (S.donnees.depenses || []).concat([envoi]); render();
     var corps = { montant: montant, date: f.date, commentaire: f.commentaire };
     if (nouvelle) corps.nouvelleActivite = f.nomActivite.trim(); else corps.activiteId = f.activiteId;
     function annuler() {
       S.donnees.depenses = S.donnees.depenses.filter(function (d) { return d !== envoi; });
-      S.form = formGarde; S.vue = 'saisie'; S.envoi = false;
+      S.pile = pileGardee; S.pile.push({ ecran: S.ecran, p: S.p }); S.ecran = 'saisie'; S.p = {}; S.form = formGarde; S.envoi = false;
     }
     api('ajouterDepense', corps).then(function (r) {
       if (!r.ok) { annuler(); return refus(r); }
@@ -1174,13 +1484,39 @@ i.g-rembourse { background: var(--g-rembourse); }
   }
 
   var ACTIONS = {
-    saisir: function () { S.vue = 'saisie'; S.form = {}; S.erreurs = []; render(); },
-    retour: function () { S.vue = null; S.erreurs = []; render(); },
+    saisir: function () { aller('saisie'); },
+    retour: retour,
+    onglet: function (d) { onglet(d.e); },
     envoyer: envoyer,
-    page: function (d) { S.page = Math.max(0, S.page + (+d.d)); render(); },
+    page: function (d) { S.p[d.cle] = Math.max(0, (S.p[d.cle] || 0) + (+d.d)); render(); },
     deconnexion: seDeconnecter,
     reessayer: function () { if (S.jeton) charger(); else { S.etape = 'connexion'; render(); } },
-    'fermer-notif': function () { S.notif = null; render(); }
+    'fermer-notif': function () { S.notif = null; render(); },
+    // Admin
+    repartir: function (d) { aller('repartir', { id: d.id }); },
+    'filtre-depenses': function (d) { S.p = { toutes: d.v === '1' }; render(); },
+    'basculer-part': function (d) {
+      var f = S.form;
+      if (f.parts[d.id] !== undefined) delete f.parts[d.id]; else f.parts[d.id] = '';
+      if (!f.manuel) egaliser();
+      S.erreurs = []; render();
+      var champ = document.getElementById('part-' + d.id);
+      if (champ && f.manuel) champ.focus();
+    },
+    'parts-egales': function () { egaliser(); S.erreurs = []; render(); },
+    'valider-repartition': validerRepartition,
+    'voir-retards': function () { onglet('residents'); S.p.retard = true; render(); },
+    'filtre-retard': function () { S.p.retard = !S.p.retard; S.p.page = 0; render(); },
+    fiche: function (d) { aller('fiche', { id: d.id }); },
+    'nouveau-resident': function () { aller('form-resident', {}); },
+    'modifier-resident': function (d) { aller('form-resident', { id: d.id }); },
+    'basculer-actif': function () { S.form.actif = !S.form.actif; render(); },
+    'enregistrer-resident': enregistrerResident,
+    'supprimer-resident': supprimerResident,
+    rembourser: function (d) { aller('form-remb', { id: d.id }); },
+    'valider-remb': validerRemb,
+    'voir-remb': function (d) { aller('remb', { id: d.id }); },
+    'supprimer-remb': supprimerRemb
   };
   app.addEventListener('click', function (ev) {
     var el = ev.target.closest('[data-a]');
@@ -1189,16 +1525,31 @@ i.g-rembourse { background: var(--g-rembourse); }
     if (f) { ev.preventDefault(); f(el.dataset); }
   });
   app.addEventListener('input', function (ev) {
-    var k = ev.target.getAttribute && ev.target.getAttribute('data-champ');
+    var el = ev.target;
+    // Part d'un résident : saisie à la main → parts ajustées ; le total se met à jour sans redessiner.
+    var part = el.getAttribute && el.getAttribute('data-part');
+    if (part) {
+      S.form.parts[part] = el.value; S.form.manuel = true;
+      var d = idx(S.donnees.depenses)[S.p.id], somme = document.getElementById('somme-parts');
+      if (somme && d) somme.innerHTML = sommeParts(d);
+      var egal = document.querySelector('[data-a="parts-egales"]'); if (egal) egal.removeAttribute('aria-pressed');
+      if (S.erreurs.length) { S.erreurs = []; render(); }
+      return;
+    }
+    var k = el.getAttribute && el.getAttribute('data-champ');
     if (!k) return;
-    S.form[k] = ev.target.value;
+    if (k === 'q') {   // recherche : retour en page 1, redessin immédiat
+      if (el.getAttribute('data-p')) S.p.q = el.value; else S.form.q = el.value;
+      S.p.page = 0; render(); return;
+    }
+    S.form[k] = el.value;
     if (S.erreurs.length) { S.erreurs = []; render(); }
   });
   app.addEventListener('change', function (ev) {
     var k = ev.target.getAttribute && ev.target.getAttribute('data-champ');
-    if (k) { S.form[k] = ev.target.value; if (k === 'activiteId') render(); }
+    if (k && k !== 'q') { S.form[k] = ev.target.value; if (k === 'activiteId' || k === 'partId') render(); }
   });
-  app.addEventListener('submit', function (ev) { ev.preventDefault(); envoyer(); });
+  app.addEventListener('submit', function (ev) { ev.preventDefault(); if (S.ecran === 'saisie') envoyer(); });
 
   // Démarrage : attendre la bibliothèque de connexion Google (chargée en async), 10 s au plus.
   render();
