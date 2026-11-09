@@ -1,7 +1,7 @@
 {
-  "name": "Résident Activités",
-  "short_name": "Résident Activités",
-  "description": "Suivi des dépenses d'activités avancées pour les résidents et de leurs remboursements.",
+  "name": "Gestion APF",
+  "short_name": "Gestion APF",
+  "description": "Dépenses d'activités des résidents et heures des bénévoles.",
   "lang": "fr",
   "start_url": "./",
   "scope": "./",
