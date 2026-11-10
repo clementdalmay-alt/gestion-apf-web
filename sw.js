@@ -1,6 +1,6 @@
-// Gestion APF : service worker. Version 0.32.
+// Gestion APF : service worker. Version 0.33.
 // Page : réseau d'abord (revalidée à chaque ouverture), copie gardée pour l'ouverture sans réseau. Icônes : copie gardée.
-var CACHE = 'resident-activites-0.32';
+var CACHE = 'resident-activites-0.33';
 var FICHIERS = ["manifest.webmanifest","icone-192.png","icone-512.png","icone-maskable-512.png","apple-touch-icon.png","favicon-32.png"];
 function page() { return self.registration.scope; }
 self.addEventListener('install', function (e) {
