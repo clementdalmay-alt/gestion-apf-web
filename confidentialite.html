@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Confidentialité — Resident Activités</title>
+<title>Confidentialité — Gestion APF</title>
 <style>
 :root { --fond: #FAF7F2; --texte: #2B2B2B; --texte-2: #5E625F; --sauge: #557560; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --fond: #1F2321; --texte: #EDEAE4; --texte-2: #B5B8B4; --sauge: #8FB59A; color-scheme: dark; } }
@@ -19,21 +19,22 @@ a { color: var(--sauge); }
 </head>
 <body>
 <main>
-<!-- Texte provisoire rédigé par le Chantier (G0.7) : à relire par Contenus (voir a-traiter.md). -->
+<!-- Texte provisoire rédigé par le Chantier (G0.7, repris en G0.34) : à relire par Contenus (voir a-traiter.md). Version : 0.34 -->
 <h1>Confidentialité</h1>
-<p class="sec">Resident Activités · mise à jour le 7 novembre 2026</p>
+<p class="sec">Gestion APF · mise à jour le 9 novembre 2026</p>
 
 <h2>À quoi sert l'appli</h2>
-<p>Resident Activités aide une association de résidents à suivre les dépenses d'activités qu'elle avance pour les résidents, la part de chacun et leurs remboursements. Elle n'est utilisée que par les personnes invitées par l'association.</p>
+<p>Gestion APF aide un établissement APF France handicap dans deux tâches : <strong>Résident Activités</strong> suit les dépenses d'activités avancées pour les résidents, la part de chacun et leurs remboursements ; <strong>Bénévoles</strong> suit les interventions des bénévoles et leurs heures. L'appli n'est utilisée que par les personnes invitées par l'établissement.</p>
 
 <h2>Connexion avec Google</h2>
 <p>L'appli utilise « Se connecter avec Google » uniquement pour savoir qui est connecté. Elle reçoit de Google votre nom et votre adresse e-mail, rien d'autre : ni vos contacts, ni vos fichiers, ni vos e-mails.</p>
-<p>Seules les adresses inscrites par l'association comme membres ont accès aux données. Une association ne voit que les dépenses qu'elle a saisies.</p>
+<p>Seules les adresses inscrites par l'établissement comme membres ont accès aux données. Une association ne voit que les dépenses qu'elle a saisies, jamais les résidents ni les bénévoles. Le module Bénévoles n'est visible que des administrateurs.</p>
 
 <h2>Données enregistrées</h2>
 <ul>
 <li>Les dépenses saisies (activité, montant, date, note), avec l'adresse e-mail de la personne qui les a saisies et l'heure.</li>
-<li>Pour l'administration de l'association : le nom et la chambre des résidents, leurs parts et leurs remboursements.</li>
+<li>Pour l'administration de l'établissement : le nom et la chambre des résidents, leurs parts et leurs remboursements (avec le moyen de paiement s'il est noté).</li>
+<li>Pour les bénévoles : leur nom, une note pratique facultative (par exemple « véhicule personnel »), leurs interventions (activité, date, horaire) et les heures confirmées. Ces heures servent aux totaux et à l'attestation d'heures remise au bénévole.</li>
 <li>Un journal des modifications (qui, quand, quoi).</li>
 </ul>
 <p>Ces données sont stockées dans un tableur Google Sheets privé, appartenant à l'administrateur de l'appli et partagé avec personne. Une copie de sauvegarde est faite chaque semaine dans son Google Drive.</p>
@@ -43,10 +44,10 @@ a { color: var(--sauge); }
 <p>Après la connexion, une clé de session est gardée dans le navigateur pendant 30 jours pour éviter de se reconnecter. « Se déconnecter » l'efface. L'appli n'utilise ni publicité, ni mesure d'audience, ni cookies de suivi.</p>
 
 <h2>Partage</h2>
-<p>Les données ne sont ni vendues, ni partagées, ni utilisées à d'autres fins que le suivi des activités de l'association. Des e-mails sont envoyés aux administrateurs à chaque nouvelle dépense, et aux personnes invitées.</p>
+<p>Les données ne sont ni vendues, ni partagées, ni utilisées à d'autres fins que le suivi des activités et des bénévoles de l'établissement. Des e-mails sont envoyés aux administrateurs à chaque nouvelle dépense, et aux personnes invitées.</p>
 
 <h2>Vos droits</h2>
-<p>Vous pouvez demander à l'association de consulter, corriger ou supprimer les informations qui vous concernent, ou de retirer votre accès.</p>
+<p>Vous pouvez demander à l'établissement de consulter, corriger ou supprimer les informations qui vous concernent, ou de retirer votre accès.</p>
 
 <p class="sec"><a href="./">Retour à l'appli</a></p>
 </main>
